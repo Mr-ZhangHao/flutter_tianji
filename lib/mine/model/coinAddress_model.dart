@@ -1,0 +1,1 @@
+class coinAddress_model {}
