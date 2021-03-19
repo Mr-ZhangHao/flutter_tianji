@@ -18,6 +18,7 @@ import 'package:flutter_tianji/mine/provider/mine_provider.dart';
 import 'package:flutter_tianji/mine/routes/index.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
+import 'package:flutter_tianji/utils/util.dart';
 import 'package:provider/provider.dart';
 
 class SecurityPage extends StatelessWidget {
@@ -55,7 +56,7 @@ class SecurityPage extends StatelessWidget {
               leading: Tr.of(context).CellPhone,
               linkText: null == user.mobile
                   ? Tr.of(context).unbounded
-                  : Tr.of(context).Bound,
+                  : Utils.hiddenMiddle(user?.mobile, 3, 4),
               linkColor:
                   null == user.mobile ? kPrimaryColor : Color(0xff909090),
               onTab: user.mobile != null
@@ -66,7 +67,7 @@ class SecurityPage extends StatelessWidget {
               leading: Tr.of(context).mailbox,
               linkText: null == user.email
                   ? Tr.of(context).unbounded
-                  : Tr.of(context).Bound,
+                  : Utils.hiddenMiddle(user?.email, 3, 4),
               linkColor: null == user.email ? kPrimaryColor : Color(0xff909090),
               onTab: user.email != null
                   ? null

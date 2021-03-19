@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/refresh/page_list.dart';
-import 'package:flutter_tianji/core/services/mine.dart';
+import 'package:flutter_tianji/mine/server/index.dart';
 import 'package:flutter_tianji/mine/model/login_history_model.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';

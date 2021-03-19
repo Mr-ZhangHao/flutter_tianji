@@ -13,7 +13,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tianji/common/constants/index.dart';
-import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/input/focus.dart';
 import 'package:flutter_tianji/login/server/index.dart';
 import 'package:flutter_tianji/login/widgets/text_input.dart';

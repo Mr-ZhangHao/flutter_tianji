@@ -16,7 +16,7 @@ import 'package:flutter_tianji/common/button/index.dart';
 import 'package:flutter_tianji/common/input/focus.dart';
 import 'package:flutter_tianji/common/toast/index.dart';
 import 'package:flutter_tianji/common/upload/image_upload.dart';
-import 'package:flutter_tianji/core/services/mine.dart';
+import 'package:flutter_tianji/mine/server/index.dart';
 import 'package:flutter_tianji/login/widgets/text_input.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';

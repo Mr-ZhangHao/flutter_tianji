@@ -40,7 +40,8 @@ class _RecordBibiPageState extends PageListState<BibiRecored, RecordBibiPage> {
           onTap: () => Navigator.pop(context),
           child: Container(
             alignment: Alignment.center,
-            child: Image.asset('images/mine/back@2x.png', width: width(22), height: height(36)),
+            child: Image.asset('images/mine/back@2x.png',
+                width: width(22), height: height(36)),
           ),
         ),
         brightness: Brightness.light,
@@ -57,7 +58,8 @@ class _RecordBibiPageState extends PageListState<BibiRecored, RecordBibiPage> {
               onTap: () => Scaffold.of(context).openEndDrawer(),
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: width(20)),
-                  child: ImageIcon(AssetImage('images/home/shaixuan.png'), size: sp(44))),
+                  child: ImageIcon(AssetImage('images/home/shaixuan.png'),
+                      size: sp(44))),
             );
           })
         ],
@@ -80,7 +82,8 @@ class _RecordBibiPageState extends PageListState<BibiRecored, RecordBibiPage> {
 
   ///加载数据
   @override
-  loadPage({int page, Function(List<BibiRecored>) onSuccess, Function onErr}) async {
+  loadPage(
+      {int page, Function(List<BibiRecored>) onSuccess, Function onErr}) async {
     try {
       List<BibiRecored> list = await WalletServer.bibiRecord({
         "coin_id": params['coin_id'],
@@ -111,13 +114,14 @@ class _RecordBibiPageState extends PageListState<BibiRecored, RecordBibiPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Image.asset(
-            'images/contract/no_record.png',
+            'images/business/no_task.png',
             width: width(230),
             height: width(230),
             fit: BoxFit.contain,
           ),
           SizedBox(height: height(20)),
-          Text('${Tr.of(context).homeNodata}', style: TextStyle(color: Color(0xffDBDBDB)))
+          Text('${Tr.of(context).homeNodata}',
+              style: TextStyle(color: Color(0xffDBDBDB)))
         ],
       ),
     );

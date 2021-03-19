@@ -9,6 +9,7 @@ import 'package:flutter_tianji/mine/routes/index.dart';
 import 'package:flutter_tianji/routes/router_init.dart';
 import 'package:flutter_tianji/routes/webView.dart';
 import 'package:flutter_tianji/splash/splash_page.dart';
+import 'package:flutter_tianji/strategy/routes/index.dart';
 import 'package:flutter_tianji/wallet/routes/index.dart';
 import '404.dart';
 import 'package:flutter/material.dart' hide Router;
@@ -60,8 +61,7 @@ class Routes {
     _listRouter.add(BaikeRouter()); // 百科
     _listRouter.add(MineRouter()); // 我的
     _listRouter.add(WalletRouter()); // 钱包
-/*    _listRouter.add(TradeRouter()); // 交易
-    _listRouter.add(ContractRouter()); // 交易*/
+    _listRouter.add(StrategyRouter()); // 策略
     _listRouter.add(LoginRouter()); // 登录注册相关
     _listRouter.add(BusinessRouter()); // 商业API
 

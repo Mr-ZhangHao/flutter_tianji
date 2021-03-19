@@ -10,10 +10,13 @@
 * @FilePath: /etf_flutter/lib/pages/mine/provider/mine_provider.dart
 */
 
-import 'package:flutter_tianji/core/services/mine.dart';
+import 'package:flutter_tianji/home/server/index.dart';
+import 'package:flutter_tianji/mine/model/BuddyListModel.dart';
+import 'package:flutter_tianji/mine/server/index.dart';
 import 'package:flutter_tianji/mine/model/kyc_info_model.dart';
 import 'package:flutter_tianji/mine/model/user_model.dart';
 import 'package:flutter_tianji/providers/view_state_model.dart';
+import 'package:flutter_tianji/strategy/model/strategyListModel.dart';
 
 class VertifyFiled {
   String country;
@@ -27,6 +30,8 @@ class VertifyFiled {
 
 class MineProvider extends ViewStateModel {
   UserInfoModel userInfo;
+  List<BuddyListModel> buddyListModel;
+  bool isShowBadge = false;
 
   KycInfoModel kycInfo;
   String googleSecret = '';
@@ -42,6 +47,20 @@ class MineProvider extends ViewStateModel {
     } catch (e, s) {
       setError(e, s);
       return userInfo;
+    }
+  }
+
+  Future<List<BuddyListModel>> getBuddyList() async {
+    setBusy();
+    try {
+      var datas = await MineServer.getBuddyList();
+      buddyListModel = datas;
+      setIdle();
+      notifyListeners();
+      return buddyListModel;
+    } catch (e, s) {
+      setError(e, s);
+      return buddyListModel;
     }
   }
 
@@ -73,6 +92,11 @@ class MineProvider extends ViewStateModel {
     }
   }
 
+  setIsShowBadge(bool param) {
+    isShowBadge = param;
+    notifyListeners();
+  }
+
   void setGoogleSecret(String params) {
     googleSecret = params;
     notifyListeners();
@@ -81,5 +105,21 @@ class MineProvider extends ViewStateModel {
   setVertifyFiled(VertifyFiled data) {
     vertifyFiled = data;
     notifyListeners();
+  }
+
+  List<strategyListModel> recommendList = [];
+  getRecommendApi() async {
+    setBusy();
+    try {
+      var res = await HomeServer.getRecommendApi();
+      // print(res);
+      setIdle();
+      recommendList = (res['data'] as List)
+          .map((e) => strategyListModel.fromJson(e))
+          .toList();
+      notifyListeners();
+    } catch (e, s) {
+      setError(e, s);
+    }
   }
 }

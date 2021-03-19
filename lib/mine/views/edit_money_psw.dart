@@ -5,7 +5,7 @@ import 'package:flutter_tianji/common/input/focus.dart';
 import 'package:flutter_tianji/common/toast/index.dart';
 import 'package:flutter_tianji/common/verivication/vertify_form.dart';
 import 'package:flutter_tianji/core/model/tfa_type_model.dart';
-import 'package:flutter_tianji/core/services/mine.dart';
+import 'package:flutter_tianji/mine/server/index.dart';
 import 'package:flutter_tianji/login/server/index.dart';
 import 'package:flutter_tianji/login/widgets/text_input.dart';
 import 'package:flutter_tianji/mine/provider/mine_provider.dart';

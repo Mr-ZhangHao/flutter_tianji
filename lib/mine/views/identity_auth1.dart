@@ -10,6 +10,7 @@ import 'package:flutter_tianji/mine/routes/index.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_tianji/mine/server/index.dart';
 
 class IdentityAuth1Page extends StatefulWidget {
   IdentityAuth1Page({Key key}) : super(key: key);
@@ -33,10 +34,10 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
   final _countryCtr = TextEditingController();
   final FocusNode _countryFocus = FocusNode();
 
-  int type = 1;
+  int type = 0;
   String area = '86';
-  String area_name = '台湾';
-  String area_name_us = 'Taiwan';
+  String area_name = '中国';
+  String area_name_us = 'China';
   List<Map<String, dynamic>> typeList = [
     {"name": '身份证', "id": 0},
     {"name": '护照', "id": 1},
@@ -296,7 +297,8 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
       Toast.showText(Tr.of(context).IDNumberHint);
     }*/
     else {
-      if (type == 0 || type == 2) {
+      confirm();
+      /*   if (type == 0 || type == 2) {
         Provider.of<MineProvider>(context, listen: false).setVertifyFiled(
             VertifyFiled(area_name, _lastNameCtr.text, _firstNameCtr.text,
                 type.toString(), _numberCtr.text));
@@ -306,8 +308,28 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
             VertifyFiled(area_name, _lastNameCtr.text, _firstNameCtr.text,
                 type.toString(), _numberCtr.text));
         RouterUtil.push(context, MineRouter.auth3);
-      }
+      } */
     }
+  }
+
+  confirm() async {
+    Toast.showLoading('loading...');
+    Map data = {
+      "passport_type": type,
+      "country": area_name,
+      "name": _firstNameCtr.text,
+      "family_name": _lastNameCtr.text,
+      "passport_id": _numberCtr.text,
+      //  "passport_front": _frontImage,
+      // "passport_back": _backImage,
+      // "passport_image": _shouImage
+    };
+    await MineServer.vertifySubmit(data);
+    Toast.showText("已提交,请等待审核");
+    Provider.of<MineProvider>(context, listen: false).getUserInfo();
+    // RouterUtil.goBack(context);
+
+    RouterUtil.push(context, MineRouter.mine, clearStack: true, replace: true);
   }
 }
 

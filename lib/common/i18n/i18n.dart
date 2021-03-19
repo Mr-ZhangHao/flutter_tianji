@@ -50,28 +50,28 @@ class Tr {
       'main Strategy': '策略库',
       'main Business': '商业API',
       'main Assets': '资产',
-      'login Email': '邮箱登陆',
-      'login Phone': '手机登陆',
-      'Welcome Login': '欢迎登陆',
+      'login Email': '邮箱登录',
+      'login Phone': '手机登录',
+      'Welcome Login': '欢迎登录',
       'hint input email': '请输入邮箱',
       'hint input phone': '请输入手机号',
       'hint input VerificationCode': '请输入验证码',
       'E-mail verification': '邮箱验证',
-      'Login password': '密码登陆',
+      'Login password': '密码登录',
       'forget password': '忘记密码',
       'Login': '登录',
       'create Account': '创建账户',
       'hint input EmailOrPhone': '请输入手机号或邮箱账号',
       'hint input password': '请输入密码',
       'Login successful': '登录成功',
-      'Login VerificationCode': '验证码登陆',
+      'Login VerificationCode': '验证码登录',
       'Next step': '下一步',
       'have Account': '已有账号,',
       'Go to login': '去登录',
       'Email verification': '邮箱验证',
       'asset Coin': '币币资产',
       'asset Contract': '合约资产',
-      'asset Coin record': '币币财务记录',
+      'asset Coin record': '财务记录',
       'asset Contract record': '合约财务记录',
       'asset Freeze': '冻结',
       'asset Converted amount': '折合金额',
@@ -103,7 +103,7 @@ class Tr {
       'asset Successful withdrawal': '申请提现成功',
       'asset Search': '搜索',
       'asset Withdrawal Hint2': '请输入提币地址',
-      'asset ALL': '全提',
+      'asset ALL': '全部',
       'asset Arrival quantity': '到账数量',
       'asset Carry on': '继续',
       'asset Withdrawal Max hint': '单次最大提币',
@@ -284,8 +284,19 @@ class Tr {
       'Set New Password': '设置新密码',
       'hint input Password2': '请再次输入新密码',
       'enter name': '请输入名字',
+      'Registered successfu': '注册成功',
+      'terms hint': '閱讀並同意使用《天玑阁协议》',
+      'login account hint': '请输入手机号或邮箱',
+      'login pwd hint': '请输入密码',
+      'login successful': '登录成功',
+      'home customer service': '天玑在线客服',
+      'Password reset': '密码已重置',
     },
     'US': {
+      'home customer service': 'service',
+      'login successful': 'Login successful',
+      'login account hint': 'Enter your phone  or email',
+      'login pwd hint': 'Please enter password',
       'main Home': 'Home',
       'main Encyclopedia': 'Encyclopedia',
       'main Strategy': 'Strategy',
@@ -534,11 +545,31 @@ class Tr {
           'The login password is 6-20 digits, and is a combination of numbers and letters',
       'Set New Password': 'Set new password',
       'hint input Password2': 'Please enter the new password again',
+      'Registered successfu': 'Registered successfu',
+      'terms hint': '閱讀並同意使用《天玑阁协议》',
+      'Password reset': 'Password reset',
     },
     'HK': {}
   };
 
   ///** 我的 **//
+  get Passwordreset {
+    return _localizedValues[localProvider.locale.countryCode]['Password reset'];
+  }
+
+  get loginAccountHint {
+    return _localizedValues[localProvider.locale.countryCode]
+        ['login account hint'];
+  }
+
+  get homeCustomerService {
+    return _localizedValues[localProvider.locale.countryCode]
+        ['home customer service'];
+  }
+
+  get loginPwdHint {
+    return _localizedValues[localProvider.locale.countryCode]['login pwd hint'];
+  }
 
   get UploadSuccessfully {
     return _localizedValues[localProvider.locale.countryCode]
@@ -1482,6 +1513,11 @@ class Tr {
   get EmailOrPhone {
     return _localizedValues[localProvider.locale.countryCode]['EmailOrPhone'];
   }
+
+  get loginSuccessful {
+    return _localizedValues[localProvider.locale.countryCode]
+        ['login successful'];
+  }
 /*
 
   get EmailOrPhone {
@@ -1491,6 +1527,15 @@ class Tr {
 
   get LoginEmail {
     return _localizedValues[localProvider.locale.countryCode]['login Email'];
+  }
+
+  get RegisteredSuccessfu {
+    return _localizedValues[localProvider.locale.countryCode]
+        ['Registered successfu'];
+  }
+
+  get termsHint {
+    return _localizedValues[localProvider.locale.countryCode]['terms hint'];
   }
 
   get LoginPhone {

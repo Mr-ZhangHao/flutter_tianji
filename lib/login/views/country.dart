@@ -10,6 +10,7 @@ import 'package:flutter_tianji/main.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
 
+/* 选择国家 */
 class countryPage extends StatefulWidget {
   @override
   _countryPageState createState() => _countryPageState();

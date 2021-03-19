@@ -20,7 +20,6 @@ import 'package:flutter_tianji/wallet/provider/index.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
 
-
 class RecoredDrawer extends StatefulWidget {
   const RecoredDrawer({
     Key key,
@@ -34,7 +33,8 @@ class RecoredDrawer extends StatefulWidget {
 
 enum CheckType { trade, coin }
 
-class _ShaiXuanDrawerState extends State<RecoredDrawer> with SingleTickerProviderStateMixin {
+class _ShaiXuanDrawerState extends State<RecoredDrawer>
+    with SingleTickerProviderStateMixin {
   List dateList = [
     {"title": "最近7天", "index": 1},
     {"title": "7天至1个月", "index": 2},
@@ -56,14 +56,13 @@ class _ShaiXuanDrawerState extends State<RecoredDrawer> with SingleTickerProvide
 
   @override
   Widget build(BuildContext context) {
-
     dateList = [
       {"title": "${Tr.of(context).asset7Day}", "index": 1},
       {"title": "${Tr.of(context).asset7o1month}", "index": 2},
       {"title": "${Tr.of(context).asset7o3month}", "index": 3}
     ];
 
-    currentType = {'title': '${Tr.of(context).tradrAll}', "index": 0};
+    //  currentType = {'title': '${Tr.of(context).tradrAll}', "index": 0};
     return CustomDrawer(
       child: Scaffold(
         body: Stack(
@@ -77,7 +76,8 @@ class _ShaiXuanDrawerState extends State<RecoredDrawer> with SingleTickerProvide
             body: SelectTradeTypeDrawerWidget(
                 type: type,
                 onTab: (item) => setState(() => currentType = item),
-                onCoinTab: (CoinInfoModel item) => setState(() => coinInfo = item)),
+                onCoinTab: (CoinInfoModel item) =>
+                    setState(() => coinInfo = item)),
           ),
         ),
       ),
@@ -93,7 +93,8 @@ class _ShaiXuanDrawerState extends State<RecoredDrawer> with SingleTickerProvide
           Container(
             margin: EdgeInsets.only(top: height(70), left: width(40)),
             alignment: Alignment.centerLeft,
-            child: Text('${Tr.of(context).assetDate}', style: TextStyle(fontSize: sp(30))),
+            child: Text('${Tr.of(context).assetDate}',
+                style: TextStyle(fontSize: sp(30))),
           ),
           SizedBox(height: height(20)),
           Row(
@@ -113,13 +114,18 @@ class _ShaiXuanDrawerState extends State<RecoredDrawer> with SingleTickerProvide
                               color: Color(0xffEFF8FE),
                               borderRadius: BorderRadius.circular(5),
                               image: dataSelectType == e['index']
-                                  ? DecorationImage(image: AssetImage('images/trade/select.png'), fit: BoxFit.fill)
+                                  ? DecorationImage(
+                                      image: AssetImage(
+                                          'images/wallet/select.png'),
+                                      fit: BoxFit.fill)
                                   : null),
                           height: width(70),
                           width: width(140),
                           child: Text(e['title'],
                               style: TextStyle(
-                                  color: dataSelectType == e['index'] ? kPrimaryColor : Color(0xff323232),
+                                  color: dataSelectType == e['index']
+                                      ? kPrimaryColor
+                                      : Color(0xff323232),
                                   fontSize: sp(24))),
                         ),
                       ))
@@ -127,16 +133,19 @@ class _ShaiXuanDrawerState extends State<RecoredDrawer> with SingleTickerProvide
           Container(
             margin: EdgeInsets.only(top: height(20), left: width(40)),
             alignment: Alignment.centerLeft,
-            child: Text('${Tr.of(context).assetTransactionType}', style: TextStyle(color: Color(0xffC0C0C0), fontSize: sp(30))),
+            child: Text('${Tr.of(context).assetTransactionType}',
+                style: TextStyle(color: Color(0xffC0C0C0), fontSize: sp(30))),
           ),
           Builder(
             builder: (context) {
               return Container(
-                margin: EdgeInsets.only(top: height(20), left: width(40), right: width(40)),
+                margin: EdgeInsets.only(
+                    top: height(20), left: width(40), right: width(40)),
                 padding: EdgeInsets.symmetric(horizontal: width(20)),
                 height: height(80),
-                decoration:
-                    BoxDecoration(color: Color(0xffEDEDED), borderRadius: BorderRadius.all(Radius.circular(width(10)))),
+                decoration: BoxDecoration(
+                    color: Color(0xffEDEDED),
+                    borderRadius: BorderRadius.all(Radius.circular(width(10)))),
                 child: InkWell(
                   onTap: () {
                     setState(() => type = CheckType.trade);
@@ -146,11 +155,16 @@ class _ShaiXuanDrawerState extends State<RecoredDrawer> with SingleTickerProvide
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('${Tr.of(context).assetChoosetype}', style: TextStyle(color: Color(0xffC0C0C0), fontSize: sp(30))),
+                      Text('${Tr.of(context).assetChoosetype}',
+                          style: TextStyle(
+                              color: Color(0xffC0C0C0), fontSize: sp(30))),
                       Row(
                         children: <Widget>[
-                          Text(currentType['title'], style: TextStyle(color: kTextColor3, fontSize: sp(30))),
-                          Image.asset('images/contract/right_jiantou.png', width: width(40), height: height(50))
+                          Text(currentType['title'],
+                              style: TextStyle(
+                                  color: kTextColor3, fontSize: sp(30))),
+                          Image.asset('images/wallet/right_jiantou.png',
+                              width: width(40), height: height(50))
                         ],
                       ),
                     ],
@@ -162,30 +176,40 @@ class _ShaiXuanDrawerState extends State<RecoredDrawer> with SingleTickerProvide
           Container(
             margin: EdgeInsets.only(top: height(20), left: width(40)),
             alignment: Alignment.centerLeft,
-            child: Text('${Tr.of(context).assetCurrency}', style: TextStyle(color: Color(0xffC0C0C0), fontSize: sp(30))),
+            child: Text('${Tr.of(context).assetCurrency}',
+                style: TextStyle(color: Color(0xffC0C0C0), fontSize: sp(30))),
           ),
           Builder(
             builder: (context) {
               return Container(
-                margin: EdgeInsets.only(top: height(20), left: width(40), right: width(40)),
+                margin: EdgeInsets.only(
+                    top: height(20), left: width(40), right: width(40)),
                 padding: EdgeInsets.symmetric(horizontal: width(20)),
                 height: height(80),
-                decoration:
-                    BoxDecoration(color: Color(0xffEDEDED), borderRadius: BorderRadius.all(Radius.circular(width(10)))),
+                decoration: BoxDecoration(
+                    color: Color(0xffEDEDED),
+                    borderRadius: BorderRadius.all(Radius.circular(width(10)))),
                 child: InkWell(
                   onTap: () {
                     setState(() => type = CheckType.coin);
-                     Scaffold.of(context).openEndDrawer();
+                    Scaffold.of(context).openEndDrawer();
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('${Tr.of(context).assetChoosetype}', style: TextStyle(color: Color(0xffC0C0C0), fontSize: sp(30))),
+                      Text('${Tr.of(context).assetChoosetype}',
+                          style: TextStyle(
+                              color: Color(0xffC0C0C0), fontSize: sp(30))),
                       Row(
                         children: <Widget>[
-                          Text(coinInfo?.coin?.name ?? '${Tr.of(context).tradrAll}', style: TextStyle(color: kTextColor3, fontSize: sp(30))),
-                          Image.asset('images/contract/right_jiantou.png', width: width(40), height: height(50))
+                          Text(
+                              coinInfo?.coin?.name ??
+                                  '${Tr.of(context).tradrAll}',
+                              style: TextStyle(
+                                  color: kTextColor3, fontSize: sp(30))),
+                          Image.asset('images/wallet/right_jiantou.png',
+                              width: width(40), height: height(50))
                         ],
                       ),
                     ],
@@ -226,7 +250,10 @@ class _ShaiXuanDrawerState extends State<RecoredDrawer> with SingleTickerProvide
               onPressed: () {
                 setState(() {
                   coinInfo = CoinInfoModel();
-                  currentType = {'title': '${Tr.of(context).tradrAll}', "index": 0};
+                  currentType = {
+                    'title': '${Tr.of(context).tradrAll}',
+                    "index": 0
+                  };
                   dataSelectType = 1;
                 });
               },
@@ -243,7 +270,11 @@ class _ShaiXuanDrawerState extends State<RecoredDrawer> with SingleTickerProvide
               borderRadius: BorderRadius.all(Radius.circular(width(0))),
               text: '${Tr.of(context).Confirm}',
               onPressed: () {
-                widget.onTab({"coin_id": coinInfo?.coinId ?? '', "type": currentType['index'], "time": dataSelectType});
+                widget.onTab({
+                  "coin_id": coinInfo?.coinId ?? '',
+                  "type": currentType['index'],
+                  "time": dataSelectType
+                });
                 Navigator.of(context).pop();
               },
             ),
@@ -267,17 +298,19 @@ class SelectTradeTypeDrawerWidget extends StatefulWidget {
   final Function(CoinInfoModel coin) onCoinTab;
 
   @override
-  _SelectTradeTypeDrawerWidgetState createState() => _SelectTradeTypeDrawerWidgetState();
+  _SelectTradeTypeDrawerWidgetState createState() =>
+      _SelectTradeTypeDrawerWidgetState();
 }
 
-class _SelectTradeTypeDrawerWidgetState extends State<SelectTradeTypeDrawerWidget> {
+class _SelectTradeTypeDrawerWidgetState
+    extends State<SelectTradeTypeDrawerWidget> {
   @override
   Widget build(BuildContext context) {
     List typeList = [
-      {"title": '${Tr.of(context).assetRecharge}', "index": 1},
-      {"title": '${Tr.of(context).assetWithdrawal}', "index": 2},
-      {"title": '${Tr.of(context).assetTransfer1}', "index": 3},
-      {"title": '${Tr.of(context).assetTransfer2}', "index": 4},
+      {"title": '充币', "index": 1},
+      {"title": '提币', "index": 2},
+/*       {"title": '${Tr.of(context).assetTransfer1}', "index": 3},
+      {"title": '${Tr.of(context).assetTransfer2}', "index": 4}, */
     ];
 
     return Container(
@@ -289,7 +322,11 @@ class _SelectTradeTypeDrawerWidgetState extends State<SelectTradeTypeDrawerWidge
             color: Colors.white,
             margin: EdgeInsets.only(top: height(70), left: width(40)),
             alignment: Alignment.centerLeft,
-            child: Text(widget.type == CheckType.trade ? '${Tr.of(context).assetChoosetype}' : '${Tr.of(context).assetChoosecurrency}', style: TextStyle(fontSize: sp(30))),
+            child: Text(
+                widget.type == CheckType.trade
+                    ? '${Tr.of(context).assetChoosetype}'
+                    : '${Tr.of(context).assetChoosecurrency}',
+                style: TextStyle(fontSize: sp(30))),
           ),
           Visibility(
             visible: widget.type == CheckType.trade,
@@ -308,7 +345,8 @@ class _SelectTradeTypeDrawerWidgetState extends State<SelectTradeTypeDrawerWidge
                       width: double.infinity,
                       height: height(80),
                       padding: EdgeInsets.symmetric(horizontal: width(40)),
-                      child: Text(typeList[index]['title'], style: TextStyle(color: kTextColor9)),
+                      child: Text(typeList[index]['title'],
+                          style: TextStyle(color: kTextColor9)),
                     ),
                   );
                 },
@@ -316,7 +354,8 @@ class _SelectTradeTypeDrawerWidgetState extends State<SelectTradeTypeDrawerWidge
             ),
             replacement: Expanded(
               child: Consumer<WallerProvider>(
-                builder: (BuildContext context, WallerProvider model, Widget child) {
+                builder:
+                    (BuildContext context, WallerProvider model, Widget child) {
                   return ListView.builder(
                     itemCount: model.coinInfoList.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -331,7 +370,8 @@ class _SelectTradeTypeDrawerWidgetState extends State<SelectTradeTypeDrawerWidge
                           width: double.infinity,
                           height: height(80),
                           padding: EdgeInsets.symmetric(horizontal: width(40)),
-                          child: Text(model.coinInfoList[index].coin.name, style: TextStyle(color: kTextColor9)),
+                          child: Text(model.coinInfoList[index].coin.name,
+                              style: TextStyle(color: kTextColor9)),
                         ),
                       );
                     },

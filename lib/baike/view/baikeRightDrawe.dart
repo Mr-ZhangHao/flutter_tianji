@@ -11,6 +11,7 @@ class baikeRightDrawe extends StatefulWidget {
   final ValueChanged<List<String>> onTab;
   const baikeRightDrawe({
     Key key,
+    
     this.selectPayType,
     this.onTab,
   }) : super(key: key);

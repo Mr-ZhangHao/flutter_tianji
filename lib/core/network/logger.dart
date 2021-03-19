@@ -1,55 +1,22 @@
-/*
-* @message: 日志拦截器
-* @Author: Jack
-* @Email: Jack@163.com
-* @Github: Jack@163.com
-* @Date: 2020-06-18 19:47:32
-* @LastEditors: Jack
-* @LastEditTime: 2020-06-21 20:59:56
-* @Deprecated: 否
-* @FilePath: /flutter_qinyun/lib/core/network/logger.dart
-*/
 import 'package:dio/dio.dart';
 import 'dart:async';
 import 'dart:math' as math;
 
-/// description: Dio 日志拦截器
-/// 
-/// 参考 【pretty_dio_logger: any】，修改而来
 class DioLogger extends Interceptor {
-  /// Print request [Options]
   final bool request;
 
-  /// Print request header [Options.headers]
   final bool requestHeader;
-
-  /// Print request data [Options.data]
   final bool requestBody;
 
-  /// Print [Response.data]
   final bool responseBody;
-
-  /// Print [Response.headers]
   final bool responseHeader;
-
-  /// Print error message
   final bool error;
 
-  /// InitialTab count to logPrint json response
   static const int initialTab = 1;
-
-  /// 1 tab length
   static const String tabStep = '    ';
-
-  /// Print compact json response
   final bool compact;
 
-  /// Width size per logPrint
   final int maxWidth;
-
-  /// Log printer; defaults logPrint log to console.
-  /// In flutter, you'd better use debugPrint.
-  /// you can also write log in a file.
   void Function(Object object) logPrint;
 
   DioLogger(
@@ -87,9 +54,7 @@ class DioLogger extends Interceptor {
       if (data != null) {
         if (data is Map) _printMapAsTable(options.data, header: 'Body');
         if (data is FormData) {
-          final formDataMap = Map()
-            ..addEntries(data.fields)
-            ..addEntries(data.files);
+          final formDataMap = Map()..addEntries(data.fields)..addEntries(data.files);
           _printMapAsTable(formDataMap, header: 'Form data | ${data.boundary}');
         } else
           _printBlock(data.toString());
@@ -105,8 +70,7 @@ class DioLogger extends Interceptor {
       if (err.type == DioErrorType.RESPONSE) {
         final uri = err.response.request.uri;
         _printBoxed(
-            header:
-                'DioError ║ Status: ${err.response.statusCode} ${err.response.statusMessage}',
+            header: 'DioError ║ Status: ${err.response.statusCode} ${err.response.statusMessage}',
             text: uri.toString());
         if (err.response != null && err.response.data != null) {
           logPrint('╔ ${err.type.toString()}');
@@ -124,8 +88,7 @@ class DioLogger extends Interceptor {
   Future onResponse(Response response) async {
     if (responseHeader) {
       final responseHeaders = Map<String, String>();
-      response.headers
-          .forEach((k, list) => responseHeaders[k] = list.toString());
+      response.headers.forEach((k, list) => responseHeaders[k] = list.toString());
       _printMapAsTable(responseHeaders, header: 'Headers');
     }
 
@@ -165,8 +128,7 @@ class DioLogger extends Interceptor {
     final uri = response?.request?.uri;
     final method = response.request.method;
     //添加以下代码，防止多接口请求时 response的header和body被分开打印
-    String header =
-        'Response ║ $method ║ Status: ${response.statusCode} ${response.statusMessage}';
+    String header = 'Response ║ $method ║ Status: ${response.statusCode} ${response.statusMessage}';
     logPrint('╔╣ $header' + ('═' * 70));
     logPrint('║  ${uri.toString()}');
     logPrint('║  ');
@@ -183,8 +145,7 @@ class DioLogger extends Interceptor {
     _printBoxed(header: 'Request ║ $method ', text: uri.toString());
   }
 
-  void _printLine([String pre = '', String suf = '╝']) =>
-      logPrint('$pre${'═' * maxWidth}');
+  void _printLine([String pre = '', String suf = '╝']) => logPrint('$pre${'═' * maxWidth}');
 
   void _printKV(String key, Object v) {
     final pre = '╟ $key: ';
@@ -200,16 +161,13 @@ class DioLogger extends Interceptor {
   void _printBlock(String msg) {
     int lines = (msg.length / maxWidth).ceil();
     for (int i = 0; i < lines; ++i) {
-      logPrint((i >= 0 ? '║ ' : '') +
-          msg.substring(i * maxWidth,
-              math.min<int>(i * maxWidth + maxWidth, msg.length)));
+      logPrint((i >= 0 ? '║ ' : '') + msg.substring(i * maxWidth, math.min<int>(i * maxWidth + maxWidth, msg.length)));
     }
   }
 
   String _indent([int tabCount = initialTab]) => tabStep * tabCount;
 
-  void _printPrettyMap(Map data,
-      {int tabs = initialTab, bool isListItem = false, bool isLast = false}) {
+  void _printPrettyMap(Map data, {int tabs = initialTab, bool isListItem = false, bool isLast = false}) {
     final bool isRoot = tabs == initialTab;
     final initialIndent = _indent(tabs);
     tabs++;
@@ -268,8 +226,7 @@ class DioLogger extends Interceptor {
   }
 
   bool _canFlattenMap(Map map) {
-    return map.values.where((val) => val is Map || val is List).isEmpty &&
-        map.toString().length < maxWidth;
+    return map.values.where((val) => val is Map || val is List).isEmpty && map.toString().length < maxWidth;
   }
 
   bool _canFlattenList(List list) {

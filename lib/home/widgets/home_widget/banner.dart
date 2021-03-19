@@ -9,9 +9,14 @@
 * @Deprecated: 否
 * @FilePath: /etf_flutter/lib/pages/home/widgets/home_widget/banner.dart
 */
+import 'package:extended_image/extended_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:flutter_tianji/common/constants/index.dart';
+import 'package:flutter_tianji/home/provider/index.dart';
+import 'package:flutter_tianji/home/widgets/home_widget/CustomSwiperPagination.dart';
+import 'package:flutter_tianji/providers/provider_widget.dart';
+import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
 
 class AppBarBanner extends StatelessWidget {
@@ -73,25 +78,74 @@ class SwiperBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height(460),
-      child: Swiper(
-        autoplay: true,
-        itemCount: 3,
-        autoplayDisableOnInteraction: true,
-        autoplayDelay: 5000,
-        duration: 1000,
-        itemBuilder: (BuildContext context, int index) {
-          return Image.asset('images/home/banner.png', fit: BoxFit.fill);
-        },
-        pagination: SwiperPagination(
-            builder: DotSwiperPaginationBuilder(
-                size: width(10),
-                activeSize: width(10),
-                activeColor: kPrimaryColor,
-                color: kTextColor9,
-                space: width(10))),
-      ),
+    return ProviderWidget<HomeProvider>(
+      model: HomeProvider(),
+      onModelReady: (model) => model.getBanner(),
+      builder: (BuildContext context, HomeProvider model, Widget child) {
+        if (model.isIdle) {
+          return Container(
+            color: Colors.white,
+            height: width(320),
+            child: Swiper(
+                autoplay: true,
+                // viewportFraction: 0.85,
+                fade: 1,
+                scale: 0.95,
+                itemCount: model.banner?.length ?? 0,
+                autoplayDisableOnInteraction: true,
+                autoplayDelay: 5000,
+                duration: 1000,
+                itemBuilder: (BuildContext context, int index) {
+                  return InkWell(
+                    onTap: () {
+                      RouterUtil.goWebViewPage(
+                          context, '', model.banner[index].link);
+                    },
+                    child: ExtendedImage.network(
+                      model.banner[index].picture,
+                      fit: BoxFit.fitWidth,
+                      cache: true,
+                      shape: BoxShape.rectangle,
+                      height: width(320),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(width(12))),
+                      loadStateChanged: (ExtendedImageState state) {
+                        if (state.extendedImageLoadState ==
+                            LoadState.completed) {
+                          return ExtendedRawImage(
+                            image: state.extendedImageInfo?.image,
+                          );
+                        } else {
+                          return CupertinoActivityIndicator(animating: true);
+                        }
+                      },
+                    ),
+                    // child: Container(
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(12),
+                    //       image: DecorationImage(image: NetworkImage(model.banner[index].picture), fit: BoxFit.fitWidth)),
+                    // ),
+                  );
+                },
+                pagination: CustomSwiperPagination()
+                /*           pagination: SwiperPagination(
+                  alignment: Alignment.bottomCenter,
+                  builder: CustomSwiperPagination(
+                      activeColor: kWhite,
+                      size: Size(width(20), 3.0),
+                      activeSize: Size(10.0, 3.0))), */
+                ),
+          );
+        } else {
+          return Container(
+            color: Colors.white,
+            padding: EdgeInsets.symmetric(horizontal: width(40)),
+            height: height(320),
+            width: double.infinity,
+            child: CupertinoActivityIndicator(),
+          );
+        }
+      },
     );
   }
 }

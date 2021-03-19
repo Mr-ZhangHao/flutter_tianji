@@ -29,7 +29,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin
  {
   TabController _tabController;
-  List<String> _tabs = ['邮箱登陆', '手机登陆'];
+  List<String> _tabs = ['邮箱登陆', '手机登录'];
 
   @override
   void initState() {
@@ -82,12 +82,14 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                   ),
                 ),
                 Container(
+                  alignment: Alignment.center,
                   width: double.infinity,
-                  height: height(80),
+                  height: height(65),
                   decoration: BoxDecoration(
                     color: Color(0xffFFFFFF),
                   ),
                   child: TabBar(
+
                     isScrollable: false,
                     labelPadding:
                         EdgeInsets.only(left: width(120), right: width(120)),
@@ -128,10 +130,10 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
         .asMap()
         .keys
         .map((i) => Container(
-
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
             child: Text(
               _tabs[i],
+              style: TextStyle(fontSize: sp(28)),
               textAlign: TextAlign.center,
             )))
         .toList();

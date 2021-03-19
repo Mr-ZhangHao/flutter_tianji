@@ -1,13 +1,4 @@
 /*
-* @message: 登录
-* @Author: Jack
-* @Email: Jack@163.com
-* @Github: Jack@163.com
-* @Date: 2020-08-10 12:08:38
-* @LastEditors: Jack
-* @LastEditTime: 2020-08-22 11:25:41
-* @Deprecated: 否
-* @FilePath: /etf_flutter/lib/pages/wallet/views/recharge.dart
 */
 
 import 'package:flutter/cupertino.dart';
@@ -40,14 +31,16 @@ class _MineScreenState extends State<RechargePage> {
   @override
   void initState() {
     super.initState();
-  /*  WidgetsBinding.instance.addPostFrameCallback((mag) {
-      WallerProvider model = Provider.of<WallerProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((mag) {
+      WallerProvider model =
+          Provider.of<WallerProvider>(context, listen: false);
       model.setCurrentCoin(widget.coinName);
       setState(() {
-        address =
-            widget.coinName == 'USDT' ? model.currentCoin.usdtErc20 ?? 'null' : model.currentCoin.address ?? 'null';
+        address = widget.coinName == 'USDT'
+            ? model.currentCoin.usdtErc20 ?? 'null'
+            : model.currentCoin.address ?? 'null';
       });
-    });*/
+    });
   }
 
   @override
@@ -59,11 +52,13 @@ class _MineScreenState extends State<RechargePage> {
           onTap: () => Navigator.pop(context),
           child: Container(
             alignment: Alignment.center,
-            child: Image.asset('images/mine/back@2x.png', width: width(22), height: height(36)),
+            child: Image.asset('images/mine/back@2x.png',
+                width: width(22), height: height(36)),
           ),
         ),
         brightness: Brightness.light,
-        title: Text('${widget.coinName}${Tr.of(context).assetRecharge}', style: TextStyle(color: kTextColor3, fontSize: sp(36))),
+        title: Text('${widget.coinName}${Tr.of(context).assetRecharge}',
+            style: TextStyle(color: kTextColor3, fontSize: sp(36))),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
@@ -105,8 +100,9 @@ class _MineScreenState extends State<RechargePage> {
                 Container(
                   alignment: Alignment.center,
                   height: height(630),
-                  decoration:
-                      BoxDecoration(color: Color(0xffF6F9FB), borderRadius: BorderRadius.all(Radius.circular(4))),
+                  decoration: BoxDecoration(
+                      color: Color(0xffF6F9FB),
+                      borderRadius: BorderRadius.all(Radius.circular(4))),
                   child: Column(
                     children: <Widget>[
                       Container(
@@ -126,13 +122,22 @@ class _MineScreenState extends State<RechargePage> {
                       ),
                       Container(
                         alignment: Alignment.center,
-                        margin: EdgeInsets.fromLTRB(0, height(28), 0, height(24)),
-                        child: Text('${Tr.of(context).assetWithdrawalHint}', style: TextStyle(color: kTextColor2, fontSize: sp(28), height: 1.1)),
+                        margin:
+                            EdgeInsets.fromLTRB(0, height(28), 0, height(24)),
+                        child: Text('${Tr.of(context).assetWithdrawalHint}',
+                            style: TextStyle(
+                                color: kTextColor2,
+                                fontSize: sp(28),
+                                height: 1.1)),
                       ),
                       Container(
                         alignment: Alignment.center,
                         margin: EdgeInsets.fromLTRB(0, 0, 0, height(20)),
-                        child: Text(address, style: TextStyle(color: kTextColor3, fontSize: sp(30), height: 1.1)),
+                        child: Text(address,
+                            style: TextStyle(
+                                color: kTextColor3,
+                                fontSize: sp(30),
+                                height: 1.1)),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -145,8 +150,13 @@ class _MineScreenState extends State<RechargePage> {
                           height: height(70),
                           decoration: BoxDecoration(
                               color: Color.fromARGB(1000, 18, 109, 255),
-                              borderRadius: BorderRadius.all(Radius.circular(width(35)))),
-                          child: Text('${Tr.of(context).assetCopyaddress}', style: TextStyle(color: Colors.white, fontSize: sp(28), height: 1.1)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(width(35)))),
+                          child: Text('${Tr.of(context).assetCopyaddress}',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: sp(28),
+                                  height: 1.1)),
                         ),
                       ),
                     ],
@@ -160,8 +170,11 @@ class _MineScreenState extends State<RechargePage> {
                     children: <Widget>[
                       SizedBox(height: height(20)),
                       Text('  ${Tr.of(context).assetTips}',
-                          style: TextStyle(fontSize: sp(28), color: Color(0xff323232), fontWeight: FontWeight.bold)),
-                    //  renderTips(model)
+                          style: TextStyle(
+                              fontSize: sp(28),
+                              color: Color(0xff323232),
+                              fontWeight: FontWeight.bold)),
+                      renderTips(model)
                     ],
                   ),
                 )
@@ -219,31 +232,38 @@ class RechargeTipsWIdget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: height(28)),
       padding: EdgeInsets.all(width(30)),
-      decoration:
-          BoxDecoration(color: Color.fromARGB(1000, 246, 249, 251), borderRadius: BorderRadius.all(Radius.circular(4))),
+      decoration: BoxDecoration(
+          color: Color.fromARGB(1000, 246, 249, 251),
+          borderRadius: BorderRadius.all(Radius.circular(4))),
       child: Column(
         children: <Widget>[
           Container(
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.fromLTRB(0, 0, 0, height(20)),
-            child: Text('${Tr.of(context).assetTips}', style: TextStyle(color: kTextColor3, fontSize: sp(28), height: 1.1)),
+            child: Text('${Tr.of(context).assetTips}',
+                style: TextStyle(
+                    color: kTextColor3, fontSize: sp(28), height: 1.1)),
           ),
           Container(
             alignment: Alignment.centerLeft,
-            child: Text(tip1, style: TextStyle(color: kTextColor1, fontSize: sp(24))),
+            child: Text(tip1,
+                style: TextStyle(color: kTextColor1, fontSize: sp(24))),
           ),
           Container(
             alignment: Alignment.centerLeft,
-            child: Text(tip2, style: TextStyle(color: kTextColor0, fontSize: sp(24))),
+            child: Text(tip2,
+                style: TextStyle(color: kTextColor0, fontSize: sp(24))),
           ),
           Container(
             alignment: Alignment.centerLeft,
-            child: Text(tip3, style: TextStyle(color: kTextColor1, fontSize: sp(24))),
+            child: Text(tip3,
+                style: TextStyle(color: kTextColor1, fontSize: sp(24))),
           ),
           Container(
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.fromLTRB(0, 0, 0, height(20)),
-            child: Text(tip4, style: TextStyle(color: kTextColor1, fontSize: sp(24))),
+            child: Text(tip4,
+                style: TextStyle(color: kTextColor1, fontSize: sp(24))),
           ),
         ],
       ),

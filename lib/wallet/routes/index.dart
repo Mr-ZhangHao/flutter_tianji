@@ -12,12 +12,12 @@
 
 import 'dart:convert';
 
-
 import 'package:fluro/fluro.dart';
 import 'package:flutter_tianji/routes/router_init.dart';
 import 'package:flutter_tianji/wallet/views/item.dart';
 import 'package:flutter_tianji/wallet/views/recharge.dart';
 import 'package:flutter_tianji/wallet/views/record_bibi.dart';
+import 'package:flutter_tianji/wallet/views/verification.dart';
 import 'package:flutter_tianji/wallet/views/withdraw.dart';
 import 'package:flutter_tianji/wallet/views/withdrawDetail.dart';
 
@@ -40,22 +40,29 @@ class WalletRouter implements IRouterProvider {
 
   @override
   void initRouter(FluroRouter router) {
-    router.define(item, handler: Handler(handlerFunc: (context, Map<String, List<String>> params) {
+    router.define(item, handler:
+        Handler(handlerFunc: (context, Map<String, List<String>> params) {
       var coinName = params['coinName'].first;
       return ItemPage(coinName: coinName);
     }));
-    router.define(recharge, handler: Handler(handlerFunc: (context, Map<String, List<String>> params) {
+    router.define(recharge, handler:
+        Handler(handlerFunc: (context, Map<String, List<String>> params) {
       var coinName = params['coinName'].first;
       return RechargePage(coinName: coinName);
     }));
-    router.define(recordBibi, handler: Handler(handlerFunc: (_, __) => RecordBibiPage()));
+    router.define(recordBibi,
+        handler: Handler(handlerFunc: (_, __) => RecordBibiPage()));
 
-    router.define(withdraw, handler: Handler(handlerFunc: (_, __) => WithdrawPage()));
-    router.define(withdrawDetail, handler: Handler(handlerFunc: (context, Map<String, List<String>> params) {
+    router.define(withdraw,
+        handler: Handler(handlerFunc: (_, __) => WithdrawPage()));
+    router.define(withdrawDetail, handler:
+        Handler(handlerFunc: (context, Map<String, List<String>> params) {
       var coinName = params['coinName'].first;
       return WithdrawDetailPage(coinName: coinName);
     }));
 
+    router.define(verification,
+        handler: Handler(handlerFunc: (_, __) => VerificationPage()));
 
 /*
     router.define(transformation, handler: Handler(handlerFunc: (_, __) => TransformationPage()));
@@ -67,7 +74,6 @@ class WalletRouter implements IRouterProvider {
       BibiRecored model = BibiRecored.fromJson(item);
       return RecordDetailPage(model: model);
     }));
-    router.define(verification, handler: Handler(handlerFunc: (_, __) => VerificationPage()));
 
     router.define(trade, handler: Handler(handlerFunc: (_, __) => TradeScreen()));
     router.define(MiningList, handler: Handler(handlerFunc: (_, __) => MiningListPage()));

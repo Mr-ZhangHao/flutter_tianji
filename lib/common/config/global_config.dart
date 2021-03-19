@@ -26,7 +26,7 @@ class GlobalConfig {
   ///当前版本号和版本名称，由于ios打tf包只能用1.0版本，所以升级判断要用自己的配置文件
   static int versionCode = 100;
   static String versionName = '1.0.0';
-
+  static bool isTimer = false;
   //aes加密得key
   static String aesKey = 'GmtWrMXg6ruVzJ1oCRQY9g==';
   //aes加密得CBC模式下的vi
@@ -36,7 +36,8 @@ class GlobalConfig {
   static bool isDebug = false; //是否是调试模式
 
   //api服务器地址
-  static String apiHost1 = "http://39.101.163.191/";
+  static String apiHost1 = "http://192.168.12.110:8120/";
+  // static String apiHost1 = "http://api.hbitex.com/";
   static String apiHost2 = "http://www.aaladfk.cn/";
   static String apiHost3 = "http://three.aaladfk.cn:9000/";
   static String apiHost4 = "http://four.aaladfk.cn:9000/";
@@ -77,21 +78,21 @@ const APP_ID = 'dd75ce1243be4603b15223da26df01b3';
 
 ///分隔线颜色
 const dividerColor = 0xffF2F2F2;
-const  font_sp10 = 10;
-const  font_sp12 = 12;
-const  font_sp14 = 14;
-const  font_sp16 = 16;
-const  font_sp18 = 18;
+const font_sp10 = 10;
+const font_sp12 = 12;
+const font_sp14 = 14;
+const font_sp16 = 16;
+const font_sp18 = 18;
 
 const DefaultPadding = 60.0;
 const circular = 44.0;
-const  gap_px5 = 5;
-const  gap_px10= 10;
-const  gap_px15 = 15;
-const  gap_px20 = 20;
-const  gap_px25 = 25;
-const  gap_px30 = 30;
-const  gap_px35 = 35;
-const  gap_px40 = 40;
-const  gap_px45 = 45;
-const  gap_px50 = 50;
+const gap_px5 = 5;
+const gap_px10 = 10;
+const gap_px15 = 15;
+const gap_px20 = 20;
+const gap_px25 = 25;
+const gap_px30 = 30;
+const gap_px35 = 35;
+const gap_px40 = 40;
+const gap_px45 = 45;
+const gap_px50 = 50;

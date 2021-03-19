@@ -67,6 +67,15 @@ class _VertifyStatusPageState extends State<VertifyStatusPage> {
                           height: width(140))
                       : SizedBox(),
               SizedBox(height: height(20)),
+              Text(
+                model.kycInfo?.kycStatus == 1
+                    ? '认证成功'
+                    : model.kycInfo?.kycStatus == 2
+                        ? '等待审核'
+                        : '认证失败',
+                style: TextStyle(color: Color(0xff323232), fontSize: sp(28)),
+              ),
+              SizedBox(height: height(20)),
               InputWidget(
                 maxHeight: 100,
                 textAlign: TextAlign.right,
@@ -114,7 +123,7 @@ class _VertifyStatusPageState extends State<VertifyStatusPage> {
                 hintText: model.kycInfo?.kycInfo?.passportId ?? '--',
                 //hintText: Utils.hiddenMiddle(model.kycInfo?.kycInfo?.passportId, 4, 5),
                 controller: _numberCtr,
-                prefixIconConstraintsMaxWidth: 150,
+                prefixIconConstraintsMaxWidth: 200,
                 prefixIconConstraintsMinWidth: 150,
                 prefixIconConstraintsMinHeight: 50,
                 prefixIconConstraintsMaxHeight: 50,

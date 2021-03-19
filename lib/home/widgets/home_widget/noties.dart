@@ -11,9 +11,10 @@
 */
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:flutter_tianji/home/routes/index.dart';
+import 'package:flutter_tianji/home/provider/index.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
+import 'package:provider/provider.dart';
 
 class NoticesBarWidget extends StatelessWidget {
   const NoticesBarWidget({
@@ -44,34 +45,44 @@ class NoticesBarWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Image.asset('images/home/laba.png',
-              fit: BoxFit.fill, width: width(40), height: height(40)),
-          Expanded(
-              child: GestureDetector(
-            onTap: () => RouterUtil.push(context, HomeRouter.notice),
-            child: Container(
-              height: height(64),
-              child: Swiper(
-                scrollDirection: Axis.vertical,
-                itemCount: 3,
-                autoplay: true,
-                autoplayDelay: 3000,
-                autoplayDisableOnInteraction: true,
-                duration: 300,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: height(86),
-                    margin: EdgeInsets.only(left: width(20)),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      '11111111111111111111111111',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  );
-                },
-              ),
-            ),
-          )),
+              fit: BoxFit.contain, width: width(36), height: width(34)),
+          Consumer<HomeProvider>(
+            builder: (BuildContext context, HomeProvider model, Widget child) {
+              return Expanded(
+                  child: Container(
+                height: width(60),
+                child: Swiper(
+                  scrollDirection: Axis.vertical,
+                  itemCount: model.notices.length ?? 0,
+                  autoplay: true,
+                  autoplayDelay: 3000,
+                  autoplayDisableOnInteraction: true,
+                  duration: 300,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () {
+                        RouterUtil.goWebViewPage(
+                            context,
+                            model.notices[index].title,
+                            model.notices[index].htmlUrl);
+                      },
+                      child: Container(
+                        height: width(80),
+                        margin: EdgeInsets.only(left: width(20)),
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          model.notices[index]?.title ?? '公告',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ));
+            },
+          ),
+
           // GestureDetector(
           //   onTap: () {},
           //   child: Text('更多',

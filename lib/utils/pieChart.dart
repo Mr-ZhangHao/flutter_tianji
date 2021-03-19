@@ -85,7 +85,7 @@ class MyView extends CustomPainter {
       _mPaint..color = p.color;
       /*   if (currentSelect >= 0 && i == currentSelect) {
         //如果当前为所选中的扇形 则将其半径加大  突出显示
-        canvas.drawArc(mBigOval, startAngle, sweepAngle, true, _mPaint);
+        canvas.drawArc(mBigOval, startAngle, sweepAngle, true, _mPaint);   
       } else {
         // 绘制没被选中的扇形  正常半径
         canvas.drawArc(mOval, startAngle, sweepAngle, true, _mPaint);

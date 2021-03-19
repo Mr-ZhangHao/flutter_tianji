@@ -14,8 +14,12 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:common_utils/common_utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_tianji/common/constants/index.dart';
+import 'package:flutter_tianji/common/i18n/i18n.dart';
+import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -182,6 +186,401 @@ class Utils {
 
       //action 颜色
       //actionsIconTheme: IconThemeData(color: Colors.white),
+    );
+  }
+
+  static ShowDialogUtils(BuildContext context, contText,
+      {Function confirm,
+      TextEditingController textcontroller,
+      bool isvisible}) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(contText,
+                style: TextStyle(fontSize: sp(32), color: Color(0xff323232))),
+            content: Visibility(
+              child: TextField(
+                inputFormatters: <TextInputFormatter>[
+                  LengthLimitingTextInputFormatter(15) //限制长度
+                ],
+                style: TextStyle(color: Color(0xff323232)),
+                controller: textcontroller,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    ///设置边框四个角的弧度
+                    borderRadius: BorderRadius.all(Radius.circular(width(8))),
+
+                    ///用来配置边框的样式
+                    borderSide: BorderSide(
+                      ///设置边框的颜色
+                      color: Color(0xffDADADA),
+
+                      ///设置边框的粗细
+                      width: 2.0,
+                    ),
+                  ),
+
+                  ///设置输入框可编辑时的边框样式
+                  enabledBorder: OutlineInputBorder(
+                    ///设置边框四个角的弧度
+                    borderRadius: BorderRadius.all(Radius.circular(width(8))),
+
+                    ///用来配置边框的样式
+                    borderSide: BorderSide(
+                      ///设置边框的颜色
+                      color: Color(0xffDADADA),
+
+                      ///设置边框的粗细
+                      width: 2.0,
+                    ),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    ///设置边框四个角的弧度
+                    borderRadius: BorderRadius.all(Radius.circular(width(8))),
+
+                    ///用来配置边框的样式
+                    borderSide: BorderSide(
+                      ///设置边框的颜色
+                      color: Color(0xffDADADA),
+
+                      ///设置边框的粗细
+                      width: 2.0,
+                    ),
+                  ),
+
+                  ///用来配置输入框获取焦点时的颜色
+                  focusedBorder: OutlineInputBorder(
+                    ///设置边框四个角的弧度
+                    borderRadius: BorderRadius.all(Radius.circular(width(8))),
+
+                    ///用来配置边框的样式
+                    borderSide: BorderSide(
+                      ///设置边框的颜色
+                      color: Color(0xffDADADA),
+
+                      ///设置边框的粗细
+                      width: 2.0,
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.all(10.0),
+                ),
+                autofocus: false,
+              ),
+              visible: isvisible == null ? false : isvisible,
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Container(
+                  width: width(220),
+                  height: height(80),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Color(0xffDADADA),
+                    borderRadius: BorderRadius.all(Radius.circular(width(8))),
+                  ),
+                  child: Text(Tr.of(context).cancel,
+                      style: TextStyle(
+                          fontSize: sp(28), color: Color(0xff323232))),
+                ),
+                onPressed: () => RouterUtil.goBack(context),
+              ),
+              FlatButton(
+                  child: Container(
+                    width: width(220),
+                    height: height(80),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Color(0xff7865FE),
+                      borderRadius: BorderRadius.all(Radius.circular(width(8))),
+                    ),
+                    child: Text(Tr.of(context).determine,
+                        style:
+                            TextStyle(fontSize: sp(28), color: Colors.white)),
+                  ),
+                  onPressed: confirm),
+            ],
+          );
+        });
+  }
+}
+
+class WhitelistingTextInputFormatter {}
+
+class commonTypeWidget extends StatelessWidget {
+  final Function(int type, String name) onTab;
+  final List typeList;
+  const commonTypeWidget({Key key, this.onTab, this.typeList})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(
+        minWidth: 500,
+        minHeight: 400,
+      ),
+      height: height(400),
+      child: Column(
+        children: <Widget>[
+          Column(
+              children: typeList
+                  .map((e) => GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => {onTab(e['id'], e['name'])},
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 0.5, color: Color(0xffcccccc)))),
+                          margin: EdgeInsets.symmetric(horizontal: width(40)),
+                          child: Text(e['name']),
+                          height: height(100),
+                          alignment: Alignment.center,
+                        ),
+                      ))
+                  .toList()),
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => {Navigator.pop(context)},
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom:
+                          BorderSide(width: 0.5, color: Color(0xffcccccc)))),
+              margin: EdgeInsets.symmetric(horizontal: width(40)),
+              child: Text(Tr.of(context).cancel,
+                  style: TextStyle(color: Colors.blue)),
+              height: height(100),
+              alignment: Alignment.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/* 
+  平台 类型
+   */
+class platformTypeWidget extends StatelessWidget {
+  final Function(int type, String name) onTab;
+  final List typeList;
+  const platformTypeWidget({Key key, this.onTab, this.typeList})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(
+        minWidth: 500,
+        minHeight: 400,
+      ),
+      height: height(400),
+      child: Column(
+        children: <Widget>[
+          Column(
+              children: typeList
+                  .map((e) => GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => {onTab(e['id'], e['platform'])},
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 0.5, color: Color(0xffcccccc)))),
+                          margin: EdgeInsets.symmetric(horizontal: width(40)),
+                          child: Text(e['platform']),
+                          height: height(100),
+                          alignment: Alignment.center,
+                        ),
+                      ))
+                  .toList()),
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => {Navigator.pop(context)},
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom:
+                          BorderSide(width: 0.5, color: Color(0xffcccccc)))),
+              margin: EdgeInsets.symmetric(horizontal: width(40)),
+              child: Text(Tr.of(context).cancel,
+                  style: TextStyle(color: Colors.blue)),
+              height: height(100),
+              alignment: Alignment.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/* 
+  币种 类型
+   */
+class coinsTypeWidget extends StatelessWidget {
+  final Function(int type, String name) onTab;
+  final List typeList;
+  const coinsTypeWidget({Key key, this.onTab, this.typeList}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(
+        minWidth: 500,
+        minHeight: 400,
+      ),
+      height: height(400),
+      child: Column(
+        children: <Widget>[
+          Column(
+              children: typeList
+                  .map((e) => GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => {onTab(e['id'], e['coin'])},
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 0.5, color: Color(0xffcccccc)))),
+                          margin: EdgeInsets.symmetric(horizontal: width(40)),
+                          child: Text(e['coin']),
+                          height: height(100),
+                          alignment: Alignment.center,
+                        ),
+                      ))
+                  .toList()),
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => {Navigator.pop(context)},
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom:
+                          BorderSide(width: 0.5, color: Color(0xffcccccc)))),
+              margin: EdgeInsets.symmetric(horizontal: width(40)),
+              child: Text(Tr.of(context).cancel,
+                  style: TextStyle(color: Colors.blue)),
+              height: height(100),
+              alignment: Alignment.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class StrategyTypeWidget extends StatelessWidget {
+  final Function(int type, String name) onTab;
+  final List typeList;
+  const StrategyTypeWidget({Key key, this.onTab, this.typeList})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(
+        minWidth: 500,
+        minHeight: 400,
+      ),
+      height: height(400),
+      child: Column(
+        children: <Widget>[
+          Column(
+              children: typeList
+                  .map((e) => GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => {onTab(e['id'], e['type_name'])},
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 0.5, color: Color(0xffcccccc)))),
+                          margin: EdgeInsets.symmetric(horizontal: width(40)),
+                          child: Text(e['type_name']),
+                          height: height(100),
+                          alignment: Alignment.center,
+                        ),
+                      ))
+                  .toList()),
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => {Navigator.pop(context)},
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom:
+                          BorderSide(width: 0.5, color: Color(0xffcccccc)))),
+              margin: EdgeInsets.symmetric(horizontal: width(40)),
+              child: Text(Tr.of(context).cancel,
+                  style: TextStyle(color: Colors.blue)),
+              height: height(100),
+              alignment: Alignment.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AccountTypeWidget extends StatelessWidget {
+  final Function(int id, String name, String avatar, String memo) onTab;
+  final List typeList;
+  const AccountTypeWidget({Key key, this.onTab, this.typeList})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(
+        minWidth: 500,
+        minHeight: 400,
+      ),
+      height: height(400),
+      child: Column(
+        children: <Widget>[
+          Column(
+              children: typeList
+                  .map((e) => GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => {
+                          onTab(e['id'], e['username'], e['avatar'], e['memo'])
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 0.5, color: Color(0xffcccccc)))),
+                          margin: EdgeInsets.symmetric(horizontal: width(40)),
+                          child: Text(e['memo']),
+                          height: height(100),
+                          alignment: Alignment.center,
+                        ),
+                      ))
+                  .toList()),
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => {Navigator.pop(context)},
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom:
+                          BorderSide(width: 0.5, color: Color(0xffcccccc)))),
+              margin: EdgeInsets.symmetric(horizontal: width(40)),
+              child: Text(Tr.of(context).cancel,
+                  style: TextStyle(color: Colors.blue)),
+              height: height(100),
+              alignment: Alignment.center,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

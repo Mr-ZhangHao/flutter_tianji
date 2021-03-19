@@ -9,12 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/toast/index.dart';
+import 'package:flutter_tianji/mine/provider/mine_provider.dart';
 import 'package:flutter_tianji/mine/routes/index.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
 import 'package:flutter_tianji/utils/util.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:ui' as ui;
 
@@ -93,7 +95,11 @@ class _SharePageState extends State<SharePage> {
                           width: width(310),
                           alignment: Alignment.center,
                           margin: EdgeInsets.symmetric(vertical: height(20)),
-                          child: QrImage(data: 'aadasda', size: width(310)),
+                          child: QrImage(
+                              data: Provider.of<MineProvider>(context)
+                                  .userInfo
+                                  .link,
+                              size: width(310)),
                         ),
                         SizedBox(height: width(20)),
                         // Text('${Tr.of(context).InvitationCode}:${Provider.of<MineProvider>(context).userInfo.pid.toString()}', style: TextStyle(fontSize: sp(32), color: Color(0xff323232))),
@@ -102,27 +108,41 @@ class _SharePageState extends State<SharePage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Utils.normalText('邀请码：'),
-                            Utils.normalText('123456',
+                            Utils.normalText('邀请码：',
+                                fontWeight: FontWeight.bold),
+                            Utils.normalText(
+                                '${Provider.of<MineProvider>(context).userInfo.pid.toString()}',
                                 color: Color(0xffFF3A14),
                                 fontWeight: FontWeight.bold),
                             SizedBox(
                               width: width(20),
                             ),
-                            Container(
-                              width: width(120),
-                              height: height(48),
-                              decoration: BoxDecoration(
-                                color: Color(0xffFF3A14),
-                                borderRadius: new BorderRadius.all(
-                                    new Radius.circular(width(26))),
+                            GestureDetector(
+                              child: Container(
+                                width: width(120),
+                                height: height(48),
+                                decoration: BoxDecoration(
+                                  color: Color(0xffFF3A14),
+                                  borderRadius: new BorderRadius.all(
+                                      new Radius.circular(width(26))),
+                                ),
+                                child: Center(
+                                  child: Utils.normalText('复制',
+                                      color: Colors.white,
+                                      fontSize: 24,
+                                      textAlign: TextAlign.center),
+                                ),
                               ),
-                              child: Center(
-                                child: Utils.normalText('复制',
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    textAlign: TextAlign.center),
-                              ),
+                              onTap: () {
+                                Clipboard.setData(ClipboardData(
+                                    text: Provider.of<MineProvider>(context,
+                                            listen: false)
+                                        .userInfo
+                                        .pid
+                                        .toString()));
+                                Toast.showSuccess(
+                                    Tr.of(context).copySuccessfully);
+                              },
                             )
                           ],
                         ),

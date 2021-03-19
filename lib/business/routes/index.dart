@@ -32,6 +32,7 @@ class BusinessRouter implements IRouterProvider {
   static String CollectTaskList = '/CollectTaskListPage';
   static String taskAllocation = '/taskAllocationPage';
   static String tradeRecordDetail = '/tradeRecordDetailPage';
+
   static String addressManagement = '/addressManagementPage';
 
   @override

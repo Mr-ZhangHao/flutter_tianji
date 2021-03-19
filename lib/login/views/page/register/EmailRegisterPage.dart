@@ -4,7 +4,9 @@ import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/input/focus.dart';
 import 'package:flutter_tianji/common/input/text_input2.dart';
+import 'package:flutter_tianji/common/toast/index.dart';
 import 'package:flutter_tianji/login/routes/index.dart';
+import 'package:flutter_tianji/login/server/index.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
 
@@ -24,7 +26,8 @@ class _EmailRegisterWidget extends State<EmailRegisterWidget>
   final _codeCtr = TextEditingController();
   final FocusNode _codeFocus = FocusNode();
   bool wantKeepAlive = true;
-
+  String area = '86';
+  String area_name = '中国';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -79,12 +82,12 @@ class _EmailRegisterWidget extends State<EmailRegisterWidget>
             child: FocusWidget(
               focusNode: _codeFocus,
               child: InputWidget2(
-                obscureText: true,
+                obscureText: false,
                 controller: _codeCtr,
                 focusNode: _codeFocus,
                 hintText: '${Tr.of(context).EmailVerification}',
                 getVCode: () {
-                  return Future.value(true);
+                  return getVcode('email');
                 },
                 suffixIconConstraintsMaxWidth: 160,
                 suffixIconConstraintsMinWidth: 160,
@@ -96,8 +99,15 @@ class _EmailRegisterWidget extends State<EmailRegisterWidget>
           ),
           SizedBox(height: height(30)),
           GestureDetector(
-              onTap: () => RouterUtil.push(context, LoginRouter.setpwd,
-                  replace: true, clearStack: false),
+              onTap: () {
+                if (!validInput('email')) {
+                  return;
+                }
+                RouterUtil.pushResult(
+                    context,
+                    "${LoginRouter.setpwd}?name=${_nameCtr.text}&code=${_codeCtr.text}&area=${area}&type=email",
+                    (result) {});
+              },
               child: Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: width(DefaultPadding)),
@@ -125,48 +135,71 @@ class _EmailRegisterWidget extends State<EmailRegisterWidget>
             height: height(74),
           ),
           GestureDetector(
-              onTap: () => RouterUtil.goBack(context),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '${Tr.of(context).haveAccount}',
-                    style:
-                        TextStyle(color: Color(0xffA2A2A2), fontSize: sp(28)),
-                  ),
-                  Text(
-                    '${Tr.of(context).GoToLogin}',
-                    style: TextStyle(color: kPrimaryColor, fontSize: sp(28)),
-                  ),
-                ],
-              )),
+            onTap: () => RouterUtil.goBack(context),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '${Tr.of(context).haveAccount}',
+                  style: TextStyle(color: Color(0xffA2A2A2), fontSize: sp(28)),
+                ),
+                Text(
+                  '${Tr.of(context).GoToLogin}',
+                  style: TextStyle(color: kPrimaryColor, fontSize: sp(28)),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 
-/*  _login() async {
-    if (_nameCtr.text.isEmpty) {
-      Toast.showText('请输入手机号或邮箱账号');
-    } else if (_pswCtr.text.isEmpty) {
-      Toast.showText('请输入密码');
-    } else {}
-*/ /*
-      showCenterDialog(context,
-          SecurityVerificationWidget(loginType: VerificationType.phone));
-*/ /*
+  bool validInput(type) {
+    if (type == 'sms') {
+      if (_nameCtr.text == null || _nameCtr.text == "") {
+        Toast.showText(Tr.of(context).phoneInputHint);
+        return false;
+      }
+      if (_codeCtr.text == null || _codeCtr.text == "") {
+        Toast.showText(Tr.of(context).PhoneCodeHint);
+        return false;
+      }
+    } else {
+      if (_nameCtr.text == null || _nameCtr.text == "") {
+        Toast.showText(Tr.of(context).emailInputHint);
+        return false;
+      }
+      if (_codeCtr.text == null || _codeCtr.text == "") {
+        Toast.showText(Tr.of(context).emailCodeInputHint);
+        return false;
+      }
+    }
 
+    return true;
+  }
+
+  Future<bool> getVcode(type) async {
     try {
-      Toast.showLoading('loading');
-      // var res = await UserServer.login(_nameCtr.text, _pswCtr.text);
-      await SpUtils.sp.setString('token', 'res["data"]["access_token"]');
-      Provider.of<UserProvider>(context, listen: false).setIsLogin(true);
-      RouterUtil.push(context, Routes.home, replace: true, clearStack: true);
-      Toast.close();
-      Toast.showSuccess('登录成功');
+      if (type == 'sms') {
+        if (_nameCtr.text.isEmpty) {
+          return Toast.showText(Tr.of(context).phoneInputHint);
+        } else {
+          await LoginServer.sms('${area}', _nameCtr.text);
+          return Future.value(true);
+        }
+      } else {
+        if (_nameCtr.text.isEmpty) {
+          return Toast.showText(Tr.of(context).emailInputHint);
+        } else {
+          await LoginServer.email(_nameCtr.text);
+          return Future.value(true);
+        }
+      }
     } catch (e) {
       GlobalConfig.errorTips(e);
+      return Future.value(false);
     }
-  }*/
+  }
 }

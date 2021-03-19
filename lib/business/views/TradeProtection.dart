@@ -144,7 +144,9 @@ class _TradeProtectionListViewState
   }
 
   @override
-  buildItem(TradeProtectionModel model) {
+  buildItem(
+    TradeProtectionModel model,
+  ) {
     return Card(
         child: Container(
       height: height(260),

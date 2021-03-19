@@ -13,6 +13,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_tianji/common/button/index.dart';
 import 'package:flutter_tianji/common/constants/index.dart';
+import 'package:flutter_tianji/common/toast/index.dart';
 import 'package:flutter_tianji/utils/screen.dart';
 
 class InputWidget2 extends StatefulWidget {
@@ -53,7 +54,7 @@ class InputWidget2 extends StatefulWidget {
     this.prefixIconConstraintsMaxHeight = 0,
     this.textAlign = TextAlign.left,
     this.onTab,
-    this.style = const TextStyle(fontSize: 15, color: Color(0xff323232)),
+    this.style = const TextStyle(fontSize: 14, color: Color(0xff323232)),
   }) : super(key: key);
   final controller;
   final focusNode;
@@ -108,6 +109,7 @@ class _InputWidgetState extends State<InputWidget2> {
 
   /// 当前倒计时的秒数。
   int _seconds;
+
   @override
   void initState() {
     super.initState();
@@ -156,13 +158,16 @@ class _InputWidgetState extends State<InputWidget2> {
         maxLength: widget.maxLength,
         textAlign: widget.textAlign,
         focusNode: widget.focusNode,
-        maxLines: widget.maxLine, //最大行数
-        autofocus: widget.autofocus, //是否自动对焦
+        maxLines: widget.maxLine,
+        //最大行数
+        autofocus: widget.autofocus,
+        //是否自动对焦
         cursorColor: Color(0xffBFBFBF),
         obscureText: widget.obscureText,
         style: widget.style,
         keyboardType: widget.keyboardType,
-        readOnly: widget.readOnly, //输入文本的样式
+        readOnly: widget.readOnly,
+        //输入文本的样式
         decoration: InputDecoration(
           prefixStyle: TextStyle(color: Colors.black),
           contentPadding: widget.contentPadding,
@@ -187,29 +192,60 @@ class _InputWidgetState extends State<InputWidget2> {
               minHeight: height(widget.suffixIconConstraintsMinHeight)),
           suffixIcon: widget.getVCode == null
               ? widget.suffixIcon
-              : SmallButton(
-                  borderWidth: 0.5,
-                  width: width(160),
-                  height: height(widget.maxHeight * 0.6),
-                  fontSize: sp(24),
-                  isBorder: false,
-                  borderColor:
-                      _isAvailableGetVCode ? kPrimaryColor : kDividerColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(width(12)),
+              : GestureDetector(
+                  child: Row(
+                    children: [
+                      Container(
+                        width: width(1),
+                        height: height(widget.maxHeight * 0.3),
+                        color: kPrimaryColor,
+                      ),
+                      SizedBox(
+                        width: width(30),
+                      ),
+                      Text(
+                        _verifyStr,
+                        style: TextStyle(
+                          color: _isAvailableGetVCode
+                              ? kPrimaryColor
+                              : Color(0xff323232),
+                          fontSize: sp(24),
+                        ),
+                      ),
+                    ],
                   ),
-                  textColor:
-                      _isAvailableGetVCode ? kPrimaryColor : kDividerColor,
-                  onPressed: _seconds == widget.countdown
+                  onTap: _seconds == widget.countdown
                       ? () async {
                           if (await widget.getVCode()) {
                             _startTimer();
                           }
                         }
                       : null,
-                  text: _verifyStr,
+              ),
+                  /*     SmallButton(
+                borderWidth: 0.5,
+                width: width(160),
+                height: height(widget.maxHeight * 0.6),
+                fontSize: sp(24),
+                isBorder: false,
+                borderColor:
+                _isAvailableGetVCode ? kPrimaryColor : kDividerColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(width(12)),
                 ),
-    /*      enabledBorder: UnderlineInputBorder(
+                textColor:
+                _isAvailableGetVCode ? kPrimaryColor : kDividerColor,
+                onPressed: _seconds == widget.countdown
+                    ? () async {
+                  if (await widget.getVCode()) {
+                    _startTimer();
+                  }
+                }
+                    : null,
+                text: _verifyStr,
+              )*/
+
+          /*      enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(width: 0.2, color: Colors.grey)),
           disabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(width: 0.2, color: Colors.grey)),

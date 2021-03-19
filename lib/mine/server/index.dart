@@ -1,76 +1,168 @@
-
-import 'package:flutter/services.dart';
-import 'package:device_info/device_info.dart';
+/*
+* @message: 个人中心接口
+* @Author: Jack
+* @Email: Jack@163.com
+* @Github: Jack@163.com
+* @Date: 2020-08-06 22:17:55
+* @LastEditors: Jack
+* @LastEditTime: 2020-08-20 16:14:52
+* @Deprecated: 否
+* @FilePath: /etf_flutter/lib/core/services/mine.dart
+*/
+import 'package:dio/dio.dart';
+import 'dart:io';
 import 'package:flutter_tianji/core/network/http.dart';
-import 'package:flutter_tianji/mine/server/url.dart';
+import 'package:flutter_tianji/mine/model/BuddyListModel.dart';
+import 'package:flutter_tianji/mine/model/kyc_info_model.dart';
+import 'package:flutter_tianji/mine/model/login_history_model.dart';
+import 'package:flutter_tianji/mine/model/user_model.dart';
 
-class UserServer {
-  // static String _token = SpUtils.sp.getString('token');
-  // static Future<String, dynamic> login() async {
-  //   return
-  // }
-
-  // 发送验证码
-  static Future senCode(
-      String userName, String captchaKey, String captcha, String type) async {
-    var response = await http.post(UserApi.sendCode, data: {
-      "mobile": userName.toString(),
-      "type": type.toString(),
-      "captcha_key": captchaKey.toString(),
-      "captcha": captcha
-    });
-    return response.data;
+class MineServer {
+  static Future<UserInfoModel> getUserInfo() async {
+    var res = await http.get('/api/auth/info');
+    return UserInfoModel.fromJson(res.data['data']);
   }
 
-  // 获取图片
-  static Future getCaptcha() async {
-    var response = await http.get(UserApi.captcha);
-    return response.data;
+  static Future editLoginPsw(
+      psw, newPsw, emailCode, smsCode, googleCode) async {
+    var data = {
+      "login_password": psw,
+      "new_login_password": newPsw,
+      "email_code": emailCode ?? '',
+      "sms_code": smsCode ?? '',
+      "google_code": googleCode ?? ''
+    };
+    var res = await http.post('/api/auth/login_password/update', data: data);
+    return res.data;
   }
 
-  // 注册
-  static Future register(
-      String userName, String code, String password, String inviteCode) async {
-    var response = await http.post(UserApi.reg, data: {
-      "mobile": userName, //账号
-      "code": code, //验证码
-      "password": password, //密码
-      "pid": inviteCode // 邀请码(必填)
-    });
-    return response.data;
+  static Future bindEmail(email, emailCode, smsCode, googleCode) async {
+    var data = {
+      "email": email,
+      "email_code": emailCode ?? '',
+      "sms_code": smsCode ?? '',
+      "google_code": googleCode ?? ''
+    };
+    var res = await http.post('/api/auth/email', data: data);
+    return res.data;
   }
 
-  // 登录
-  static Future login(String userName, String password) async {
-    var response = await http.post(UserApi.login, data: {
-      "username": userName, //账号
-      "password": password, //密码
-    });
-    return response.data;
-  }
-
-  // 退出登录
-  static Future logOut() async {
-    var response = await http.post(UserApi.logout);
-    return response;
-  }
-
-  // 忘记密码
-  static Future resetPsw(mobile, code, psw, resetPWD) async {
-    var response = await http.post(UserApi.resetPsw, data: {
+  static Future bindMobile(area, mobile, emailCode, smsCode, googleCode) async {
+    var data = {
+      "area": area,
       "mobile": mobile,
-      "code": code,
-      "password": psw,
-      "password_confirmation": resetPWD
-    });
-    return response;
+      "email_code": emailCode ?? '',
+      "sms_code": smsCode ?? '',
+      "google_code": googleCode ?? ''
+    };
+    var res = await http.post('/api/auth/mobile', data: data);
+    return res.data;
   }
 
-  /// 获取本地国家/地区编码文件数据
-  static Future<String> _loadClassInfoJson() async {
-    return await rootBundle.loadString('data/sms_area.json');
+  static Future setLang(String Lang) async {
+    var data = {
+      "lang": Lang,
+    };
+    var res = await http.post('/api/common/setLang', data: data);
+    return res.data;
   }
 
+  static Future setPayPsw(psw, emailCode, smsCode, googleCode) async {
+    var data = {
+      "pay_password": psw,
+      "email_code": emailCode,
+      "sms_code": smsCode,
+      "google_code": googleCode
+    };
+    var res = await http.post('/api/auth/pay_password/set', data: data);
+    return res.data;
+  }
+
+  static Future setAvatar(avatar) async {
+    var data = {
+      "avatar": avatar,
+    };
+    var res = await http.post('/api/auth/avatar', data: data);
+    return res.data;
+  }
+
+  static Future setName(userName) async {
+    var data = {
+      "username": userName,
+    };
+    var res = await http.post('/api/auth/username', data: data);
+    return res.data;
+  }
+
+  static Future googleSecret() async {
+    var res = await http.get('/api/auth/google');
+    return res.data;
+  }
+
+  static Future bindGoogle(secret, emailCode, smsCode, googleCode) async {
+    var data = {
+      "google_secret": secret,
+      "email_code": emailCode ?? '',
+      "sms_code": smsCode ?? '',
+      "google_code": googleCode ?? ''
+    };
+    var res = await http.post('/api/auth/google', data: data);
+    return res.data;
+  }
+
+  static Future<List<LoginHistoryModel>> getLogiHistory(page) async {
+    var res = await http.get('/api/auth/login_log',
+        queryParameters: {"page": page, "pre_page": 10});
+    return (res.data['data'] as List)
+        .map((e) => LoginHistoryModel.fromJson(e))
+        .toList();
+  }
+
+  static Future<List<BuddyListModel>> getBuddyList() async {
+    var res = await http.get('/api/auth/invite_record');
+    return (res.data['data'] as List)
+        .map((e) => BuddyListModel.fromJson(e))
+        .toList();
+  }
+
+  static Future<KycInfoModel> getKycInfo() async {
+    var res = await http.get('/api/auth/kyc_info');
+    return KycInfoModel.fromJson(res.data['data']);
+  }
+
+  static Future upFile(formData) async {
+    Options options = Options(contentType: 'multipart/form-data');
+    var response =
+        await http.post('/api/common/upload', options: options, data: formData);
+    return response.data;
+  }
+
+  static upLoadImage(File image) async {
+    String filePath = image.path;
+
+    var name =
+        filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length);
+    FormData formData = FormData.fromMap(
+        {"file": await MultipartFile.fromFile(filePath, filename: name)});
+    try {
+      var response = await MineServer.upFile(formData);
+      return response;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static Future vertifySubmit(Map data) async {
+    var res = await http.post('/api/auth/kyc', data: data);
+    return res.data;
+  }
+
+  static Future getRate() async {
+    var res = await http.get('/api/common/fee');
+    return res.data;
+  }
+
+/* 
   /// 获取Android设备信息
   static Map<String, dynamic> readAndroidBuildData(AndroidDeviceInfo build) {
     return <String, dynamic>{
@@ -120,5 +212,5 @@ class UserServer {
       'utsname.version:': data.utsname.version,
       'utsname.machine:': data.utsname.machine,
     };
-  }
+  } */
 }

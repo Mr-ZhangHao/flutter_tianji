@@ -38,17 +38,16 @@ class LoginRouter implements IRouterProvider {
     // 忘记密码
     router.define(forgot, handler:
         Handler(handlerFunc: (context, Map<String, List<String>> params) {
-      // Map<String, dynamic> item = json.decode(params['param'].first);
-      // NoticeModel noticeModel = NoticeModel.fromJson(item);
       return Forgot1PageWidget();
     }));
 
     // 忘记密码
     router.define(forgot2, handler:
         Handler(handlerFunc: (context, Map<String, List<String>> params) {
-      // Map<String, dynamic> item = json.decode(params['param'].first);
-      // NoticeModel noticeModel = NoticeModel.fromJson(item);
-      return Forgot2PageWidget();
+      String account = params['account'].first;
+      return Forgot2PageWidget(
+        account: account,
+      );
     }));
     router.define(country, handler:
         Handler(handlerFunc: (context, Map<String, List<String>> params) {
@@ -58,9 +57,21 @@ class LoginRouter implements IRouterProvider {
     // 设置密码
     router.define(setpwd, handler:
         Handler(handlerFunc: (context, Map<String, List<String>> params) {
-      // Map<String, dynamic> item = json.decode(params['param'].first);
-      // NoticeModel noticeModel = NoticeModel.fromJson(item);
-      return SetPwdPageWidget();
+      String Name = params['name'].first;
+      String code = params['code'].first;
+      String area = params['area'].first;
+      String type = params['type'].first;
+      return SetPwdPageWidget(
+        name: Name,
+        code: code,
+        area: area,
+        type: type,
+      );
+    }));
+
+    router.define(country, handler:
+        Handler(handlerFunc: (context, Map<String, List<String>> params) {
+      return countryPage();
     }));
   }
 }

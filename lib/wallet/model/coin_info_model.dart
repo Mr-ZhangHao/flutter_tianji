@@ -2,7 +2,7 @@ class CoinInfoModel {
   int id;
   int userId;
   int coinId;
-  String available;
+  Object available;
   String disabled;
   String address;
   String usdtErc20;

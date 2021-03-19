@@ -17,17 +17,17 @@ import 'package:flutter_tianji/baike/baikai.dart';
 import 'package:flutter_tianji/business/business_screen.dart';
 import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
+import 'package:flutter_tianji/common/update/index.dart';
 import 'package:flutter_tianji/home/home_screen.dart';
 import 'package:flutter_tianji/login/login_screen.dart';
 import 'package:flutter_tianji/login/provider/user_provider.dart';
 import 'package:flutter_tianji/providers/gloable_provider.dart';
 import 'package:flutter_tianji/providers/provider_widget.dart';
-import 'package:flutter_tianji/routes/application.dart';
+import 'package:flutter_tianji/strategy/strategy_screen.dart';
 import 'package:flutter_tianji/utils/screen.dart';
 import 'package:flutter_tianji/utils/sp_utils.dart';
 import 'package:flutter_tianji/wallet/wallet_screen.dart';
 import 'package:provider/provider.dart';
-// import 'package:ETF/components/update/index.dart';
 
 class BottomTabBar extends StatefulWidget {
   @override
@@ -76,7 +76,7 @@ class _BottomTabBarState extends State<BottomTabBar> {
   final List<Widget> _pageList = [
     HomeScreen(), // 首页
     Baike(), // 项目百科
-    HomeScreen(), //
+    strategyScreen(), //策略跟单
     BusinessScreen(), // 商业API
     WalletScreen(), // 资产
     //   ContractScreen(), // 合约
@@ -87,7 +87,7 @@ class _BottomTabBarState extends State<BottomTabBar> {
   @override
   void initState() {
     super.initState();
-    // UpdateUtil().checkVersion(context);
+  //  UpdateUtil().checkVersion(context);
   }
 
   @override
@@ -147,6 +147,8 @@ class _BottomTabBarState extends State<BottomTabBar> {
                               Theme.of(context).bottomAppBarTheme.color,
                           type: BottomNavigationBarType.fixed, //可以有多个按钮
                           currentIndex: provider.bottomCurrIndex,
+                          selectedFontSize: sp(22),
+                          unselectedFontSize: sp(22),
                           selectedItemColor:
                               Theme.of(context).tabBarTheme.labelColor,
                           unselectedItemColor: kTextColor6,

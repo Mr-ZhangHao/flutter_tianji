@@ -3,7 +3,7 @@ import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/toast/index.dart';
 import 'package:flutter_tianji/common/upload/image_upload.dart';
-import 'package:flutter_tianji/core/services/mine.dart';
+import 'package:flutter_tianji/mine/server/index.dart';
 import 'package:flutter_tianji/mine/provider/mine_provider.dart';
 import 'package:flutter_tianji/mine/routes/index.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';

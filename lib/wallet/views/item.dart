@@ -61,109 +61,112 @@ class _MineScreenState extends State<ItemPage> {
           children: <Widget>[
             Container(
               alignment: Alignment.centerLeft,
-              height: height(108),
+              height: height(220),
               margin: EdgeInsets.only(top: height(26)),
               padding: EdgeInsets.symmetric(horizontal: width(28)),
-              decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(color: kLineColor1, width: width(1)))),
               child: Consumer<WallerProvider>(
                 builder:
                     (BuildContext context, WallerProvider model, Widget child) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      TopItemWidget(
-                        title: '${Tr.of(context).tradrAvailable}',
-                        number: Utils.cutZero(model.currentCoin.available ?? 0),
-                        align: TextAlign.left,
-                      ),
-                      TopItemWidget(
-                        title: '${Tr.of(context).assetFreeze}',
-                        number: Utils.cutZero(model.currentCoin.disabled ?? 0),
-                        align: TextAlign.right,
-                      ),
-                      /*    TopItemWidget(
-                        title: '${Tr.of(context).assetConvertedamount}',
-                        number: "￥${Utils.cutZero(model.currentCoin.cny ?? 0)}",
-                        align: TextAlign.right,
-                      ),*/
-                    ],
+                  return Container(
+                    height: height(220),
+                    color: Color(0xFFFFFFFF),
+                    padding: EdgeInsets.only(left: width(20), right: width(20)),
+                    margin: EdgeInsets.only(top: height(10)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Image.asset('images/home/icon_quantify.png',
+                                    width: width(80), height: height(80)),
+                                SizedBox(
+                                  width: height(20),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('${model.currentCoin.coin.name ?? ""}',
+                                        style: TextStyle(
+                                            fontSize: sp(32),
+                                            color: Color(0xFF604F6A),
+                                            fontWeight: FontWeight.bold)),
+                                    Text(
+                                        '${model.isOpen ? model.currentCoin.available ?? "0.00" : "****"}',
+                                        style: TextStyle(
+                                            fontSize: sp(36),
+                                            color: Color(0xFF444444))),
+                                  ],
+                                )
+                              ],
+                            )),
+                            Text(
+                                '≈ ¥${model.isOpen ? model.currentCoin.cny ?? "0.00" : "****"}',
+                                style: TextStyle(
+                                    fontSize: sp(28),
+                                    color: Color(0xffCFCFCF))),
+                          ],
+                        ),
+                        SizedBox(
+                          height: height(30),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 0.5, color: kDividerColor))),
+                        ),
+                        SizedBox(
+                          height: height(20),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                                child: GestureDetector(
+                              child: Text('充币',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: sp(28), color: kPrimaryColor)),
+                              onTap: () => RouterUtil.push(context,
+                                  "${WalletRouter.recharge}?coinName=${model.currentCoin.coin.name ?? ""}"),
+                            )),
+                            Container(
+                              width: width(1),
+                              height: height(30),
+                              color: Color(0xffE8E8E8),
+                            ),
+                            Expanded(
+                                child: GestureDetector(
+                                    child: Text('提币',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: sp(28),
+                                            color: kPrimaryColor)),
+                                    onTap: () {
+                                      RouterUtil.pushResult(context,
+                                          "${WalletRouter.withdrawDetail}?coinName=${model.currentCoin.coin.name ?? ""}",
+                                          (result) {
+                                        Provider.of<WallerProvider>(context,
+                                                listen: false)
+                                            .setCurrentCoin(
+                                                model.currentCoin.coin ?? "");
+                                      });
+                                    }))
+                          ],
+                        )
+                      ],
+                    ),
                   );
                 },
               ),
             ),
-            Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(
-                  horizontal: width(28), vertical: height(40)),
-              decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(color: kLineColor1, width: width(1)))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  widget.coinName == 'HBIT'
-                      ? Container(width: 0, height: 0)
-                      : Expanded(
-                          child: IconItemWidget(
-                            icon: 'images/mine/icon4.png',
-                            title: '${Tr.of(context).assetRecharge}',
-                            onTab: () => RouterUtil.push(context,
-                                "${WalletRouter.recharge}?coinName=${widget.coinName}"),
-                          ),
-                        ),
-                  widget.coinName == 'HBIT'
-                      ? Container(width: 0, height: 0)
-                      : Expanded(
-                          child: IconItemWidget(
-                            icon: 'images/mine/icon5.png',
-                            title: '${Tr.of(context).assetWithdrawal}',
-                            onTab: () {
-                              RouterUtil.pushResult(context,
-                                  "${WalletRouter.withdrawDetail}?coinName=${widget.coinName}",
-                                  (result) {
-                                Provider.of<WallerProvider>(context,
-                                        listen: false)
-                                    .setCurrentCoin(widget.coinName);
-                              });
-                            },
-                          ),
-                        ),
-                  /*    widget.coinName == 'USDT'
-                      ? Expanded(
-                          child: IconItemWidget(
-                            icon: 'images/mine/icon6.png',
-                            title: '${Tr.of(context).assetTransfer}',
-                            onTab: () {
-                              Provider.of<WallerProvider>(context, listen: false).setCurrentCoin('USDT');
-                              Provider.of<ContractAssetProvider>(context, listen: false).setCurrentCoin('USDT');
-                              RouterUtil.push(context, WalletRouter.transformation);
-                            },
-                          ),
-                        )
-                      : Container(width: 0, height: 0),*/
-                  Expanded(
-                    child: IconItemWidget(
-                      icon: 'images/mine/icon7.png',
-                      title: '${Tr.of(context).assetTotrade}',
-                      onTab: () {
-                        CoinInfoModel currentCoin =
-                            Provider.of<WallerProvider>(context, listen: false)
-                                .currentCoin;
-                        if (currentCoin.coin.isSpot == 1) {
-                          RouterUtil.goBack(context);
-                          Provider.of<GloableProvider>(context, listen: false)
-                              .setCurrIndex(2);
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            )
           ],
         ),
       )),

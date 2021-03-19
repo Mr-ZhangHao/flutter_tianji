@@ -1,4 +1,3 @@
-
 import 'package:flutter_tianji/core/model/tfa_type_model.dart';
 import 'package:flutter_tianji/core/network/http.dart';
 import 'package:flutter_tianji/login/model/country_model.dart';
@@ -16,7 +15,8 @@ class LoginServer {
     return res.data;
   }
 
-  static Future registerMobile(area, mobile, smsCode, loginPassword, parentId) async {
+  static Future registerMobile(
+      area, mobile, smsCode, loginPassword, parentId) async {
     var data = {
       "area": area,
       "mobile": mobile,
@@ -29,7 +29,12 @@ class LoginServer {
   }
 
   static Future registerEmail(email, emailCode, loginPassword, parentId) async {
-    var data = {"email": email, "email_code": emailCode, "login_password": loginPassword, "parent_id": parentId};
+    var data = {
+      "email": email,
+      "email_code": emailCode,
+      "login_password": loginPassword,
+      "parent_id": parentId
+    };
     var res = await http.post('/api/auth/register/email', data: data);
     return res.data;
   }
@@ -43,6 +48,18 @@ class LoginServer {
   static Future loginEmail(email, psw) async {
     var data = {"email": email, "login_password": psw};
     var res = await http.post('/api/auth/login/email', data: data);
+    return res.data;
+  }
+
+  static Future loginCodeMobile(mobile, psw) async {
+    var data = {"mobile": mobile, "sms_code": psw};
+    var res = await http.post('api/auth/login/code/mobile', data: data);
+    return res.data;
+  }
+
+  static Future loginCodeEmail(email, psw) async {
+    var data = {"email": email, "email_code": psw};
+    var res = await http.post('/api/auth/login/code/email', data: data);
     return res.data;
   }
 
@@ -73,19 +90,22 @@ class LoginServer {
   }
 
   static Future resetPswbyMobile(Map data) async {
-    var res = await http.post('/api/auth/login_password/reset/mobile', data: data);
+    var res =
+        await http.post('/api/auth/login_password/reset/mobile', data: data);
     return res.data;
   }
 
   static Future resetPswbyEmail(Map data) async {
-    var res = await http.post('/api/auth/login_password/reset/email', data: data);
+    var res =
+        await http.post('/api/auth/login_password/reset/email', data: data);
     return res.data;
   }
 
-
   static Future<List<CountryModel>> searchCountry(String countryName) async {
-    var res = await http.get('/api/spot/currencies', queryParameters: {"coin_name": countryName});
-    return (res.data['data'] as List).map((e) => CountryModel.fromJson(e)).toList();
+    var res = await http.get('/api/spot/currencies',
+        queryParameters: {"coin_name": countryName});
+    return (res.data['data'] as List)
+        .map((e) => CountryModel.fromJson(e))
+        .toList();
   }
-
 }

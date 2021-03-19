@@ -462,8 +462,8 @@ class _BusinessScreenState extends State<BusinessScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: width(64),
-              height: height(64),
+              width: width(48),
+              height: height(48),
               margin: EdgeInsets.only(right: width(20)),
               decoration: BoxDecoration(
                   border:

@@ -56,7 +56,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
         child: Stack(fit: StackFit.expand, children: <Widget>[
           showGuide
               ? GuidePage()
-              : Image.asset('images/splash/launch_image.gif', fit: BoxFit.fill),
+              : Image.asset('images/splash/launch_image.png', fit: BoxFit.fill),
           Visibility(
             visible: !showGuide,
             child: Align(

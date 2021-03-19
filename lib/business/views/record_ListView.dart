@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'file:///D:/android_worke/flutter_demo/TianJi/flutter_tianji/lib/business/views/item/record_List_item.dart';
+import 'package:flutter_tianji/business/views/item/record_List_item.dart';
 import 'package:flutter_tianji/common/refresh/page_list.dart';
 import 'package:flutter_tianji/home/model/transfer_model.dart';
+
 /**
 * 交易记录
 * */
@@ -9,10 +10,12 @@ class TransactionRecordListView extends PageList {
   TransactionRecordListView({Key key}) : super(key: key);
 
   @override
-  _TransactionRecordListViewState createState() => _TransactionRecordListViewState();
+  _TransactionRecordListViewState createState() =>
+      _TransactionRecordListViewState();
 }
 
-class _TransactionRecordListViewState   extends PageListState<TransferModel, TransactionRecordListView> {
+class _TransactionRecordListViewState
+    extends PageListState<TransferModel, TransactionRecordListView> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,8 +33,8 @@ class _TransactionRecordListViewState   extends PageListState<TransferModel, Tra
   @override
   loadPage(
       {int page,
-        Function(List<TransferModel>) onSuccess,
-        Function onErr}) async {
+      Function(List<TransferModel>) onSuccess,
+      Function onErr}) async {
     try {
       // var data = await HomeServer.advisory(page);
       // onSuccess((data['data']['records'] as List)

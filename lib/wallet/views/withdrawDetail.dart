@@ -34,7 +34,6 @@ import 'package:flutter_tianji/wallet/widgets/usdt_type_button.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_tianji/mine/routes/index.dart';
 
-
 class WithdrawDetailPage extends StatefulWidget {
   final String coinName;
   WithdrawDetailPage({Key key, this.coinName}) : super(key: key);
@@ -55,13 +54,15 @@ class _MineScreenState extends State<WithdrawDetailPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((mag) {
-      WallerProvider model = Provider.of<WallerProvider>(context, listen: false);
+      WallerProvider model =
+          Provider.of<WallerProvider>(context, listen: false);
       model.setCurrentCoin(widget.coinName);
       _numCtr.addListener(() {
         if (_numCtr.text.isNotEmpty) {
           num _num = num.parse(_numCtr.text);
           num _withdrawFee = num.parse(model.currentCoin.coin.withdrawFee);
-          setState(() => _numStr = (_num > _withdrawFee) ? (_num - _withdrawFee) : 0.0);
+          setState(() =>
+              _numStr = (_num > _withdrawFee) ? (_num - _withdrawFee) : 0.0);
         } else {
           setState(() => _numStr = 0.0);
         }
@@ -85,24 +86,29 @@ class _MineScreenState extends State<WithdrawDetailPage> {
           onTap: () => Navigator.pop(context),
           child: Container(
             alignment: Alignment.center,
-            child: Image.asset('images/mine/back@2x.png', width: width(22), height: height(36)),
+            child: Image.asset('images/mine/back@2x.png',
+                width: width(22), height: height(36)),
           ),
         ),
         brightness: Brightness.light,
-        title: Text('${widget.coinName}${Tr.of(context).assetWithdrawal}', style: TextStyle(color: kTextColor3, fontSize: sp(36))),
+        title: Text('${widget.coinName}${Tr.of(context).assetWithdrawal}',
+            style: TextStyle(color: kTextColor3, fontSize: sp(36))),
         centerTitle: true,
         elevation: 0,
       ),
       body: SingleChildScrollView(
           child: Container(
         padding: EdgeInsets.only(top: height(28)),
-        decoration: BoxDecoration(border: Border(top: BorderSide(color: kLineColor1, width: width(1)))),
+        decoration: BoxDecoration(
+            border:
+                Border(top: BorderSide(color: kLineColor1, width: width(1)))),
         child: Consumer<WallerProvider>(
           builder: (BuildContext context, WallerProvider model, Widget child) {
             return Column(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.fromLTRB(width(40), height(32), width(40), 0),
+                  margin:
+                      EdgeInsets.fromLTRB(width(40), height(32), width(40), 0),
                   child: Column(
                     children: <Widget>[
                       Container(
@@ -112,7 +118,10 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                             // '可用',
                             '${Tr.of(context).tradrAvailable} ${Utils.cutZero(model.currentCoin?.available ?? '0.0')} ${model.currentCoin?.coin?.name ?? '--/--'}',
                             style: TextStyle(
-                                color: kTextColor3, fontSize: sp(28), height: 1.1, fontWeight: FontWeight.bold)),
+                                color: kTextColor3,
+                                fontSize: sp(28),
+                                height: 1.1,
+                                fontWeight: FontWeight.bold)),
                       ),
                       Visibility(
                         visible: widget.coinName == 'USDT',
@@ -127,7 +136,8 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                           controller: _addrCtr,
                           focusNode: _addrFocus,
                           hintText: '${Tr.of(context).assetWithdrawalHint2}',
-                          hintStyle: TextStyle(fontSize: sp(28), color: Color(0xffcccccc)),
+                          hintStyle: TextStyle(
+                              fontSize: sp(28), color: Color(0xffcccccc)),
                           suffixIconConstraintsMaxWidth: 100,
                           suffixIconConstraintsMinWidth: 100,
                           suffixIconConstraintsMaxHeight: 60,
@@ -150,12 +160,14 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                           hintText: maxFoo(model),
                           // inputFormatters: [_UsNumberTextInputFormatter()],
                           // inputFormatters: [WhitelistingTextInputFormatter(RegExp(r"[0-9.]"))],
-                          hintStyle: TextStyle(fontSize: sp(28), color: Color(0xffcccccc)),
+                          hintStyle: TextStyle(
+                              fontSize: sp(28), color: Color(0xffcccccc)),
                           suffixIconConstraintsMaxWidth: 180,
                           suffixIconConstraintsMinWidth: 160,
                           suffixIconConstraintsMaxHeight: 60,
                           suffixIconConstraintsMinHeight: 60,
-                          keyboardType: TextInputType.numberWithOptions(decimal: true),
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
                           maxHeight: 100,
                           suffixIcon: Container(
                             alignment: Alignment.centerRight,
@@ -164,9 +176,13 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                               children: <Widget>[
                                 Container(
                                   padding: EdgeInsets.only(right: width(20)),
-                                  child: Text('${model.currentCoin?.coin?.name ?? '--/--'}',
+                                  child: Text(
+                                      '${model.currentCoin?.coin?.name ?? '--/--'}',
                                       textAlign: TextAlign.left,
-                                      style: TextStyle(color: kLineColor2, fontSize: sp(28), height: 1.1)),
+                                      style: TextStyle(
+                                          color: kLineColor2,
+                                          fontSize: sp(28),
+                                          height: 1.1)),
                                 ),
                                 InkWell(
                                   onTap: () {
@@ -175,7 +191,10 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                                   child: Container(
                                     padding: EdgeInsets.only(left: width(20)),
                                     decoration: BoxDecoration(
-                                        border: Border(left: BorderSide(color: kLineColor1, width: width(1)))),
+                                        border: Border(
+                                            left: BorderSide(
+                                                color: kLineColor1,
+                                                width: width(1)))),
                                     child: Text('${Tr.of(context).assetALL}',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
@@ -192,7 +211,8 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                       ),
                       Container(
                         height: height(40),
-                        margin: EdgeInsets.fromLTRB(0, height(30), 0, height(92)),
+                        margin:
+                            EdgeInsets.fromLTRB(0, height(30), 0, height(92)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -200,13 +220,19 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                             Container(
                               child: Text('${Tr.of(context).tradrFee}：',
                                   textAlign: TextAlign.left,
-                                  style: TextStyle(color: kLineColor2, fontSize: sp(28), height: 1.1)),
+                                  style: TextStyle(
+                                      color: kLineColor2,
+                                      fontSize: sp(28),
+                                      height: 1.1)),
                             ),
                             Container(
                               child: Text(
                                 feeFoo(model),
                                 textAlign: TextAlign.left,
-                                style: TextStyle(color: kTextColor3, fontSize: sp(28), height: 1.1),
+                                style: TextStyle(
+                                    color: kTextColor3,
+                                    fontSize: sp(28),
+                                    height: 1.1),
                               ),
                             ),
                           ],
@@ -220,19 +246,24 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Container(
-                              child: Text('${Tr.of(context).assetArrivalquantity}',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    color: kLineColor2,
-                                    fontSize: sp(28),
-                                    height: 1.1,
-                                  )),
+                              child:
+                                  Text('${Tr.of(context).assetArrivalquantity}',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: kLineColor2,
+                                        fontSize: sp(28),
+                                        height: 1.1,
+                                      )),
                             ),
                             Container(
-                              child: Text('$_numStr ${model.currentCoin?.coin?.name ?? '--/--'}',
+                              child: Text(
+                                  '$_numStr ${model.currentCoin?.coin?.name ?? '--/--'}',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      color: kTextColor3, fontSize: sp(28), height: 1.1, fontWeight: FontWeight.bold)),
+                                      color: kTextColor3,
+                                      fontSize: sp(28),
+                                      height: 1.1,
+                                      fontWeight: FontWeight.bold)),
                             ),
                           ],
                         ),
@@ -244,12 +275,16 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                           width: width(670),
                           height: height(88),
                           decoration: BoxDecoration(
-                              color: Color.fromARGB(500, 18, 109, 255),
-                              borderRadius: BorderRadius.all(Radius.circular(width(44)))),
+                              color: Color(0xff7865FE),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(width(44)))),
                           alignment: Alignment.center,
                           child: Text('${Tr.of(context).assetCarryon}',
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.white, fontSize: sp(30), height: 1.1)),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: sp(30),
+                                  height: 1.1)),
                         ),
                       )
                     ],
@@ -258,15 +293,19 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                 SizedBox(height: height(20)),
                 Container(
                   color: Color(0xffF6F9FB),
-                  margin: EdgeInsets.fromLTRB(width(40), height(60), width(40), 0),
+                  margin:
+                      EdgeInsets.fromLTRB(width(40), height(60), width(40), 0),
                   padding: EdgeInsets.all(width(30)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       SizedBox(height: height(20)),
                       Text('  ${Tr.of(context).assetTips}',
-                          style: TextStyle(fontSize: sp(28), color: Color(0xff323232), fontWeight: FontWeight.bold)),
-                //      renderTips(model)
+                          style: TextStyle(
+                              fontSize: sp(28),
+                              color: Color(0xff323232),
+                              fontWeight: FontWeight.bold)),
+                      renderTips(model)
                     ],
                   ),
                 )
@@ -285,10 +324,12 @@ class _MineScreenState extends State<WithdrawDetailPage> {
       } else if (type == 'TRC20') {
         return '${Utils.cutZero(model.currentCoin?.trc20WithdrawFee ?? 0)} ${model.currentCoin?.coin?.name ?? '---'}';
       } else {
-        return Utils.cutZero(model.currentCoin?.coin?.withdrawFee ?? 0) + widget.coinName;
+        return Utils.cutZero(model.currentCoin?.coin?.withdrawFee ?? 0) +
+            widget.coinName;
       }
     } else {
-      return Utils.cutZero(model.currentCoin?.coin?.withdrawFee ?? 0) + widget.coinName;
+      return Utils.cutZero(model.currentCoin?.coin?.withdrawFee ?? 0) +
+          widget.coinName;
     }
   }
 
@@ -333,7 +374,8 @@ class _MineScreenState extends State<WithdrawDetailPage> {
   }
 
   void next(WallerProvider model) async {
-    MineProvider mineProvider = Provider.of<MineProvider>(context, listen: false);
+    MineProvider mineProvider =
+        Provider.of<MineProvider>(context, listen: false);
     if (mineProvider.userInfo.payPassword == 0) {
       showDialog(
           context: context,
@@ -343,11 +385,13 @@ class _MineScreenState extends State<WithdrawDetailPage> {
               content: Text('${Tr.of(context).assetNoFundpwd}。'),
               actions: <Widget>[
                 CupertinoDialogAction(
-                  child: Text('${Tr.of(context).cancel}', style: TextStyle(color: Color(0xff909090))),
+                  child: Text('${Tr.of(context).cancel}',
+                      style: TextStyle(color: Color(0xff909090))),
                   onPressed: () => RouterUtil.goBack(context),
                 ),
                 CupertinoDialogAction(
-                  child: Text('${Tr.of(context).assetSet}', style: TextStyle(color: kPrimaryColor)),
+                  child: Text('${Tr.of(context).assetSet}',
+                      style: TextStyle(color: kPrimaryColor)),
                   onPressed: () {
                     Navigator.pop(context);
                     RouterUtil.push(context, MineRouter.moneyPsw);
@@ -365,7 +409,8 @@ class _MineScreenState extends State<WithdrawDetailPage> {
               content: Text('${Tr.of(context).assetWithdrawalhint3}!'),
               actions: <Widget>[
                 CupertinoDialogAction(
-                  child: Text('${Tr.of(context).determine}', style: TextStyle(color: kPrimaryColor)),
+                  child: Text('${Tr.of(context).determine}',
+                      style: TextStyle(color: kPrimaryColor)),
                   onPressed: () => Navigator.pop(context),
                 ),
               ],
@@ -378,13 +423,18 @@ class _MineScreenState extends State<WithdrawDetailPage> {
     } else {
       Toast.showLoading('Loading...');
       try {
-        TfaTypeModel tfaType =
-            await LoginServer.getVertifyType(4, Provider.of<MineProvider>(context, listen: false).userInfo.username);
-        Provider.of<WallerProvider>(context, listen: false).setWithdrawField(WithdrawField(
-            model.currentCoin.coinId.toString(), type, _addrCtr.text, _numCtr.text, tfaType.tfaType, widget.coinName));
+        TfaTypeModel tfaType = await LoginServer.getVertifyType(
+            4,
+            Provider.of<MineProvider>(context, listen: false)
+                .userInfo
+                .username);
+        Provider.of<WallerProvider>(context, listen: false).setWithdrawField(
+            WithdrawField(model.currentCoin.coinId.toString(), type,
+                _addrCtr.text, _numCtr.text, tfaType.tfaType, widget.coinName));
 
         RouterUtil.pushResult(context, WalletRouter.verification, (res) {
-          Provider.of<WallerProvider>(context, listen: false).setCurrentCoin(widget.coinName);
+          Provider.of<WallerProvider>(context, listen: false)
+              .setCurrentCoin(widget.coinName);
         });
       } catch (e) {
         print(e);

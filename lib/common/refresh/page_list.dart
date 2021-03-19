@@ -22,7 +22,9 @@ class PageListState<M, T extends PageList> extends State<PageList> {
 
   ///当前第几页
   int currentPage = 0;
+  int postion = 0;
   List<M> items = [];
+  final bool isPostion = false;
 
   bool isLoading = false;
   int pageCount = 20;
@@ -81,7 +83,7 @@ class PageListState<M, T extends PageList> extends State<PageList> {
           } else if (mode == LoadStatus.canLoading) {
             body = Text("松开加载更多");
           } else {
-          //  body = Text("---- end ----");
+            //  body = Text("---- end ----");
           }
           return Container(
             height: height(55),
@@ -117,7 +119,8 @@ class PageListState<M, T extends PageList> extends State<PageList> {
       return _recommendGridView();
     }
     return ListView.separated(
-      itemBuilder: (context, i) => buildItem(items[i]),
+      itemBuilder: (context, i) =>
+          isPostion == false ? buildItem(items[i]) : buildItem1(items[i], i),
       itemCount: items.length,
       separatorBuilder: (context, i) => builderDivider(),
     );
@@ -136,6 +139,11 @@ class PageListState<M, T extends PageList> extends State<PageList> {
 
   ///默认列表项
   Widget buildItem(M item) {
+    return Card(child: Center(child: Text(item.toString())));
+  }
+
+  ///默认列表项
+  Widget buildItem1(M item, int postion) {
     return Card(child: Center(child: Text(item.toString())));
   }
 
