@@ -116,9 +116,9 @@ class _BottomTabBarState extends State<BottomTabBar> {
       ),
       BottomNavigationBarItem(
         icon: Image.asset('images/tabBar/shangye02.png',
-            width: width(44), height: width(44)),
+            width: width(48), height: width(48)),
         activeIcon: Image.asset('images/tabBar/shangye01.png',
-            width: width(44), height: width(44)),
+            width: width(48), height: width(48)),
         title: Text(Tr.of(context).mainBusiness),
       ),
       BottomNavigationBarItem(

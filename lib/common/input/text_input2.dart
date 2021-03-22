@@ -208,7 +208,7 @@ class _InputWidgetState extends State<InputWidget2> {
                         style: TextStyle(
                           color: _isAvailableGetVCode
                               ? kPrimaryColor
-                              : Color(0xff323232),
+                              : Color(0xff7865FE),
                           fontSize: sp(24),
                         ),
                       ),

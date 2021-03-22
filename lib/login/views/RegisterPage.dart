@@ -135,6 +135,7 @@ class _RegisterPageState extends State<RegisterPage>   with SingleTickerProvider
         alignment: Alignment.center,
         child: Text(
           _tabs[i],
+          style: TextStyle(fontSize: sp(28)),
           textAlign: TextAlign.center,
         )))
         .toList();

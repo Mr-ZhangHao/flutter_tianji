@@ -89,7 +89,6 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     color: Color(0xffFFFFFF),
                   ),
                   child: TabBar(
-
                     isScrollable: false,
                     labelPadding:
                         EdgeInsets.only(left: width(120), right: width(120)),

@@ -67,9 +67,19 @@ class _PhoneRegisterWidget extends State<PhoneRegisterWidget>
                 hintText: '${Tr.of(context).hintInputPhone}',
                 contentPadding: EdgeInsets.symmetric(horizontal: width(20)),
                 prefixIcon: GestureDetector(
-                  child: Text(
-                    '+$area ',
-                    style: TextStyle(color: Color(0xff7865FE)),
+                  child: Row(
+                    children: [
+                      Text(
+                        '+$area ',
+                        style: TextStyle(color: Color(0xff7865FE)),
+                      ),
+                      SizedBox(width: width(20),),
+                      Container(
+                        width: width(1),
+                        height: height(32),
+                        color: kPrimaryColor,
+                      ),
+                    ],
                   ),
                   onTap: () {
                     Navigator.pushNamed(context, LoginRouter.country)
