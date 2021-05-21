@@ -10,6 +10,8 @@
 * @FilePath: /etf_flutter/lib/pages/mine/provider/mine_provider.dart
 */
 
+import 'package:flutter_tianji/baike/model/NewsListModel.dart';
+import 'package:flutter_tianji/baike/model/projectListModel.dart';
 import 'package:flutter_tianji/home/server/index.dart';
 import 'package:flutter_tianji/mine/model/BuddyListModel.dart';
 import 'package:flutter_tianji/mine/server/index.dart';
@@ -106,6 +108,7 @@ class MineProvider extends ViewStateModel {
     vertifyFiled = data;
     notifyListeners();
   }
+  //策略推荐
 
   List<strategyListModel> recommendList = [];
   getRecommendApi() async {
@@ -122,4 +125,41 @@ class MineProvider extends ViewStateModel {
       setError(e, s);
     }
   }
+
+
+  //项目推荐
+  List<projectListModel> projectList = [];
+  getProjectRecommendApi() async {
+    setBusy();
+    try {
+      var res = await HomeServer.getProjectRecommend();
+      // print(res);
+      setIdle();
+      projectList = (res['data'] as List)
+          .map((e) => projectListModel.fromJson(e))
+          .toList();
+      notifyListeners();
+    } catch (e, s) {
+      setError(e, s);
+    }
+  }
+
+  //news推荐
+  List<NewsListModel> newsList = [];
+  getNewsRecommend() async {
+    setBusy();
+    try {
+      var res = await HomeServer.getNewsRecommend();
+      // print(res);
+      setIdle();
+      newsList = (res['data'] as List)
+          .map((e) => NewsListModel.fromJson(e))
+          .toList();
+      notifyListeners();
+    } catch (e, s) {
+      setError(e, s);
+    }
+  }
+
+
 }

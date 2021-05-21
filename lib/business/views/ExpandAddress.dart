@@ -16,7 +16,7 @@ class _ExpandAddressPageState extends State<ExpandAddressPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: Utils.getCommonAppBar(context, "扩充地址", elevation: 1, actions: [
+      appBar: Utils.getCommonAppBar(context, "扩充地址", elevation: 0.5, actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -62,7 +62,7 @@ class _ExpandAddressPageState extends State<ExpandAddressPage> {
         ),
       ]),
       resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: false,
+     // resizeToAvoidBottomPadding: false,
     );
   }
 }

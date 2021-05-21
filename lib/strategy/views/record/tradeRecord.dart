@@ -47,9 +47,9 @@ class _tradeRecordPageState extends State<tradeRecordPage>
               color: Color(0xffFFFFFF),
             ),
             child: TabBar(
-              isScrollable: false,
+              isScrollable: true,
               labelPadding: EdgeInsets.only(left: width(40), right: width(40)),
-              labelColor: Color(0xff7865FE),
+              labelColor: kPrimaryColor,
               unselectedLabelColor: Color(0xff323232),
               indicatorSize: TabBarIndicatorSize.label,
               indicatorColor: Theme.of(context).tabBarTheme.labelColor,

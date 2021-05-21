@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter_tianji/baike/routes/index.dart';
 import 'package:flutter_tianji/business/routes/index.dart';
 import 'package:flutter_tianji/common/tabbar/index.dart';
+import 'package:flutter_tianji/course/routes/index.dart';
 import 'package:flutter_tianji/home/routes/index.dart';
 import 'package:flutter_tianji/login/login_screen.dart';
 import 'package:flutter_tianji/login/routes/index.dart';
@@ -62,6 +63,7 @@ class Routes {
     _listRouter.add(MineRouter()); // 我的
     _listRouter.add(WalletRouter()); // 钱包
     _listRouter.add(StrategyRouter()); // 策略
+    _listRouter.add(CourseRouter()); // 策略
     _listRouter.add(LoginRouter()); // 登录注册相关
     _listRouter.add(BusinessRouter()); // 商业API
 

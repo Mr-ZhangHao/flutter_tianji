@@ -39,15 +39,17 @@ class _EmailRegisterWidget extends State<EmailRegisterWidget>
           Container(
             height: height(88),
             alignment: Alignment.centerLeft,
-            margin: EdgeInsets.symmetric(horizontal: width(60)),
+            margin: EdgeInsets.symmetric(horizontal: width(DefaultPadding)),
             padding: EdgeInsets.symmetric(horizontal: width(40)),
             decoration: BoxDecoration(
                 color: Color(0xffF4F4F4),
+                border: new Border.all(color: Color(0xFFE7E7E7), width: width(2)),
+
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(44),
-                  bottomRight: Radius.circular(44),
-                  topLeft: Radius.circular(44),
-                  topRight: Radius.circular(44),
+                  bottomLeft: Radius.circular(circular),
+                  bottomRight: Radius.circular(circular),
+                  topLeft: Radius.circular(circular),
+                  topRight: Radius.circular(circular),
                 )),
             child: FocusWidget(
               focusNode: _nameFocus,
@@ -72,6 +74,8 @@ class _EmailRegisterWidget extends State<EmailRegisterWidget>
             margin: EdgeInsets.symmetric(horizontal: width(DefaultPadding)),
             padding: EdgeInsets.symmetric(horizontal: width(40)),
             decoration: BoxDecoration(
+                border: new Border.all(color: Color(0xFFE7E7E7), width: width(2)),
+
                 color: Color(0xffF4F4F4),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(circular),
@@ -116,7 +120,8 @@ class _EmailRegisterWidget extends State<EmailRegisterWidget>
                   margin: EdgeInsets.only(top: height(36)),
                   height: height(88),
                   decoration: BoxDecoration(
-                    color: Color(0xff7865FE),
+                    color: kPrimaryColor,
+
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(circular),
                       bottomRight: Radius.circular(circular),

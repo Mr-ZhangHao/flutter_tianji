@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_tianji/common/config/global_config.dart';
 import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_tianji/common/toast/index.dart';
 import 'package:flutter_tianji/login/provider/user_provider.dart';
 import 'package:flutter_tianji/login/routes/index.dart';
 import 'package:flutter_tianji/login/server/index.dart';
+import 'package:flutter_tianji/login/widgets/text_input.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/routes/routes.dart';
 import 'package:flutter_tianji/utils/screen.dart';
@@ -32,6 +34,7 @@ class _EmailLoginWidget extends State<EmailLoginWidget>
   final _codeCtr = TextEditingController();
   final FocusNode _codeFocus = FocusNode();
   bool wantKeepAlive = true;
+  bool isopen = false;
 
   bool isCode = true;
   @override
@@ -45,15 +48,17 @@ class _EmailLoginWidget extends State<EmailLoginWidget>
           Container(
             height: height(88),
             alignment: Alignment.centerLeft,
-            margin: EdgeInsets.symmetric(horizontal: width(60)),
+            margin: EdgeInsets.symmetric(horizontal: width(DefaultPadding)),
             padding: EdgeInsets.symmetric(horizontal: width(40)),
             decoration: BoxDecoration(
+                border: new Border.all(color: Color(0xFFE7E7E7), width: width(2)),
+
                 color: Color(0xffF4F4F4),
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(44),
-                  bottomRight: Radius.circular(44),
-                  topLeft: Radius.circular(44),
-                  topRight: Radius.circular(44),
+                  bottomLeft: Radius.circular(circular),
+                  bottomRight: Radius.circular(circular),
+                  topLeft: Radius.circular(circular),
+                  topRight: Radius.circular(circular),
                 )),
             child: FocusWidget(
               focusNode: _nameFocus,
@@ -81,6 +86,8 @@ class _EmailLoginWidget extends State<EmailLoginWidget>
                       EdgeInsets.symmetric(horizontal: width(DefaultPadding)),
                   padding: EdgeInsets.symmetric(horizontal: width(40)),
                   decoration: BoxDecoration(
+                      border: new Border.all(color: Color(0xFFE7E7E7), width: width(2)),
+
                       color: Color(0xffF4F4F4),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(circular),
@@ -102,6 +109,9 @@ class _EmailLoginWidget extends State<EmailLoginWidget>
                           return getVcode('email');
                         }
                       },
+                      inputFormatters: [
+                        WhitelistingTextInputFormatter.digitsOnly
+                      ],
                       keyboardType: TextInputType.number,
                       suffixIconConstraintsMaxWidth: 160,
                       suffixIconConstraintsMinWidth: 160,
@@ -128,14 +138,22 @@ class _EmailLoginWidget extends State<EmailLoginWidget>
                   child: FocusWidget(
                     focusNode: _pswFocus,
                     child: InputWidget2(
-                      obscureText: true,
                       controller: _pswCtr,
                       focusNode: _pswFocus,
                       hintText: '${Tr.of(context).LoginPassword}',
-                      suffixIconConstraintsMaxWidth: 160,
-                      suffixIconConstraintsMinWidth: 160,
-                      suffixIconConstraintsMaxHeight: 60,
-                      suffixIconConstraintsMinHeight: 60,
+                      suffixIconConstraintsMaxWidth: 28,
+                      suffixIconConstraintsMinWidth: 28,
+                      suffixIconConstraintsMaxHeight: 100,
+                      suffixIconConstraintsMinHeight: 28,
+                      obscureText: !isopen,
+                      suffixIcon: GestureDetector(
+                        onTap: () => {setState(() => isopen = !isopen)},
+                        child: ImageIcon(
+                            AssetImage(
+                                'images/login/${isopen ? 'open' : 'close'}.png'),
+                            color: isopen ? kPrimaryColor : Color(0xffBFBFBF)),
+                      ),
+
                       maxHeight: 100,
                     ),
                   ),
@@ -173,10 +191,10 @@ class _EmailLoginWidget extends State<EmailLoginWidget>
                     EdgeInsets.symmetric(horizontal: width(DefaultPadding)),
                 child: Container(
                   width: double.infinity,
-                  margin: EdgeInsets.only(top: height(36)),
+                  margin: EdgeInsets.only(top: height(80)),
                   height: height(88),
                   decoration: BoxDecoration(
-                    color: Color(0xff7865FE),
+                    color: kPrimaryColor,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(circular),
                       bottomRight: Radius.circular(circular),
@@ -192,7 +210,7 @@ class _EmailLoginWidget extends State<EmailLoginWidget>
                 ),
               )),
           SizedBox(
-            height: height(74),
+            height: height(54),
           ),
           GestureDetector(
             onTap: () => RouterUtil.push(context, LoginRouter.register,

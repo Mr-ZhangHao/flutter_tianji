@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tianji/common/button/index.dart';
+import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/input/focus.dart';
 import 'package:flutter_tianji/common/toast/index.dart';
@@ -38,7 +39,8 @@ class _EditMoneyPswPageState extends State<EditMoneyPswPage> {
   String errorText = '';
 
   bool isError = false;
-
+  bool isopen = false;
+  bool isopen2 = false;
   bool isLoading = false;
   TfaTypeModel tfaType;
   @override
@@ -55,7 +57,7 @@ class _EditMoneyPswPageState extends State<EditMoneyPswPage> {
       appBar: AppBar(
         title: Text(Tr.of(context).ChangeFundPassword),
         centerTitle: true,
-        elevation: 1,
+        elevation: 0.5,
         leading: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => RouterUtil.goBack(context),
@@ -76,7 +78,6 @@ class _EditMoneyPswPageState extends State<EditMoneyPswPage> {
                 focusNode: _psw1Focus,
                 child: InputWidget(
                   maxHeight: 100,
-                  obscureText: true,
                   focusNode: _psw1Focus,
                   hintText: Tr.of(context).passwordLimitHint,
                   controller: _psw1Ctr,
@@ -84,6 +85,18 @@ class _EditMoneyPswPageState extends State<EditMoneyPswPage> {
                   prefixIconConstraintsMinWidth: 200,
                   prefixIconConstraintsMinHeight: 50,
                   prefixIconConstraintsMaxHeight: 50,
+                  suffixIconConstraintsMaxWidth: 28,
+                  suffixIconConstraintsMinWidth: 28,
+                  suffixIconConstraintsMaxHeight: 100,
+                  suffixIconConstraintsMinHeight: 28,
+                  obscureText: !isopen,
+                  suffixIcon: GestureDetector(
+                    onTap: () => {setState(() => isopen = !isopen)},
+                    child: ImageIcon(
+                        AssetImage(
+                            'images/login/${isopen ? 'open' : 'close'}.png'),
+                        color: isopen ? kPrimaryColor : Color(0xff787878)),
+                  ),
                   contentPadding: EdgeInsets.only(bottom: height(12)),
                   hintStyle:
                       TextStyle(color: Color(0xffCCCCCC), fontSize: sp(28)),
@@ -97,13 +110,24 @@ class _EditMoneyPswPageState extends State<EditMoneyPswPage> {
                 child: InputWidget(
                   maxHeight: 100,
                   hintText: Tr.of(context).ConfirmMoneyPassword,
-                  obscureText: true,
                   controller: _psw2Ctr,
                   focusNode: _psw2Focus,
                   prefixIconConstraintsMaxWidth: 230,
                   prefixIconConstraintsMinWidth: 230,
                   prefixIconConstraintsMinHeight: 50,
                   prefixIconConstraintsMaxHeight: 50,
+                  suffixIconConstraintsMaxWidth: 28,
+                  suffixIconConstraintsMinWidth: 28,
+                  suffixIconConstraintsMaxHeight: 100,
+                  suffixIconConstraintsMinHeight: 28,
+                  obscureText: !isopen,
+                  suffixIcon: GestureDetector(
+                    onTap: () => {setState(() => isopen = !isopen)},
+                    child: ImageIcon(
+                        AssetImage(
+                            'images/login/${isopen ? 'open' : 'close'}.png'),
+                        color: isopen ? kPrimaryColor : Color(0xff787878)),
+                  ),
                   contentPadding: EdgeInsets.only(bottom: height(12)),
                   hintStyle:
                       TextStyle(color: Color(0xffCCCCCC), fontSize: sp(28)),
@@ -132,7 +156,7 @@ class _EditMoneyPswPageState extends State<EditMoneyPswPage> {
         ),
       ),
       resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: false,
+   //   resizeToAvoidBottomPadding: false,
     );
   }
 

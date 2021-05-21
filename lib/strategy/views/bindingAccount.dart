@@ -39,7 +39,7 @@ class _bindingAccountState extends State<bindingAccount> {
         appBar: Utils.getCommonAppBar(
           context,
           "绑定账户",
-          elevation: 1.0,
+          elevation: 0.5,
         ),
         body: Container(
           color: Color(0xffFFFFFF),
@@ -54,20 +54,20 @@ class _bindingAccountState extends State<bindingAccount> {
                       child: Container(
                         decoration: BoxDecoration(
                             color: accountType == AccountType.follower
-                                ? Color(0xff327865FE)
+                                ? Color(0xff202F6EFF)
                                 : Color(0xff32B1B1B1),
                             borderRadius: BorderRadius.all(Radius.circular(48)),
                             border: Border.all(
                                 width: 1,
                                 color: accountType == AccountType.follower
-                                    ? Color(0xff7865FE)
+                                    ? kPrimaryColor
                                     : Color(0xffD9D9D9))),
                         height: height(60),
                         width: width(140),
                         child: Center(
                           child: Utils.normalText('跟随者',
                               color: accountType == AccountType.follower
-                                  ? Color(0xff7865FE)
+                                  ? kPrimaryColor
                                   : Color(0xff666666)),
                         ),
                       )),
@@ -79,20 +79,20 @@ class _bindingAccountState extends State<bindingAccount> {
                       child: Container(
                         decoration: BoxDecoration(
                             color: accountType == AccountType.traders
-                                ? Color(0xff327865FE)
+                                ? Color(0xff202F6EFF)
                                 : Color(0xff32B1B1B1),
                             borderRadius: BorderRadius.all(Radius.circular(48)),
                             border: Border.all(
                                 width: 1,
                                 color: accountType == AccountType.traders
-                                    ? Color(0xff7865FE)
+                                    ? kPrimaryColor
                                     : Color(0xffD9D9D9))),
                         height: height(60),
                         width: width(140),
                         child: Center(
                           child: Utils.normalText('交易员',
                               color: accountType == AccountType.traders
-                                  ? Color(0xff7865FE)
+                                  ? kPrimaryColor
                                   : Color(0xff666666)),
                         ),
                       ))
@@ -146,7 +146,7 @@ class _bindingAccountState extends State<bindingAccount> {
                             child: Text("+立即绑定",
                                 style: TextStyle(
                                     fontSize: sp(28),
-                                    color: Color(0xff7865FE))),
+                                    color: kPrimaryColor)),
                           ),
                         ),
                         onTap: () {

@@ -56,18 +56,24 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
         ),*/
         body: SingleChildScrollView(
           child: Container(
+            padding:EdgeInsets.symmetric(horizontal: width(30)) ,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Container(
+         /*       Container(
                   width: double.infinity,
                   child: Image.asset(
                     'images/login/bg.png',
                     fit: BoxFit.fitWidth,
                   ),
                 ),
-                SizedBox(height: height(30)),
+                SizedBox(height: height(30)),*/
+                SizedBox(height: MediaQuery.of(context).padding.top+10),
+
                 Container(
-                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(left: width(35)),
+
+                  alignment: Alignment.centerLeft,
                   width: double.infinity,
                   height: height(80),
                   decoration: BoxDecoration(
@@ -82,17 +88,12 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                   ),
                 ),
                 Container(
-                  alignment: Alignment.center,
-                  width: double.infinity,
+                  width:width(380),
                   height: height(65),
-                  decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                  ),
+
                   child: TabBar(
                     isScrollable: false,
-                    labelPadding:
-                        EdgeInsets.only(left: width(120), right: width(120)),
-                    labelColor: Color(0xff7865FE),
+                    labelColor: kPrimaryColor,
                     unselectedLabelColor: Color(0xff323232),
                     indicatorSize: TabBarIndicatorSize.label,
                     indicatorColor: Theme.of(context).tabBarTheme.labelColor,
@@ -111,8 +112,8 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
             ),
           ),
         ),
-        resizeToAvoidBottomPadding: false,
-        resizeToAvoidBottomInset: true,
+      // resizeToAvoidBottomPadding: false,
+      //  resizeToAvoidBottomInset: false,
       ),
     );
   }

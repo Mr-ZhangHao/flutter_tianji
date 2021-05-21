@@ -15,7 +15,7 @@ class StrategyDetailModel {
   int count;
   int care;
   String create_time;
-  String coin;
+  List<String> coin;
   List<ProfitList> profitList;
   List<SumTradbuy> sumTradbuy;
   List<SumTradSell> sumTradSell;
@@ -58,7 +58,7 @@ class StrategyDetailModel {
     victoryRate = json['victory_rate'];
     profit = json['profit'];
     count = json['count'];
-    coin = json['coin'];
+    coin = json['coin'].cast<String>();
     username = json['username'];
     create_time = json['create_time'];
     care = json['care'];
@@ -121,18 +121,27 @@ class StrategyDetailModel {
 
 class ProfitList {
   String date;
-  String pnl;
+  String year;
+  String month;
+  String days;
+  Object pnl;
 
-  ProfitList({this.date, this.pnl});
+  ProfitList({this.date, this.year, this.month, this.days, this.pnl});
 
   ProfitList.fromJson(Map<String, dynamic> json) {
     date = json['date'];
+    year = json['year'];
+    month = json['month'];
+    days = json['days'];
     pnl = json['pnl'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['date'] = this.date;
+    data['year'] = this.year;
+    data['month'] = this.month;
+    data['days'] = this.days;
     data['pnl'] = this.pnl;
     return data;
   }
@@ -140,41 +149,61 @@ class ProfitList {
 
 class SumTradbuy {
   String date;
-  int count;
+  String year;
+  String month;
+  String days;
+  Object count;
 
-  SumTradbuy({this.date, this.count});
+  SumTradbuy({this.date, this.year, this.month, this.days, this.count});
 
   SumTradbuy.fromJson(Map<String, dynamic> json) {
     date = json['date'];
+    year = json['year'];
+    month = json['month'];
+    days = json['days'];
     count = json['count'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['date'] = this.date;
+    data['year'] = this.year;
+    data['month'] = this.month;
+    data['days'] = this.days;
     data['count'] = this.count;
     return data;
   }
 }
+
 
 class SumTradSell {
   String date;
-  int count;
+  String year;
+  String month;
+  String days;
+  Object count;
 
-  SumTradSell({this.date, this.count});
+  SumTradSell({this.date, this.year, this.month, this.days, this.count});
 
   SumTradSell.fromJson(Map<String, dynamic> json) {
     date = json['date'];
+    year = json['year'];
+    month = json['month'];
+    days = json['days'];
     count = json['count'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['date'] = this.date;
+    data['year'] = this.year;
+    data['month'] = this.month;
+    data['days'] = this.days;
     data['count'] = this.count;
     return data;
   }
 }
+
 
 class SumTrad {
   int tradVictory;

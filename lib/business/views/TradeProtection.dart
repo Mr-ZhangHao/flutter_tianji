@@ -20,7 +20,7 @@ class _TradeProtectionPageState extends State<TradeProtectionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Utils.getCommonAppBar(context, "交易防护", elevation: 1.0, actions: [
+      appBar: Utils.getCommonAppBar(context, "交易防护", elevation: 0.5, actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

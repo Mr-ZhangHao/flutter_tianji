@@ -22,7 +22,7 @@ class _UnPhishingpageState extends State<UnPhishingpage> {
       appBar: AppBar(
         title: Text('设置防钓鱼码'),
         centerTitle: true,
-        elevation: 1,
+        elevation: 0.5,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -86,7 +86,7 @@ class _UnPhishingpageState extends State<UnPhishingpage> {
         ),
       ),
       resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: false,
+     // resizeToAvoidBottomPadding: false,
     );
   }
 }

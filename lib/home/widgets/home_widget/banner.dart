@@ -13,6 +13,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/home/provider/index.dart';
 import 'package:flutter_tianji/home/widgets/home_widget/CustomSwiperPagination.dart';
 import 'package:flutter_tianji/providers/provider_widget.dart';
@@ -29,20 +30,19 @@ class AppBarBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height(340),
+      height: height(360),
       child: Stack(
         children: <Widget>[
           ClipPath(
             clipper: CustomShape(),
-            child: Container(
-              height: height(210),
+       /*     child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
-                  Color(0xFF00D8FF),
-                  Color(0xFF003BCF),
+              //    Color(0xFF00D8FF),
+                //  Color(0xFF003BCF),
                 ], begin: Alignment.centerLeft, end: Alignment.centerRight),
               ),
-            ),
+            ),*/
           ),
           child,
         ],
@@ -84,18 +84,18 @@ class SwiperBanner extends StatelessWidget {
       builder: (BuildContext context, HomeProvider model, Widget child) {
         if (model.isIdle) {
           return Container(
-            color: Colors.white,
-            height: width(320),
+            height: height(458),
             child: Swiper(
-                autoplay: true,
-                // viewportFraction: 0.85,
-                fade: 1,
-                scale: 0.95,
-                itemCount: model.banner?.length ?? 0,
-                autoplayDisableOnInteraction: true,
-                autoplayDelay: 5000,
-                duration: 1000,
-                itemBuilder: (BuildContext context, int index) {
+           //  viewportFraction:1,
+              fade: 1,
+              autoplay: true,
+              itemCount: model.banner.length??0,
+              autoplayDisableOnInteraction: true,
+              autoplayDelay: 5000,
+              duration: 1000,
+              scale: 0.95,
+             // pagination: new SwiperPagination(),
+               itemBuilder: (BuildContext context, int index) {
                   return InkWell(
                     onTap: () {
                       RouterUtil.goWebViewPage(
@@ -103,17 +103,18 @@ class SwiperBanner extends StatelessWidget {
                     },
                     child: ExtendedImage.network(
                       model.banner[index].picture,
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.fill,
                       cache: true,
                       shape: BoxShape.rectangle,
-                      height: width(320),
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(width(12))),
+                      height: height(458),
+
                       loadStateChanged: (ExtendedImageState state) {
                         if (state.extendedImageLoadState ==
                             LoadState.completed) {
                           return ExtendedRawImage(
+                            height: height(458),
                             image: state.extendedImageInfo?.image,
+                            fit: BoxFit.fill,
                           );
                         } else {
                           return CupertinoActivityIndicator(animating: true);
@@ -127,13 +128,18 @@ class SwiperBanner extends StatelessWidget {
                     // ),
                   );
                 },
-                pagination: CustomSwiperPagination()
-                /*           pagination: SwiperPagination(
-                  alignment: Alignment.bottomCenter,
-                  builder: CustomSwiperPagination(
-                      activeColor: kWhite,
-                      size: Size(width(20), 3.0),
-                      activeSize: Size(10.0, 3.0))), */
+             //   pagination: CustomSwiperPagination(),
+
+                pagination: SwiperPagination(
+                    alignment: Alignment(-0, 0.65),
+                    // alignment: Alignment(-0, 1.65),
+                    builder: DotSwiperPaginationBuilder(
+                      size: width(15),
+                      activeSize: width(15),
+                      activeColor: Color(0xff20FFFFFF),
+                      color: Color(0xffFFFFFF),
+                      space: width(10),
+                    )),
                 ),
           );
         } else {

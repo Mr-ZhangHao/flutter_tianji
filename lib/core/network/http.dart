@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -33,6 +34,8 @@ class ApiInterceptor extends InterceptorsWrapper {
 
   @override
   onResponse(Response response) {
+    debugPrint('---api-response--->resp----->${json.encode(response.data)}');
+
     if (response.statusCode == 200) {
       Toast.close();
       ResponseData respData = ResponseData.fromJson(response.data);

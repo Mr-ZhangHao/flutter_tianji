@@ -36,8 +36,11 @@ class GlobalConfig {
   static bool isDebug = false; //是否是调试模式
 
   //api服务器地址
-  static String apiHost1 = "http://192.168.12.110:8120/";
-  // static String apiHost1 = "http://api.hbitex.com/";
+  // static String apiHost1 = "http://api.tjclouds.com/";
+
+  //测试地址
+ static String apiHost1 = "http://192.168.12.197:8134/";
+
   static String apiHost2 = "http://www.aaladfk.cn/";
   static String apiHost3 = "http://three.aaladfk.cn:9000/";
   static String apiHost4 = "http://four.aaladfk.cn:9000/";
@@ -84,8 +87,8 @@ const font_sp14 = 14;
 const font_sp16 = 16;
 const font_sp18 = 18;
 
-const DefaultPadding = 60.0;
-const circular = 44.0;
+const DefaultPadding = 40.0;
+const circular = 4.0;
 const gap_px5 = 5;
 const gap_px10 = 10;
 const gap_px15 = 15;

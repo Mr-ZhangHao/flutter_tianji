@@ -12,6 +12,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tianji/common/constants/index.dart';
+import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/input/focus.dart';
 import 'package:flutter_tianji/login/views/page/register/PhoneRegisterPage.dart';
 import 'file:///D:/android_worke/flutter_demo/TianJi/flutter_tianji/lib/login/views/page/login/EmailLoginPage.dart';
@@ -49,6 +50,8 @@ class _RegisterPageState extends State<RegisterPage>   with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
+
+    _tabs = ['${Tr.of(context).emailRegistration}', '${Tr.of(context).phoneRegistration}'];
     return Container(
 
       child: Scaffold(
@@ -59,26 +62,28 @@ class _RegisterPageState extends State<RegisterPage>   with SingleTickerProvider
         ),*/
         body: SingleChildScrollView(
           child: Container(
+            padding:EdgeInsets.symmetric(horizontal: width(30)) ,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Container(
+   /*             Container(
                   width: double.infinity,
                   child: Image.asset(
                     'images/login/bg.png',
                     fit: BoxFit.fitWidth,
                   ),
-                ),
-                SizedBox(height: height(30)),
+                ),*/
+                SizedBox(height: MediaQuery.of(context).padding.top+10),
                 Container(
-                  alignment: Alignment.center,
+                  alignment: Alignment.centerLeft,
                   width: double.infinity,
                   height: height(80),
+                  margin: EdgeInsets.only(left: width(35)),
                   decoration: BoxDecoration(
                     color: Color(0xffFFFFFF),
                   ),
                   child: Text(
-                    '欢迎注册',
+                    '${Tr.of(context).WelcomeRegister}',
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: sp(48),
@@ -86,16 +91,12 @@ class _RegisterPageState extends State<RegisterPage>   with SingleTickerProvider
                   ),
                 ),
                 Container(
-                  width: double.infinity,
+                  width:width(380),
                   height: height(80),
-                  decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                  ),
+                  alignment: Alignment.centerLeft,
                   child: TabBar(
                     isScrollable: false,
-                    labelPadding:
-                    EdgeInsets.only(left: width(120), right: width(120)),
-                    labelColor: Color(0xff7865FE),
+                    labelColor: kPrimaryColor,
                     unselectedLabelColor: Color(0xff323232),
                     indicatorSize: TabBarIndicatorSize.label,
                     indicatorColor: Theme.of(context).tabBarTheme.labelColor,
@@ -114,7 +115,7 @@ class _RegisterPageState extends State<RegisterPage>   with SingleTickerProvider
             ),
           ),
         ),
-        resizeToAvoidBottomPadding: false,
+      //  resizeToAvoidBottomPadding: false,
         resizeToAvoidBottomInset: true,
       ),
     );

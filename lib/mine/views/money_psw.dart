@@ -12,6 +12,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tianji/common/button/index.dart';
+import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/input/focus.dart';
 import 'package:flutter_tianji/common/toast/index.dart';
@@ -23,6 +24,7 @@ import 'package:flutter_tianji/login/widgets/text_input.dart';
 import 'package:flutter_tianji/mine/provider/mine_provider.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
+import 'package:flutter_tianji/utils/util.dart';
 import 'package:provider/provider.dart';
 
 class MoneyPswPage extends StatefulWidget {
@@ -52,7 +54,8 @@ class _MoneyPswPageState extends State<MoneyPswPage> {
   bool isError = false;
 
   bool isLoading = false;
-
+  bool isopen = false;
+  bool isopen2 = false;
   TfaTypeModel tfaType;
   @override
   void initState() {
@@ -65,19 +68,8 @@ class _MoneyPswPageState extends State<MoneyPswPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(Tr.of(context).moneyPassword),
-        centerTitle: true,
-        elevation: 1,
-        leading: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => RouterUtil.goBack(context),
-            child: Container(
-              alignment: Alignment.center,
-              child: Image.asset('images/mine/back@2x.png',
-                  width: width(22), height: height(36)),
-            )),
-      ),
+      appBar:    Utils.getCommonAppBar(context, '${Tr.of(context).moneyPassword}'),
+
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
@@ -88,41 +80,67 @@ class _MoneyPswPageState extends State<MoneyPswPage> {
               FocusWidget(
                 focusNode: _psw1Focus,
                 child: InputWidget(
+                  textAlign: TextAlign.left,
                   maxHeight: 100,
-                  obscureText: true,
                   focusNode: _psw1Focus,
                   hintText: Tr.of(context).passwordLimitHint,
                   controller: _psw1Ctr,
-                  prefixIconConstraintsMaxWidth: 200,
-                  prefixIconConstraintsMinWidth: 200,
+                  prefixIconConstraintsMaxWidth: 150,
+                  prefixIconConstraintsMinWidth: 150,
                   prefixIconConstraintsMinHeight: 50,
                   prefixIconConstraintsMaxHeight: 50,
-                  contentPadding: EdgeInsets.only(bottom: height(12)),
+                  suffixIconConstraintsMaxWidth: 28,
+                  suffixIconConstraintsMinWidth: 28,
+                  suffixIconConstraintsMaxHeight: 100,
+                  suffixIconConstraintsMinHeight: 28,
+                  obscureText: !isopen,
+                  suffixIcon: GestureDetector(
+                    onTap: () => {setState(() => isopen = !isopen)},
+                    child: ImageIcon(
+                        AssetImage(
+                            'images/login/${isopen ? 'open' : 'close'}.png'),
+                        color: isopen ? kPrimaryColor : Color(0xff787878)),
+                  ),
                   hintStyle:
                       TextStyle(color: Color(0xffCCCCCC), fontSize: sp(28)),
                   prefixIcon: Container(
-                      child: Text('${Tr.of(context).moneyPassword}：',
-                          style: TextStyle(color: Colors.black))),
-                ),
+                    alignment: Alignment.centerLeft,
+                    child: Utils.normalText("${Tr.of(context).moneyPassword}：",
+                    ),
+                  ),
+                 ),
               ),
               FocusWidget(
                 focusNode: _psw2Focus,
                 child: InputWidget(
                   maxHeight: 100,
                   hintText: Tr.of(context).RepeatPassword,
-                  obscureText: true,
                   controller: _psw2Ctr,
                   focusNode: _psw2Focus,
-                  prefixIconConstraintsMaxWidth: 230,
-                  prefixIconConstraintsMinWidth: 230,
+                  prefixIconConstraintsMaxWidth: 200,
+                  prefixIconConstraintsMinWidth: 200,
                   prefixIconConstraintsMinHeight: 50,
                   prefixIconConstraintsMaxHeight: 50,
-                  contentPadding: EdgeInsets.only(bottom: height(12)),
+                  suffixIconConstraintsMaxWidth: 28,
+                  suffixIconConstraintsMinWidth: 28,
+                  suffixIconConstraintsMaxHeight: 100,
+                  suffixIconConstraintsMinHeight: 28,
+                  obscureText: !isopen2,
+                  suffixIcon: GestureDetector(
+                    onTap: () => {setState(() => isopen2 = !isopen2)},
+                    child: ImageIcon(
+                        AssetImage(
+                            'images/login/${isopen2 ? 'open' : 'close'}.png'),
+                        color: isopen2 ? kPrimaryColor : Color(0xff787878)),
+                  ),
                   hintStyle:
                       TextStyle(color: Color(0xffCCCCCC), fontSize: sp(28)),
+
                   prefixIcon: Container(
-                      child: Text('${Tr.of(context).ConfirmMoneyPassword}：',
-                          style: TextStyle(color: Colors.black))),
+                    alignment: Alignment.centerLeft,
+                    child: Utils.normalText("${Tr.of(context).ConfirmMoneyPassword}：",
+                    ),
+                  ),
                 ),
               ),
               BuildVertifyForm(
@@ -145,7 +163,7 @@ class _MoneyPswPageState extends State<MoneyPswPage> {
         ),
       ),
       resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: false,
+     // resizeToAvoidBottomPadding: false,
     );
   }
 

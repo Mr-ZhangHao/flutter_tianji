@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/event/allStartegyEvent.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/refresh/page_list.dart';
@@ -42,6 +43,7 @@ class _allStrategyListViewState
         setState(() {
           (widget as AllStrategyListView).coinID = event.coinID;
           (widget as AllStrategyListView).mPlatformId = event.mPlatformId;
+
           loadData(1);
         });
       }
@@ -80,7 +82,7 @@ class _allStrategyListViewState
           decoration: BoxDecoration(
               border: Border(
                   bottom: BorderSide(width: 0.5, color: Color(0xffEAEAEA)))),
-          height: height(250),
+          height: height(270),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,8 +105,7 @@ class _allStrategyListViewState
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Utils.normalText('${model.username ?? ''}',
-                              fontWeight: FontWeight.bold),
+                          Utils.normalText('${model.username ?? ''}'),
                           SizedBox(
                             width: width(20),
                           ),
@@ -142,7 +143,7 @@ class _allStrategyListViewState
                         height: height(70),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: Color(0xff7865FE),
+                          color: kPrimaryColor,
                           borderRadius: BorderRadius.all(Radius.circular(44)),
                         ),
                         child: Text('跟随',
@@ -153,8 +154,6 @@ class _allStrategyListViewState
                         Toast.showLoading('loading...');
                         Provider.of<StrategyProvider>(context, listen: false)
                             .getnoFollowList(model.id, model.platformId);
-                        Provider.of<StrategyProvider>(context, listen: false)
-                            .getStrategyDetail(model.id);
                         //延时500毫秒执行
                         Future.delayed(const Duration(milliseconds: 1000), () {
                           //延时执行的代码
@@ -193,7 +192,7 @@ class _allStrategyListViewState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Utils.normalText('${model.profitRate ?? 0}%',
-                          fontSize: 28, color: Color(0xffFEA665)),
+                          fontSize: 40, color: Color(0xffFEA665)),
                       SizedBox(
                         height: height(20),
                       ),
@@ -206,7 +205,7 @@ class _allStrategyListViewState
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Utils.normalText('${model.profit ?? 0}%',
-                          fontSize: 28, color: Color(0xffFEA665)),
+                          fontSize: 40, color: Color(0xffFEA665)),
                       SizedBox(
                         height: height(20),
                       ),
@@ -219,7 +218,7 @@ class _allStrategyListViewState
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Utils.normalText('${model.count ?? 0}',
-                          fontSize: 28, color: Color(0xffFEA665)),
+                          fontSize: 40, color: Color(0xffFEA665)),
                       SizedBox(
                         height: height(20),
                       ),

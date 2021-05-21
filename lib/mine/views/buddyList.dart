@@ -24,7 +24,7 @@ class _buddyListPageState extends State<buddyListPage> {
         appBar: AppBar(
           title: Text('我的好友'),
           centerTitle: true,
-          elevation: 1,
+          elevation: 0.5,
           leading: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () => RouterUtil.goBack(context),

@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tianji/common/toast/index.dart';
+import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/strategy/provider/index.dart';
 import 'package:flutter_tianji/strategy/views/record/ongoingListView.dart';
 import 'package:flutter_tianji/utils/screen.dart';
 import 'package:flutter_tianji/utils/util.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_tianji/strategy/routes/index.dart';
 class genSuiDetailPage extends StatefulWidget {
   final String follow_api_id;
   final String apiId;
@@ -47,7 +49,7 @@ class _genSuiDetailPageState extends State<genSuiDetailPage>
         appBar: Utils.getCommonAppBar(
           context,
           "跟随详情",
-          elevation: 1.0,
+          elevation: 0.5,
         ),
         body: Consumer<StrategyProvider>(builder:
             (BuildContext context, StrategyProvider model, Widget child) {
@@ -62,7 +64,7 @@ class _genSuiDetailPageState extends State<genSuiDetailPage>
                     margin: EdgeInsets.symmetric(horizontal: width(30)),
                     child: Row(
                       children: [
-                        model.mGenSuiListViewModel.avatar == null
+                        widget.type == '1' ? model.mGenSuiListViewModel.avatar == null
                             ? Image.asset('images/home/avatar.png',
                                 width: 40, height: 40)
                             : ClipOval(
@@ -70,12 +72,20 @@ class _genSuiDetailPageState extends State<genSuiDetailPage>
                                     '${model.mGenSuiListViewModel.avatar}',
                                     fit: BoxFit.cover,
                                     width: 40,
-                                    height: 40)),
+                                    height: 40)):model.mGenSuiListViewModel.followAvatar == null
+                            ? Image.asset('images/home/avatar.png',
+                            width: 40, height: 40)
+                            : ClipOval(
+                            child: Image.network(
+                                '${model.mGenSuiListViewModel.followAvatar}',
+                                fit: BoxFit.cover,
+                                width: 40,
+                                height: 40)),
                         SizedBox(
                           width: width(30),
                         ),
                         Utils.normalText(
-                            model.mGenSuiListViewModel.username ?? '',
+                            widget.type == '1' ?  model.mGenSuiListViewModel.username ?? '': model.mGenSuiListViewModel.followUsername ,
                             fontWeight: FontWeight.bold),
                         Expanded(child: Text('')),
                         Visibility(
@@ -92,19 +102,19 @@ class _genSuiDetailPageState extends State<genSuiDetailPage>
                               ],
                             ),
                             onTap: () {
-                              /*     Provider.of<StrategyProvider>(context, listen: false)
-                            .getnoFollowList(
-                                (   model.mGenSuiListViewModel.id, (   model.mGenSuiListViewModel.platformId);
-                        Provider.of<StrategyProvider>(context, listen: false)
-                            .getStrategyDetail(data[index].id);
-                        //延时500毫秒执行
-                        Future.delayed(const Duration(milliseconds: 1000), () {
-                          //延时执行的代码
-                          RouterUtil.pushResult(
-                              context,
-                              "${StrategyRouter.genDan}?type=${1}&apiId=${data[index].id}&platformID=${data[index].platformId}",
-                              (result) {});
-                        }); */
+                              Toast.showLoading('loading...');
+                              Provider.of<StrategyProvider>(context, listen: false)
+                                  .getnoFollowList(
+                                  widget.follow_api_id, model.mGenSuiListViewModel.platformId);
+
+                              //延时500毫秒执行
+                              Future.delayed(const Duration(milliseconds: 1000), () {
+                                //延时执行的代码
+                                RouterUtil.pushResult(
+                                    context,
+                                    "${StrategyRouter.genDan}?type=${1}&apiId=${widget.follow_api_id}&platformID=${model.mGenSuiListViewModel.platformId}",
+                                        (result) {});
+                              });
                             },
                           ),
                           visible:

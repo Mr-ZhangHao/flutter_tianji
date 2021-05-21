@@ -49,6 +49,7 @@ class Tr {
       'main Encyclopedia': '项目百科',
       'main Strategy': '策略库',
       'main Business': '商业API',
+      'main course': '课程',
       'main Assets': '资产',
       'login Email': '邮箱登录',
       'login Phone': '手机登录',
@@ -139,7 +140,7 @@ class Tr {
       'tradr Available': '可用',
       'tradr fee': '手续费',
       'cancel': '取消',
-      'determine': '確定',
+      'determine': '确定',
       'Confirm': '确认',
       'Phone code hint': '手机验证码不能为空',
       'Email code hint': '邮箱验证码不能为空',
@@ -291,6 +292,19 @@ class Tr {
       'login successful': '登录成功',
       'home customer service': '天玑在线客服',
       'Password reset': '密码已重置',
+      'Welcome register': '欢迎注册',
+      'phone registration': '手机注册',
+      'email registration': '邮箱注册',
+      'loginPwd hint': '登录密码为6-20位，且位数字字母组合。',
+      'Set password': '设置登录密码',
+      'InvitationCodeHint': '邀请码（选填）',
+      'SignUpNow': '立即注册',
+      'TJAgreement': '《天玑阁协议》',
+      'TJAgreement2': '我已阅读并同意使用',
+      'splash jump over': '跳过',
+      'Language': '语言',
+      'Simplified Chinese': '简体中文',
+      'English': 'English',
     },
     'US': {
       'home customer service': 'service',
@@ -301,6 +315,7 @@ class Tr {
       'main Encyclopedia': 'Encyclopedia',
       'main Strategy': 'Strategy',
       'main Business': 'Business',
+      'main course': 'Course',
       'main Assets': 'Assets',
       'login Email': 'Login email',
       'login Phone': 'Login phone',
@@ -548,11 +563,88 @@ class Tr {
       'Registered successfu': 'Registered successfu',
       'terms hint': '閱讀並同意使用《天玑阁协议》',
       'Password reset': 'Password reset',
+      'Welcome register': 'Welcome  register',
+      'phone registration': 'Register phone',
+      'email registration': 'Register email',
+      'loginPwd hint':'login password is 6-20 digits and  combination of numbers and letters.',
+      'Set password': 'Setting login password',
+      'InvitationCodeHint': 'Invitation code (optional)',
+      'SignUpNow': 'Sign up now',
+      'TJAgreement': 'TJ Agreement',
+      'TJAgreement2': 'I have read and agree to us',
+      'splash jump over': 'jump Over',
+      'Language': 'Language',
+      'Simplified Chinese': '简体中文',
+      'English': 'English',
     },
     'HK': {}
   };
 
   ///** 我的 **//
+
+  get Language {
+    return _localizedValues[localProvider.locale.countryCode]['Language'];
+  }
+
+  get SimplifiedChinese {
+    return _localizedValues[localProvider.locale.countryCode]
+    ['Simplified Chinese'];
+  }
+
+  get English {
+    return _localizedValues[localProvider.locale.countryCode]['English'];
+  }
+  get splashJumpOver {
+    return _localizedValues[localProvider.locale.countryCode]
+    ['splash jump over'];
+  }
+  get InputPassword2 {
+    return _localizedValues[localProvider.locale.countryCode]['hint input Password2'];
+  }
+
+  get SetNewPassword {
+    return _localizedValues[localProvider.locale.countryCode]['Set New Password'];
+  }
+
+  get TJAgreement2 {
+    return _localizedValues[localProvider.locale.countryCode]['TJAgreement2'];
+  }
+
+  get TJAgreement {
+    return _localizedValues[localProvider.locale.countryCode]['TJAgreement'];
+  }
+
+  get SignUpNow {
+    return _localizedValues[localProvider.locale.countryCode]['SignUpNow'];
+  }
+
+  get InvitationCodeHint {
+    return _localizedValues[localProvider.locale.countryCode]['InvitationCodeHint'];
+  }
+
+  get SetPassword {
+    return _localizedValues[localProvider.locale.countryCode]['Set password'];
+  }
+
+  get loginPwdHint2 {
+    return _localizedValues[localProvider.locale.countryCode]['loginPwd hint'];
+  }
+
+  get WelcomeRegister {
+    return _localizedValues[localProvider.locale.countryCode]
+    ['Welcome register'];
+  }
+
+  get phoneRegistration {
+    return _localizedValues[localProvider.locale.countryCode]
+    ['phone registration'];
+  }
+
+  get emailRegistration {
+    return _localizedValues[localProvider.locale.countryCode]
+    ['email registration'];
+  }
+
   get Passwordreset {
     return _localizedValues[localProvider.locale.countryCode]['Password reset'];
   }
@@ -1627,6 +1719,10 @@ class Tr {
 
   get mainBusiness {
     return _localizedValues[localProvider.locale.countryCode]['main Business'];
+  }
+
+  get mainCourse {
+    return _localizedValues[localProvider.locale.countryCode]['main course'];
   }
 
   get mainAssets {

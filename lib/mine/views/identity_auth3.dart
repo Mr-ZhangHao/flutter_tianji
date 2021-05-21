@@ -36,7 +36,7 @@ class _IdentityAuth3PageState extends State<IdentityAuth3Page> {
       appBar: AppBar(
           title: Text('${Tr.of(context).CertificateAuthentication}'),
           centerTitle: true,
-          elevation: 1,
+          elevation: 0.5,
           leading: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () => RouterUtil.goBack(context),

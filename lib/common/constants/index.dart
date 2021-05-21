@@ -41,7 +41,7 @@ const imgHost = 'http://img.lxfy.cn/';
 
 
 
-const kPrimaryColor = Color(0xFF7865FE);
+const kPrimaryColor = Color(0xFF2F6EFF);
 const kPrimaryblackColor = Color(0xff323232);
 const kbgColor = Color(0xffF6F6F6);
 const kbackgroundColor = Color(0xFFF1EFF1);

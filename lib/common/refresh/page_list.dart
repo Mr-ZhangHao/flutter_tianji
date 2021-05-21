@@ -24,7 +24,7 @@ class PageListState<M, T extends PageList> extends State<PageList> {
   int currentPage = 0;
   int postion = 0;
   List<M> items = [];
-  final bool isPostion = false;
+   bool isPostion = false;
 
   bool isLoading = false;
   int pageCount = 20;

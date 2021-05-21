@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/refresh/page_list.dart';
 import 'package:flutter_tianji/common/toast/index.dart';
@@ -26,7 +27,7 @@ class _myInterestState extends State<myInterest> {
       appBar: Utils.getCommonAppBar(
         context,
         "我的关注",
-        elevation: 1.0,
+        elevation: 0.5,
       ),
       body: myInterestListView(),
     );
@@ -93,21 +94,15 @@ class _myInterestListViewState
                 width: width(20),
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Utils.normalText('${model.username ?? ""}',
-                          fontWeight: FontWeight.bold),
-                      SizedBox(
-                        width: width(20),
-                      ),
-                    ],
+                  Utils.normalText('${model.username ?? ""}',
+                      fontWeight: FontWeight.bold),
+                  SizedBox(
+                    height: height(10),
                   ),
-                  Utils.normalText('${model.platform ?? ""}',
+                  Utils.normalText('${model.platform}/${model.coin}',
                       fontSize: 24, color: Color(0xff999999)),
                 ],
               ),
@@ -118,7 +113,7 @@ class _myInterestListViewState
                   height: height(70),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Color(0xff7865FE),
+                    color: kPrimaryColor,
                     borderRadius: BorderRadius.all(Radius.circular(44)),
                   ),
                   child: Text('取消关注',

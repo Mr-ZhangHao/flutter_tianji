@@ -25,7 +25,7 @@ class _tariffStandardPageState extends State<tariffStandardPage> {
         appBar: AppBar(
           title: Text('资费标准'),
           centerTitle: true,
-          elevation: 1,
+          elevation: 0.5,
           leading: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () => RouterUtil.goBack(context),

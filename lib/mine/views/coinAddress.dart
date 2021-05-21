@@ -15,7 +15,7 @@ class _coinAddressPageState extends State<coinAddressPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-          Utils.getCommonAppBar(context, "我的交易地址", elevation: 1.0, actions: [
+          Utils.getCommonAppBar(context, "我的交易地址", elevation: 0.5, actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -73,7 +73,7 @@ class _MineScreenState extends State<MineScreen> {
               child: Icon(Icons.arrow_back_ios, size: sp(40), color: kWhite),
             ),
             centerTitle: true,
-            elevation: 1,
+            elevation: 0.5,
             floating: true,
             backgroundColor: Color(0xffF9F8FA),
             ////滑动时是否悬浮
@@ -87,7 +87,7 @@ class _MineScreenState extends State<MineScreen> {
               background: UserHeaderWidget(),
             ),
             actions: <Widget>[
-              InkWell(
+            /*  InkWell(
                 onTap: () {
                   ///切换语言
                   print("languageCode:" + Tr.locales.countryCode);
@@ -98,9 +98,9 @@ class _MineScreenState extends State<MineScreen> {
                     Provider.of<LocalProvider>(context, listen: false)
                         .switchLocale(1);
                   }
-                  /*else{
+                  *//*else{
                       Provider.of<LocalProvider>(context,listen: false).switchLocale(1);
-                    }*/
+                    }*//*
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -108,7 +108,7 @@ class _MineScreenState extends State<MineScreen> {
                   child: Image.asset('images/mine/ch.png',
                       width: width(80), height: width(48), fit: BoxFit.fill),
                 ),
-              )
+              )*/
             ],
           ),
           SliverList(
@@ -139,9 +139,8 @@ class _MineScreenState extends State<MineScreen> {
                       text: '${Tr.of(context).aboutUs}',
                       image: '',
                       onTab: () {
-                        Provider.of<GloableProvider>(context, listen: false)
-                            .setCurrIndex(3);
-                        RouterUtil.push(context, Routes.home);
+
+                        RouterUtil.push(context, MineRouter.focusUs);
                       },
                     ),
                     Container(
@@ -195,7 +194,7 @@ class _MineScreenState extends State<MineScreen> {
                       text: '退出登录',
                       image: '',
                       onTab: () {
-                        showDialog(
+                    /*    showDialog(
                             context: context,
                             builder: (context) {
                               return CupertinoAlertDialog(
@@ -213,6 +212,12 @@ class _MineScreenState extends State<MineScreen> {
                                       onPressed: logout),
                                 ],
                               );
+                            });*/
+
+                        Utils.ShowDialogUtils(
+                            context, '${Tr.of(context).signOutHint}',
+                            confirm: () {
+                              logout();
                             });
                       },
                     )
@@ -370,7 +375,7 @@ class UserHeaderWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('${model.userInfo?.username}',
+                      Text('${model.userInfo?.username??""}',
                           style: TextStyle(
                               color: Color(0xffFFFFFF), fontSize: sp(34))),
                       SizedBox(
@@ -382,7 +387,7 @@ class UserHeaderWidget extends StatelessWidget {
                   ),
                   onTap: () {
                     TextEditingController _textCtr = TextEditingController();
-                    Utils.ShowDialogUtils(context, '修改昵称',
+                    Utils.ShowDialogUtils(context, '修改用户名',
                         isvisible: true, textcontroller: _textCtr, confirm: () {
                       _ModifyUserName(context, _textCtr);
                     });
@@ -418,6 +423,7 @@ class UserHeaderWidget extends StatelessWidget {
                   SizedBox(
                     height: height(376),
                   ),
+
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -429,7 +435,7 @@ class UserHeaderWidget extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () {
                             if (model.userInfo.kycStatus == 0) {
-                              RouterUtil.push(context, MineRouter.identityType);
+                              RouterUtil.push(context, MineRouter.auth1);
                             } else {
                               RouterUtil.push(
                                   context, MineRouter.vertifyStatus);
@@ -512,7 +518,7 @@ class UserHeaderWidget extends StatelessWidget {
       Toast.showLoading('loading...');
       try {
         var response = await MineServer.upLoadImage(image);
-        print('身份证反面$response');
+        // print('身份证反面$response');
         if (response != null) {
           var avatar = response['data']['fileUrl'];
           await MineServer.setAvatar(avatar);
@@ -591,5 +597,6 @@ class UserHeaderWidget extends StatelessWidget {
     Toast.showText("修改成功");
     _textCtr.text = '';
     Provider.of<MineProvider>(context, listen: false).getUserInfo();
+    Navigator.pop(context);
   }
 }

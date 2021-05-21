@@ -12,6 +12,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter_tianji/home/views/notice.dart';
 import 'package:flutter_tianji/home/views/notices_detail.dart';
+import 'package:flutter_tianji/home/views/ranking.dart';
 import 'package:flutter_tianji/home/views/search_coin.dart';
 import 'package:flutter_tianji/routes/router_init.dart';
 
@@ -19,6 +20,7 @@ class HomeRouter implements IRouterProvider {
   static String notice = '/notice';
   static String noticeDetail = '/noticeDetail';
   static String search = '/search';
+  static String rankings = '/ranking';
 
   @override
   void initRouter(FluroRouter router) {
@@ -41,5 +43,13 @@ class HomeRouter implements IRouterProvider {
         Handler(handlerFunc: (context, Map<String, List<String>> params) {
       return SearchCoinPage();
     }));
+
+    // 排行榜
+    router.define(rankings, handler:
+        Handler(handlerFunc: (context, Map<String, List<String>> params) {
+      return ranking();
+    }));
+
+
   }
 }

@@ -9,6 +9,7 @@
 * @Deprecated: 否
 * @FilePath: /ETF/lib/providers/provider_manager.dart
 */
+import 'package:flutter_tianji/baike/provider/baike_provider.dart';
 import 'package:flutter_tianji/home/provider/index.dart';
 import 'package:flutter_tianji/login/provider/user_provider.dart';
 import 'package:flutter_tianji/mine/provider/mine_provider.dart';
@@ -29,4 +30,5 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider(create: (_) => UserProvider()),
   ChangeNotifierProvider(create: (_) => StrategyProvider()),
   ChangeNotifierProvider(create: (_) => HomeProvider()),
+  ChangeNotifierProvider(create: (_) => baikeProvider()),
 ];

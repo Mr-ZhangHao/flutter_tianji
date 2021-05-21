@@ -1,10 +1,11 @@
 class genSuiListViewModel {
   int apiId;
+  int platformId;
   int followApiId;
   String platform;
   String followUsername;
   String followAvatar;
-  String coin;
+  List<String> coin;
   String profit;
   int size;
   int count;
@@ -36,6 +37,7 @@ class genSuiListViewModel {
     apiId = json['api_id'];
     followApiId = json['follow_api_id'];
     platform = json['platform'];
+    platformId = json['platformId'];
     followUsername = json['follow_username'];
     followAvatar = json['follow_avatar'];
     coin = json['coin'];
@@ -54,6 +56,7 @@ class genSuiListViewModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['api_id'] = this.apiId;
     data['follow_api_id'] = this.followApiId;
+    data['platformId'] = this.platformId;
     data['platform'] = this.platform;
     data['follow_username'] = this.followUsername;
     data['follow_avatar'] = this.followAvatar;

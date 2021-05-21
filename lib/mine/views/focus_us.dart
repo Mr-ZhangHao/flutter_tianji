@@ -21,7 +21,7 @@ class FocusUsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(Tr.of(context).Follow),
         centerTitle: true,
-        elevation: 1,
+        elevation: 0.5,
         leading: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => RouterUtil.goBack(context),

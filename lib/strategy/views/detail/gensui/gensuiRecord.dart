@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/strategy/views/detail/gensui/gensuiRecordListView.dart';
 import 'package:flutter_tianji/utils/screen.dart';
 
@@ -27,7 +28,7 @@ class _gensuiRecordPageState extends State<gensuiRecordPage> {
                 decoration: BoxDecoration(
                     border: new Border.all(
                         color:
-                            type == 1 ? Color(0xFF7865FE) : Color(0xff909090),
+                            type == 1 ? kPrimaryColor : Color(0xff909090),
                         width: width(2)),
                     borderRadius: new BorderRadius.circular(width(8))),
                 alignment: Alignment.center,
@@ -39,7 +40,7 @@ class _gensuiRecordPageState extends State<gensuiRecordPage> {
                       Text('正在跟随',
                           style: TextStyle(
                             color: type == 1
-                                ? Color(0xFF7865FE)
+                                ? kPrimaryColor
                                 : Color(0xff909090),
                             fontSize: 12,
                           )),
@@ -59,7 +60,7 @@ class _gensuiRecordPageState extends State<gensuiRecordPage> {
                 decoration: BoxDecoration(
                     border: new Border.all(
                         color:
-                            type == 1 ? Color(0xff909090) : Color(0xFF7865FE),
+                            type == 1 ? Color(0xff909090) : kPrimaryColor,
                         width: width(2)),
                     borderRadius: new BorderRadius.circular(width(8))),
                 alignment: Alignment.center,
@@ -72,7 +73,7 @@ class _gensuiRecordPageState extends State<gensuiRecordPage> {
                           style: TextStyle(
                             color: type == 1
                                 ? Color(0xff909090)
-                                : Color(0xFF7865FE),
+                                : kPrimaryColor,
                             fontSize: 12,
                           )),
                     ],

@@ -29,6 +29,7 @@ class SharePage extends StatefulWidget {
 
 class _SharePageState extends State<SharePage> {
   GlobalKey _globalKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return WrapContainer(
@@ -76,16 +77,37 @@ class _SharePageState extends State<SharePage> {
           child: Container(
             height: MediaQuery.of(context).size.height,
             child: Stack(
+              alignment: Alignment.center,
+
               children: <Widget>[
-                Image.asset('images/mine/shar_bg2.png', fit: BoxFit.fill),
+
+                // Image.asset('images/mine/shar_bg2.png', fit: BoxFit.fill),
                 Positioned(
-                  top: width(410),
-                  left: width(40),
-                  right: width(40),
+                  top: height(10),
                   child: Container(
+                    width: MediaQuery.of(context).size.width,
                     alignment: Alignment.center,
+                    child: Image.asset(
+                      'images/mine/shar_bg3.png',
+                      fit: BoxFit.fill,
+                      width: width(564),
+                      height: height(82),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: width(160),
+                  child: Container(
+                    width: width(560),
+                    height: height(810),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("images/mine/shar_bg2.png"),
+                          fit: BoxFit.fill),
+                    ),
                     padding:
-                        EdgeInsets.only(bottom: height(50), top: height(90)),
+                        EdgeInsets.only(bottom: height(110), top: height(430)),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
@@ -94,98 +116,101 @@ class _SharePageState extends State<SharePage> {
                           color: Colors.white,
                           width: width(310),
                           alignment: Alignment.center,
-                          margin: EdgeInsets.symmetric(vertical: height(20)),
                           child: QrImage(
                               data: Provider.of<MineProvider>(context)
                                   .userInfo
                                   .link,
                               size: width(310)),
                         ),
-                        SizedBox(height: width(20)),
                         // Text('${Tr.of(context).InvitationCode}:${Provider.of<MineProvider>(context).userInfo.pid.toString()}', style: TextStyle(fontSize: sp(32), color: Color(0xff323232))),
-                        SizedBox(height: width(20)),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Utils.normalText('邀请码：',
-                                fontWeight: FontWeight.bold),
-                            Utils.normalText(
-                                '${Provider.of<MineProvider>(context).userInfo.pid.toString()}',
-                                color: Color(0xffFF3A14),
-                                fontWeight: FontWeight.bold),
-                            SizedBox(
-                              width: width(20),
-                            ),
-                            GestureDetector(
-                              child: Container(
-                                width: width(120),
-                                height: height(48),
-                                decoration: BoxDecoration(
-                                  color: Color(0xffFF3A14),
-                                  borderRadius: new BorderRadius.all(
-                                      new Radius.circular(width(26))),
-                                ),
-                                child: Center(
-                                  child: Utils.normalText('复制',
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                      textAlign: TextAlign.center),
-                                ),
-                              ),
-                              onTap: () {
-                                Clipboard.setData(ClipboardData(
-                                    text: Provider.of<MineProvider>(context,
-                                            listen: false)
-                                        .userInfo
-                                        .pid
-                                        .toString()));
-                                Toast.showSuccess(
-                                    Tr.of(context).copySuccessfully);
-                              },
-                            )
-                          ],
-                        ),
-                        SizedBox(height: width(120)),
-                        GestureDetector(
-                          child: Container(
-                            width: width(280),
-                            height: height(86),
-                            decoration: BoxDecoration(
-                              color: Color(0xffFFFFFF),
-                              borderRadius:
-                                  new BorderRadius.all(new Radius.circular(43)),
-                            ),
-                            child: Center(
-                              child: Utils.normalText('立即分享',
-                                  color: Color(0xff7865FE),
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                  textAlign: TextAlign.center),
-                            ),
-                          ),
-                          onTap: () async {
-                            Map<Permission, PermissionStatus> statuses =
-                                await [Permission.storage].request();
-
-                            RenderRepaintBoundary boundary =
-                                _globalKey.currentContext.findRenderObject();
-                            ui.Image image = await boundary.toImage();
-                            ByteData byteData = await image.toByteData(
-                                format: ui.ImageByteFormat.png);
-                            final result = await ImageGallerySaver.saveImage(
-                                byteData.buffer.asUint8List());
-                            if (result != null) {
-                              Toast.showSuccess(Tr.of(context).SavedAlbum);
-                            } else {
-                              Toast.showError(Tr.of(context).Savefailed);
-                            }
-                          },
-                        )
                       ],
                     ),
                   ),
                 ),
+                Positioned(
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Utils.normalText('邀请码：', fontWeight: FontWeight.bold,color: kWhite),
+                          Utils.normalText(
+                              '${Provider.of<MineProvider>(context).userInfo.pid.toString()}',
+                              color: Color(0xffFFEF00),
+                              fontWeight: FontWeight.bold),
+                          SizedBox(
+                            width: width(20),
+                          ),
+                          GestureDetector(
+                            child: Container(
+                              width: width(120),
+                              height: height(48),
+                              decoration: BoxDecoration(
+                                color: Color(0xffFF3A14),
+                                borderRadius: new BorderRadius.all(
+                                    new Radius.circular(width(26))),
+                              ),
+                              child: Center(
+                                child: Utils.normalText('复制',
+                                    color: Colors.white,
+                                    fontSize: 24,
+                                    textAlign: TextAlign.center),
+                              ),
+                            ),
+                            onTap: () {
+                              Clipboard.setData(ClipboardData(
+                                  text: Provider.of<MineProvider>(context,
+                                          listen: false)
+                                      .userInfo
+                                      .pid
+                                      .toString()));
+                              Toast.showSuccess(
+                                  Tr.of(context).copySuccessfully);
+                            },
+                          )
+                        ],
+                      ),
+                      SizedBox(height: width(20)),
+                      GestureDetector(
+                        child: Container(
+                          width: width(280),
+                          height: height(86),
+                          decoration: BoxDecoration(
+                            color: Color(0xffFFFFFF),
+                            borderRadius:
+                                new BorderRadius.all(new Radius.circular(43)),
+                          ),
+                          child: Center(
+                            child: Utils.normalText('立即分享',
+                                color: Color(0xff7865FE),
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                textAlign: TextAlign.center),
+                          ),
+                        ),
+                        onTap: () async {
+                          Map<Permission, PermissionStatus> statuses =
+                              await [Permission.storage].request();
+
+                          RenderRepaintBoundary boundary =
+                              _globalKey.currentContext.findRenderObject();
+                          ui.Image image = await boundary.toImage();
+                          ByteData byteData = await image.toByteData(
+                              format: ui.ImageByteFormat.png);
+                          final result = await ImageGallerySaver.saveImage(
+                              byteData.buffer.asUint8List());
+                          if (result != null) {
+                            Toast.showSuccess(Tr.of(context).SavedAlbum);
+                          } else {
+                            Toast.showError(Tr.of(context).Savefailed);
+                          }
+                        },
+                      )
+                    ],
+                  ),
+                  top: height(970),
+                )
               ],
             ),
           ),
@@ -197,6 +222,7 @@ class _SharePageState extends State<SharePage> {
 
 class WrapContainer extends StatelessWidget {
   final Widget child;
+
   const WrapContainer({Key key, @required this.child}) : super(key: key);
 
   @override

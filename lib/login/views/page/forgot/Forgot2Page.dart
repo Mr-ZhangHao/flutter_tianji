@@ -11,6 +11,7 @@ import 'package:flutter_tianji/login/server/index.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/routes/routes.dart';
 import 'package:flutter_tianji/utils/screen.dart';
+import 'package:flutter_tianji/utils/util.dart';
 
 class Forgot2PageWidget extends StatefulWidget {
   final String account;
@@ -29,32 +30,31 @@ class _Forgot2PageWidgetState extends State<Forgot2PageWidget> {
   final FocusNode _InvitationCodeFocus = FocusNode();
   final _codeCtr = TextEditingController();
   final FocusNode _codeFocus = FocusNode();
+
+  bool isopen = false;
+  bool isopen2 = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhite,
-      appBar: AppBar(
-        title: Text(''),
-        elevation: 1,
-        centerTitle: true,
-      ),
+      appBar: Utils.getCommonAppBar(context, '${Tr.of(context).FindPassword}'),
       body: SingleChildScrollView(
           child: Container(
-        margin: EdgeInsets.symmetric(horizontal: width(DefaultPadding)),
+        margin: EdgeInsets.symmetric(horizontal: width(60)),
         child: Column(
           children: [
-            SizedBox(height: height(48)),
-            Container(
+          /*  Container(
               alignment: Alignment.centerLeft,
               width: double.infinity,
               child: Text(
-                '找回密码',
+                '${Tr.of(context).ForgetPassword}',
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: sp(48),
                     fontWeight: FontWeight.bold),
               ),
-            ),
+            ),*/
             SizedBox(height: height(20)),
             Container(
               alignment: Alignment.centerLeft,
@@ -63,19 +63,21 @@ class _Forgot2PageWidgetState extends State<Forgot2PageWidget> {
                 color: Color(0xffFFFFFF),
               ),
               child: Text(
-                '登录密码6-20位，且为数字字母组合',
+                '${Tr.of(context).loginPwdHint2}',
                 style: TextStyle(
                     color: Color(0xffB7B7B7),
-                    fontSize: sp(28),
+                    fontSize: sp(24),
                     fontWeight: FontWeight.normal),
               ),
             ),
-            SizedBox(height: height(30)),
+            SizedBox(height: height(20)),
             Container(
               height: height(88),
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(horizontal: width(40)),
               decoration: BoxDecoration(
+                  border: new Border.all(color: Color(0xFFE7E7E7), width: width(2)),
+
                   color: Color(0xffF4F4F4),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(circular),
@@ -86,14 +88,21 @@ class _Forgot2PageWidgetState extends State<Forgot2PageWidget> {
               child: FocusWidget(
                 focusNode: _psw1Focus,
                 child: InputWidget2(
-                  obscureText: true,
                   controller: _psw1Ctr,
                   focusNode: _psw1Focus,
-                  hintText: '设置新密码',
-                  suffixIconConstraintsMaxWidth: 160,
-                  suffixIconConstraintsMinWidth: 160,
-                  suffixIconConstraintsMaxHeight: 60,
-                  suffixIconConstraintsMinHeight: 60,
+                  hintText: '${Tr.of(context).SetNewPassword}',
+                  suffixIconConstraintsMaxWidth: 30,
+                  suffixIconConstraintsMinWidth: 30,
+                  suffixIconConstraintsMaxHeight: 100,
+                  suffixIconConstraintsMinHeight: 30,
+                  obscureText: !isopen,
+                  suffixIcon: GestureDetector(
+                    onTap: () => {setState(() => isopen = !isopen)},
+                    child: ImageIcon(
+                        AssetImage(
+                            'images/login/${isopen ? 'open' : 'close'}.png'),
+                        color: isopen ? kPrimaryColor : Color(0xff787878)),
+                  ),
                   maxHeight: 100,
                 ),
               ),
@@ -104,6 +113,7 @@ class _Forgot2PageWidgetState extends State<Forgot2PageWidget> {
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(horizontal: width(40)),
               decoration: BoxDecoration(
+                  border: new Border.all(color: Color(0xFFE7E7E7), width: width(2)),
                   color: Color(0xffF4F4F4),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(circular),
@@ -114,25 +124,35 @@ class _Forgot2PageWidgetState extends State<Forgot2PageWidget> {
               child: FocusWidget(
                 focusNode: _psw2Focus,
                 child: InputWidget2(
-                  obscureText: true,
                   controller: _psw2Ctr,
                   focusNode: _psw2Focus,
-                  hintText: '请再次输入新密码',
-                  suffixIconConstraintsMaxWidth: 160,
-                  suffixIconConstraintsMinWidth: 160,
-                  suffixIconConstraintsMaxHeight: 60,
-                  suffixIconConstraintsMinHeight: 60,
+                  hintText: '${Tr.of(context).InputPassword2}',
+                  suffixIconConstraintsMaxWidth: 30,
+                  suffixIconConstraintsMinWidth: 30,
+                  suffixIconConstraintsMaxHeight: 100,
+                  suffixIconConstraintsMinHeight: 30,
+                  obscureText: !isopen2,
+                  suffixIcon: GestureDetector(
+                    onTap: () => {setState(() => isopen2 = !isopen2)},
+                    child: ImageIcon(
+                        AssetImage(
+                            'images/login/${isopen2 ? 'open' : 'close'}.png'),
+                        color: isopen2 ? kPrimaryColor : Color(0xff787878)),
+                  ),
                   maxHeight: 100,
                 ),
               ),
             ),
             SizedBox(height: height(20)),
             Container(
+
               height: height(88),
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(horizontal: width(40)),
               decoration: BoxDecoration(
                   color: Color(0xffF4F4F4),
+                  border: new Border.all(color: Color(0xFFE7E7E7), width: width(2)),
+
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(circular),
                     bottomRight: Radius.circular(circular),
@@ -145,7 +165,7 @@ class _Forgot2PageWidgetState extends State<Forgot2PageWidget> {
                   obscureText: false,
                   controller: _codeCtr,
                   focusNode: _codeFocus,
-                  hintText: '请输入验证',
+                  hintText: '${Tr.of(context).hintInputVerificationCode}',
                   getVCode: () {
                     if (widget.account.contains('@')) {
                       return getVcode('email');
@@ -174,7 +194,7 @@ class _Forgot2PageWidgetState extends State<Forgot2PageWidget> {
                 margin: EdgeInsets.only(top: height(36)),
                 height: height(88),
                 decoration: BoxDecoration(
-                  color: Color(0xff7865FE),
+                  color: kPrimaryColor,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(circular),
                     bottomRight: Radius.circular(circular),
@@ -184,7 +204,7 @@ class _Forgot2PageWidgetState extends State<Forgot2PageWidget> {
                 ),
                 alignment: Alignment.center,
                 child: Text(
-                  '确定',
+                  '${Tr.of(context).determine}',
                   style: TextStyle(color: Colors.white, fontSize: sp(28)),
                 ),
               ),

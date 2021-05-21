@@ -223,6 +223,7 @@ class Toast {
 
   static showText(String text) {
     BotToast.showCustomText(
+
       toastBuilder: (_) => TextWidget(text: text),
     );
   }

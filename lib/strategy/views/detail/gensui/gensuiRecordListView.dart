@@ -2,6 +2,7 @@
   订单详情跟随列表记录
  */
 import 'package:flutter/material.dart';
+import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/refresh/page_list.dart';
 import 'package:flutter_tianji/strategy/model/genSuiListViewModel.dart';
@@ -62,7 +63,7 @@ class _gensuiRecordListViewtate
             highlightColor: Colors.transparent,
             radius: 0.0,
             child: Container(
-              height: this.postions == postion ? height(360) : height(300),
+              height: this.postions == postion ? height(360) : height(360),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -91,14 +92,14 @@ class _gensuiRecordListViewtate
                                 height: height(20),
                               ),
                               Utils.normalText('${model.platform ?? ""}',
-                                  color: Color(0xffA5A5A5)),
+                                  color: Color(0xff999999)),
                             ],
                           )
                         ],
                       ),
                       Row(
                         children: [
-                          Utils.normalText('数据详情', color: Color(0xff7865FE)),
+                          Utils.normalText('数据详情', color: kPrimaryColor),
                           SizedBox(
                             width: width(14),
                           ),
@@ -112,9 +113,9 @@ class _gensuiRecordListViewtate
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Utils.normalText('跟随币种', color: Color(0xffA5A5A5)),
-                      Utils.normalText('跟随收益', color: Color(0xffA5A5A5)),
-                      Utils.normalText('跟随笔数', color: Color(0xffA5A5A5)),
+                      Utils.normalText('跟随币种', color: Color(0xffA5A5A5),fontSize: 26),
+                      Utils.normalText('跟随收益', color: Color(0xffA5A5A5),fontSize: 26),
+                      Utils.normalText('跟随笔数', color: Color(0xffA5A5A5),fontSize: 26),
                     ],
                   ),
                   SizedBox(
@@ -168,10 +169,13 @@ class _gensuiRecordListViewtate
                                     '跟随币种：',
                                     color: Color(0xff666666),
                                   ),
+                                  SizedBox(height: height(10),),
                                   Utils.normalText(
                                     '跟随时间：',
                                     color: Color(0xff666666),
                                   ),
+                                  SizedBox(height: height(10),),
+
                                   Utils.normalText(
                                     '跟随时长：',
                                     color: Color(0xff666666),
@@ -186,9 +190,13 @@ class _gensuiRecordListViewtate
                                   Utils.normalText(
                                     '${model.coin ?? ""}',
                                   ),
-                                  Utils.normalText('${model.profit ?? ""}',
+                                  SizedBox(height: height(10),),
+
+                                  Utils.normalText('${model.createTime ?? ""}',
                                       textAlign: TextAlign.center),
-                                  Utils.normalText('${model.count ?? ""}',
+                                  SizedBox(height: height(10),),
+
+                                  Utils.normalText('${model.count ?? ""} 天',
                                       textAlign: TextAlign.center),
                                 ],
                               )),
@@ -343,7 +351,7 @@ class _gensuiRecordListViewtate
                                     '${model.createTime ?? ""}',
                                   ),
                                   Utils.normalText(
-                                    '${model.time ?? ""}',
+                                    '${model.time ?? ""} 天',
                                   ),
                                 ],
                               )),

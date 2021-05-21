@@ -20,7 +20,7 @@ class _CollectTaskListPageState extends State<CollectTaskListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Utils.getCommonAppBar(context, "任务列表", elevation: 1.0, actions: [
+      appBar: Utils.getCommonAppBar(context, "任务列表", elevation: 0.5, actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

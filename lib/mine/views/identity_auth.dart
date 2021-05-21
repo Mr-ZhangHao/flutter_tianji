@@ -53,7 +53,7 @@ class _IdentityAuthPageState extends State<IdentityAuthPage> {
       appBar: AppBar(
         title: Text('身份认证'),
         centerTitle: true,
-        elevation: 1,
+        elevation: 0.5,
       ),
       body: SingleChildScrollView(
         child: Container(

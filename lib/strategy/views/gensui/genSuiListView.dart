@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/refresh/page_list.dart';
+import 'package:flutter_tianji/common/toast/index.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/strategy/model/genSuiListViewModel.dart';
 import 'package:flutter_tianji/strategy/provider/index.dart';
@@ -172,18 +174,18 @@ class _genDanListViewState
                     children: [
                       Row(
                         children: [
-                          model.avatar == null
+                          model.followAvatar == null
                               ? Image.asset('images/home/avatar.png',
                                   width: 50, height: 50)
                               : ClipOval(
-                                  child: Image.network('${model.avatar}',
+                                  child: Image.network('${model.followAvatar}',
                                       fit: BoxFit.cover,
                                       width: 50,
                                       height: 50)),
                           SizedBox(
                             width: width(24),
                           ),
-                          Utils.normalText(model.username ?? ""),
+                          Utils.normalText(model.followUsername ?? ""),
                         ],
                       ),
                       Visibility(
@@ -196,23 +198,39 @@ class _genDanListViewState
                                 width: width(14),
                               ),
                               Utils.normalText('修改跟随',
-                                  color: Color(0xffA396FD)),
+                                  color: kPrimaryColor),
                             ],
                           ),
                           onTap: () {
-                            /*   Provider.of<StrategyProvider>(context, listen: false)
-                            .getnoFollowList(
-                                (model.id, (model.platformId);
-                        Provider.of<StrategyProvider>(context, listen: false)
-                            .getStrategyDetail(data[index].id);
-                        //延时500毫秒执行
-                        Future.delayed(const Duration(milliseconds: 1000), () {
-                          //延时执行的代码
-                          RouterUtil.pushResult(
-                              context,
-                              "${StrategyRouter.genDan}?type=${1}&apiId=${data[index].id}&platformID=${data[index].platformId}",
-                              (result) {});
-                        }); */
+                           Toast.showLoading('loading...');
+                              Provider.of<StrategyProvider>(context, listen: false)
+                                  .getnoFollowList(
+                                  model.followApiId, model.platformId);
+                              //延时500毫秒执行
+                              Future.delayed(const Duration(milliseconds: 1000), () {
+                                //延时执行的代码
+                                RouterUtil.pushResult(
+                                    context,
+                                    "${StrategyRouter.genDan}?type=${1}&apiId=${model.followApiId}&platformID=${model.platformId}",
+                                        (result) {});
+                              });
+
+                           Toast.showLoading('loading...');
+                           Provider.of<StrategyProvider>(context, listen: false)
+                               .getnoFollowList(
+                               model.followApiId, model.platformId);
+                           /*  Provider.of<StrategyProvider>(context, listen: false)
+                            .getStrategyDetail(data[index].id);*/
+                           Provider.of<StrategyProvider>(context, listen: false).coinList=model.coin;
+                           //延时500毫秒执行
+                           Future.delayed(const Duration(milliseconds: 1500), () {
+                             //延时执行的代码
+                             RouterUtil.pushResult(
+                                 context,
+                                 "${StrategyRouter.genDan}?type=${1}&apiId=${model.followApiId}&platformID=${model.platformId}",
+                                     (result) {});
+                           });
+
                           },
                         ),
                         visible: (widget as genSuiListView).index == 1,

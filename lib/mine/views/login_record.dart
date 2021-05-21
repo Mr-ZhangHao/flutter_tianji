@@ -20,7 +20,7 @@ class _LoginRecordPageState
       appBar: AppBar(
         centerTitle: true,
         title: Text(Tr.of(context).HistoryLogin),
-        elevation: 1,
+        elevation: 0.5,
         leading: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => RouterUtil.goBack(context),

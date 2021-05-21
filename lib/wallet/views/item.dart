@@ -21,6 +21,7 @@ import 'package:flutter_tianji/utils/util.dart';
 import 'package:flutter_tianji/wallet/model/coin_info_model.dart';
 import 'package:flutter_tianji/wallet/provider/index.dart';
 import 'package:flutter_tianji/wallet/routes/index.dart';
+import 'package:flutter_tianji/wallet/views/record_bibi2.dart';
 import 'package:provider/provider.dart';
 
 class ItemPage extends StatefulWidget {
@@ -54,8 +55,11 @@ class _MineScreenState extends State<ItemPage> {
       ),
       body: SingleChildScrollView(
           child: Container(
-        decoration: BoxDecoration(
-            border:
+            padding: EdgeInsets.only(left: width(20), right: width(20)),
+
+            decoration: BoxDecoration(
+                color: Color(0xfff9f8fa),
+                border:
                 Border(top: BorderSide(color: kLineColor1, width: width(1)))),
         child: Column(
           children: <Widget>[
@@ -63,7 +67,6 @@ class _MineScreenState extends State<ItemPage> {
               alignment: Alignment.centerLeft,
               height: height(220),
               margin: EdgeInsets.only(top: height(26)),
-              padding: EdgeInsets.symmetric(horizontal: width(28)),
               child: Consumer<WallerProvider>(
                 builder:
                     (BuildContext context, WallerProvider model, Widget child) {
@@ -167,6 +170,9 @@ class _MineScreenState extends State<ItemPage> {
                 },
               ),
             ),
+
+      //    Expanded(child:   RecordBibiPage2())
+
           ],
         ),
       )),

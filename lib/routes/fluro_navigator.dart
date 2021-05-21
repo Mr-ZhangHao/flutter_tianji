@@ -11,6 +11,7 @@
 */
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tianji/baike/routes/index.dart';
 import 'routes.dart';
 import 'application.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,5 +66,11 @@ class RouterUtil {
     //fluro 不支持传中文,需转换
     push(context,
         '${Routes.webViewPage}?title=${Uri.encodeComponent(title)}&url=${Uri.encodeComponent(url)}');
+  }
+
+
+  static void goWebViewPage2(BuildContext context, String title, String content, String name, String time, String image) {
+    push(context, '${BaikeRouter.newsDetails}?title=${Uri.encodeComponent(title)}&contents=${Uri.encodeComponent(content)}&name=${Uri.encodeComponent(name)}&time=${Uri.encodeComponent(time)}&time=${Uri.encodeComponent(image)}',
+        clearStack: false);
   }
 }

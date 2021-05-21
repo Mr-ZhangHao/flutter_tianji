@@ -11,6 +11,7 @@
 */
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_tianji/common/button/index.dart';
 import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/toast/index.dart';
@@ -39,7 +40,7 @@ class InputWidget2 extends StatefulWidget {
     this.enabled = true,
     this.readOnly = false,
     this.maxLine = 1,
-    this.hintStyle = const TextStyle(fontSize: 12, color: kTextColor9),
+    this.hintStyle = const TextStyle(fontSize: 12, color: Color(0xffB0B0B0)),
     this.suffixStyle,
     this.maxHeight = 70,
     this.maxLength,
@@ -55,6 +56,8 @@ class InputWidget2 extends StatefulWidget {
     this.textAlign = TextAlign.left,
     this.onTab,
     this.style = const TextStyle(fontSize: 14, color: Color(0xff323232)),
+    this.inputFormatters,
+
   }) : super(key: key);
   final controller;
   final focusNode;
@@ -95,6 +98,7 @@ class InputWidget2 extends StatefulWidget {
   final TextAlign textAlign;
   final Function onTab;
   final TextStyle style;
+  final List<TextInputFormatter> inputFormatters;
 
   @override
   _InputWidgetState createState() => _InputWidgetState();
@@ -167,6 +171,8 @@ class _InputWidgetState extends State<InputWidget2> {
         style: widget.style,
         keyboardType: widget.keyboardType,
         readOnly: widget.readOnly,
+        inputFormatters: widget.getVCode != null ? [
+          WhitelistingTextInputFormatter.digitsOnly   ]:widget.inputFormatters,
         //输入文本的样式
         decoration: InputDecoration(
           prefixStyle: TextStyle(color: Colors.black),
@@ -198,7 +204,7 @@ class _InputWidgetState extends State<InputWidget2> {
                       Container(
                         width: width(1),
                         height: height(widget.maxHeight * 0.3),
-                        color: kPrimaryColor,
+                        color: Color(0xffCACACA),
                       ),
                       SizedBox(
                         width: width(30),
@@ -208,7 +214,7 @@ class _InputWidgetState extends State<InputWidget2> {
                         style: TextStyle(
                           color: _isAvailableGetVCode
                               ? kPrimaryColor
-                              : Color(0xff7865FE),
+                              : kPrimaryColor,
                           fontSize: sp(24),
                         ),
                       ),

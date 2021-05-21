@@ -24,7 +24,7 @@ class MyButton extends StatelessWidget {
       this.text,
       this.onPressed,
       this.bgColor,
-      this.circular = 30,
+      this.circular = 4,
       this.color = Colors.white})
       : super(key: key);
 
@@ -34,7 +34,7 @@ class MyButton extends StatelessWidget {
       child: MaterialButton(
         elevation: 0,
         onPressed: onPressed,
-        child: Text(text, style: TextStyle(fontSize: sp(34), color: color)),
+        child: Text(text, style: TextStyle(fontSize: sp(28), color: color)),
         minWidth: double.infinity,
         height: height(88),
         color: bgColor ?? kPrimaryColor,

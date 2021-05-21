@@ -33,13 +33,17 @@ class WalletListItem extends StatelessWidget {
           Provider.of<WallerProvider>(context, listen: false)
               .setCurrentCoin(Currency ?? "");
           RouterUtil.push(
-              context, "${WalletRouter.item}?coinName=${Currency ?? ""}");
+              context, "${WalletRouter.recordBibi2}?coinName=${Currency ?? ""}&id=${model.currentCoin.coinId}");
         },
         child: Container(
           height: height(220),
-          color: Color(0xFFFFFFFF),
-          padding: EdgeInsets.only(left: width(20), right: width(20)),
-          margin: EdgeInsets.only(top: height(10)),
+          padding: EdgeInsets.only(left: width(30), right: width(30)),
+          margin: EdgeInsets.only(top: height(30)),
+          decoration: BoxDecoration(
+              color: Color(0xFFFFFFFF),
+              borderRadius:
+              new BorderRadius.circular(
+                  width(12))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -52,8 +56,8 @@ class WalletListItem extends StatelessWidget {
                     children: [
                       Image.asset(
                           image == "" ? 'images/home/icon_quantify.png' : image,
-                          width: width(80),
-                          height: height(80)),
+                          width: 40,
+                          height: 40),
                       SizedBox(
                         width: height(20),
                       ),
@@ -64,11 +68,11 @@ class WalletListItem extends StatelessWidget {
                           Text('${Currency ?? ""}',
                               style: TextStyle(
                                   fontSize: sp(32),
-                                  color: Color(0xFF604F6A),
-                                  fontWeight: FontWeight.bold)),
+                                  color: Color(0xFF604F6A),)),
                           Text('${model.isOpen ? amount ?? "0.00" : "****"}',
                               style: TextStyle(
-                                  fontSize: sp(36), color: Color(0xFF444444))),
+                                  fontSize: sp(36), color: Color(0xFF444444),
+                                  fontWeight: FontWeight.bold)),
                         ],
                       )
                     ],
@@ -84,7 +88,7 @@ class WalletListItem extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                     border: Border(
-                        bottom: BorderSide(width: 0.5, color: kDividerColor))),
+                        bottom: BorderSide(width: 0.5, color: Color(0xff58d8d8d8)))),
               ),
               SizedBox(
                 height: height(20),
@@ -105,7 +109,7 @@ class WalletListItem extends StatelessWidget {
                   Container(
                     width: width(1),
                     height: height(30),
-                    color: Color(0xffE8E8E8),
+                    color: Color(0xff58d8d8d8),
                   ),
                   Expanded(
                       child: GestureDetector(

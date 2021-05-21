@@ -23,6 +23,7 @@ import 'package:flutter_tianji/login/widgets/text_input.dart';
 import 'package:flutter_tianji/mine/provider/mine_provider.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
+import 'package:flutter_tianji/utils/util.dart';
 import 'package:provider/provider.dart';
 
 class BindEmailPage extends StatefulWidget {
@@ -62,22 +63,11 @@ class _BindEmailPageState extends State<BindEmailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(Tr.of(context).bindMailbox),
-        centerTitle: true,
-        elevation: 1,
-        leading: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => RouterUtil.goBack(context),
-            child: Container(
-              alignment: Alignment.center,
-              child: Image.asset('images/mine/back@2x.png',
-                  width: width(22), height: height(36)),
-            )),
-      ),
+      appBar:    Utils.getCommonAppBar(context, '${Tr.of(context).bindMailbox}'),
+
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: width(40)),
+          padding: EdgeInsets.symmetric(horizontal: width(30)),
           color: Colors.white,
           child: Column(
             children: <Widget>[
@@ -94,7 +84,6 @@ class _BindEmailPageState extends State<BindEmailPage> {
                   prefixIconConstraintsMinWidth: 150,
                   prefixIconConstraintsMinHeight: 50,
                   prefixIconConstraintsMaxHeight: 50,
-                  contentPadding: EdgeInsets.only(bottom: height(12)),
                   hintStyle:
                       TextStyle(color: Color(0xffCCCCCC), fontSize: sp(28)),
                   prefixIcon: Container(
@@ -137,13 +126,13 @@ class _BindEmailPageState extends State<BindEmailPage> {
                   child: Text(errorText,
                       style: TextStyle(color: Color(0xffFF3838)))),
               SizedBox(height: height(70)),
-              MyButton(text: Tr.of(context).submitBinding, onPressed: _confirm)
+              MyButton(text: Tr.of(context).determine, onPressed: _confirm)
             ],
           ),
         ),
       ),
       resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: false,
+   //   resizeToAvoidBottomPadding: false,
     );
   }
 

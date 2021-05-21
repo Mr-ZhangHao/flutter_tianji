@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/input/focus.dart';
 import 'package:flutter_tianji/common/qrscan/index.dart';
 import 'package:flutter_tianji/common/toast/index.dart';
@@ -166,7 +167,7 @@ class _addBindAccountState extends State<addBindAccount> {
           widget.editorId != null && widget.editorId.isNotEmpty
               ? "修改API"
               : "添加API",
-          elevation: 1.0,
+          elevation: 0.5,
         ),
         backgroundColor: Colors.white,
         body: Consumer<StrategyProvider>(builder:
@@ -220,18 +221,19 @@ class _addBindAccountState extends State<addBindAccount> {
                               suffixIconConstraintsMinWidth: 200,
                               readOnly: true,
                               suffixIcon: Container(
+                                margin: EdgeInsets.only(right: width(20)),
+
                                 alignment: Alignment.centerRight,
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
-                                    Text(platformType ?? ""),
-                                    SizedBox(width: width(10)),
-                                    Image.asset(
+                                    Utils.normalText(platformType ?? "" ),
+                                     Expanded(child: Container(),flex: 1,),
+                                    Expanded(child: Image.asset(
                                       'images/mine/next.png',
-                                      width: width(18),
-                                      color: Color(0xff323232),
-                                    ),
+                                      width: width(16),
+                                      height: height(16),
+                                      color: Color(0xffD1D1D1),
+                                    )),
                                   ],
                                 ),
                               ),
@@ -239,6 +241,7 @@ class _addBindAccountState extends State<addBindAccount> {
                                   color: Color(0xff323232), fontSize: sp(28)),
                               prefixIcon: Center(
                                 child: Utils.normalText('平台'),
+
                               ),
                               hintText: null,
                             ),
@@ -278,18 +281,18 @@ class _addBindAccountState extends State<addBindAccount> {
                               suffixIconConstraintsMinWidth: 200,
                               readOnly: true,
                               suffixIcon: Container(
-                                alignment: Alignment.centerRight,
+                                margin: EdgeInsets.only(right: width(20)),
+                                alignment: Alignment.center,
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
-                                    Text(tradeType),
-                                    SizedBox(width: width(10)),
-                                    Image.asset(
-                                      'images/mine/next.png',
-                                      width: width(18),
-                                      color: Color(0xff323232),
-                                    ),
+                                    Utils.normalText(tradeType ?? "" ),
+                                    Expanded(child: Container(),flex: 1,),
+                                Expanded(child: Image.asset(
+                                  'images/mine/next.png',
+                                  width: width(16),
+                                  height: height(16),
+                                  color: Color(0xffD1D1D1),
+                                )),
                                   ],
                                 ),
                               ),
@@ -337,18 +340,18 @@ class _addBindAccountState extends State<addBindAccount> {
                               suffixIconConstraintsMinWidth: 200,
                               readOnly: true,
                               suffixIcon: Container(
+                                margin: EdgeInsets.only(right: width(20)),
                                 alignment: Alignment.centerRight,
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
-                                    Text(coin),
-                                    SizedBox(width: width(10)),
-                                    Image.asset(
+                                    Utils.normalText(coin ?? "" ),
+                                    Expanded(child: Container(),flex: 1,),
+                                    Expanded(child: Image.asset(
                                       'images/mine/next.png',
-                                      width: width(18),
-                                      color: Color(0xff323232),
-                                    ),
+                                      width: width(16),
+                                      height: height(16),
+                                      color: Color(0xffD1D1D1),
+                                    )),
                                   ],
                                 ),
                               ),
@@ -423,11 +426,15 @@ class _addBindAccountState extends State<addBindAccount> {
                               prefixIconConstraintsMaxHeight: 60,
                               prefixIconConstraintsMinHeight: 60,
                               maxHeight: 100,
-                              suffixIcon: QrScanCode(
-                                  image: 'images/mine/sys.png',
-                                  callback: (value) {
-                                    _secretkeyCtr.text = value;
-                                  }),
+                              suffixIcon: Container(
+                                width: width(28),
+                                height: height(28),
+                                child: QrScanCode(
+                                    image: 'images/mine/sys.png',
+                                    callback: (value) {
+                                      _secretkeyCtr.text = value;
+                                    }),
+                              ),
                               prefixIcon: Center(
                                 child: Utils.normalText('Secretkey'),
                               ),
@@ -453,11 +460,14 @@ class _addBindAccountState extends State<addBindAccount> {
                                 prefixIconConstraintsMaxHeight: 60,
                                 prefixIconConstraintsMinHeight: 60,
                                 maxHeight: 100,
-                                suffixIcon: QrScanCode(
+                                suffixIcon:Container(
+                                  width: width(28),
+                                  height: height(28),
+                                  child: QrScanCode(
                                     image: 'images/mine/sys.png',
                                     callback: (value) {
                                       _passphraseCtr.text = value;
-                                    }),
+                                    })),
                                 prefixIcon: Center(
                                   child: Utils.normalText('Passphrase'),
                                 ),
@@ -475,6 +485,9 @@ class _addBindAccountState extends State<addBindAccount> {
                               hintText: '请输入',
                               hintStyle: TextStyle(
                                   fontSize: sp(28), color: Color(0xffcccccc)),
+                              style: TextStyle(
+
+                                  fontSize: sp(28), color: Color(0xff323232)),
                               suffixIconConstraintsMaxWidth: 100,
                               suffixIconConstraintsMinWidth: 100,
                               suffixIconConstraintsMaxHeight: 60,
@@ -501,7 +514,7 @@ class _addBindAccountState extends State<addBindAccount> {
                             height: height(88),
                             alignment: Alignment.center,
                             decoration: new BoxDecoration(
-                              color: Color(0xFF7865FE), // 底色
+                              color: kPrimaryColor, // 底色
                               borderRadius:
                                   new BorderRadius.circular(width(48)), // 圆角度
                             ),
@@ -572,13 +585,16 @@ class _addBindAccountState extends State<addBindAccount> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              Text(platformType ?? ""),
-                              SizedBox(width: width(10)),
-                              Image.asset(
+
+                              Utils.normalText(platformType ?? "" ),
+                              Expanded(child: Container(),flex: 1,),
+
+                              Expanded(child: Image.asset(
                                 'images/mine/next.png',
-                                width: width(18),
-                                color: Color(0xff323232),
-                              ),
+                                width: width(16),
+                                height: height(16),
+                                color: Color(0xffD1D1D1),
+                              )),
                             ],
                           ),
                         ),
@@ -731,7 +747,7 @@ class _addBindAccountState extends State<addBindAccount> {
                       height: height(88),
                       alignment: Alignment.center,
                       decoration: new BoxDecoration(
-                        color: Color(0xFF7865FE), // 底色
+                        color: kPrimaryColor, // 底色
                         borderRadius:
                             new BorderRadius.circular(width(48)), // 圆角度
                       ),

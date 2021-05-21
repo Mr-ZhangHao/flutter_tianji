@@ -53,8 +53,14 @@ class _UpDateVersionDialogState extends State<UpDateVersionDialog> {
                           width: width(560),
                           height: width(150),
                           fit: BoxFit.fill),
+          /*
+                      Image.asset('images/mine/update-head.png',
+                          width: width(560),
+                          height: width(150),
+                          fit: BoxFit.fill),*/
                       Container(
-                        alignment: Alignment.center,
+                        padding: EdgeInsets.symmetric(horizontal: width(40)),
+                        alignment: Alignment.centerLeft,
                         child: Text(widget.codeName ?? "新版本更新",
                             style: TextStyle(
                                 color: Colors.black,
@@ -70,56 +76,71 @@ class _UpDateVersionDialogState extends State<UpDateVersionDialog> {
                             //  Text('1.全新会员体系上线；', style: TextStyle(color: Color(0xff323232), fontSize: sp(28))),
                             Text(widget.content ?? '部分Bug修复',
                                 style: TextStyle(
-                                    color: Color(0xff323232),
+                                    color: Color(0xff666666),
                                     fontSize: sp(28))),
                             //  Text('3.新增更多币种的充值；', style: TextStyle(color: Color(0xff323232), fontSize: sp(28))),
                             //  Text('4.支持越南语。', style: TextStyle(color: Color(0xff323232), fontSize: sp(28))),
                           ],
                         ),
                       ),
+
                     ],
                   ),
                 ),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: InkWell(
-                        onTap: () => Navigator.pop(context),
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: width(96),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  top: BorderSide(
-                                      width: 0.5, color: Color(0xffd8d8d8)),
-                                  right: BorderSide(
-                                      width: 0.5, color: Color(0xffd8d8d8)))),
-                          child: Text('暂不更新',
-                              style: TextStyle(
-                                  fontSize: sp(28), color: Color(0xff838383))),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: InkWell(
-                        onTap: _confirm,
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: width(96),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  top: BorderSide(
-                                      width: 0.5, color: Color(0xffd8d8d8)))),
-                          child: Text('立即更新',
-                              style: TextStyle(
-                                  fontSize: sp(28),
-                                  color: kPrimaryColor,
-                                  fontWeight: FontWeight.w600)),
-                        ),
-                      ),
-                    ),
+
+                Stack(
+                  children: [
+                      Positioned(child:     Image.asset('images/mine/update-head2.png',
+                          width: width(124),
+                          height: width(84),
+                          fit: BoxFit.fill),right: 0,bottom: 0,),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width(40),vertical: height(40)),
+                      child:        Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: InkWell(
+                              onTap: () => Navigator.pop(context),
+                              child: Container(
+                                width: width(250),
+                                alignment: Alignment.center,
+                                height: width(80),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(width(8)),
+                                    border: Border.all(
+                                        width: 1, color: Color(0xffd8d8d8)
+                                    )),
+                                child: Text('下次再说',
+                                    style: TextStyle(
+                                        fontSize: sp(28), color: Color(0xff838383))),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: width(80),),
+                          Expanded(
+                            child: InkWell(
+                              onTap: _confirm,
+                              child: Container(
+
+                                width: width(250),
+                                alignment: Alignment.center,
+                                height: width(80),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(width(8)),
+                                    border: Border.all(
+                                        width: 1, color: kPrimaryColor)),
+                                child: Text('立即更新',
+                                    style: TextStyle(
+                                        fontSize: sp(28),
+                                        color: kPrimaryColor,
+                                        fontWeight: FontWeight.w600)),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),),
                   ],
-                ),
+                )
               ],
             ),
           ),

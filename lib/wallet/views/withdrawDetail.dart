@@ -60,7 +60,7 @@ class _MineScreenState extends State<WithdrawDetailPage> {
       _numCtr.addListener(() {
         if (_numCtr.text.isNotEmpty) {
           num _num = num.parse(_numCtr.text);
-          num _withdrawFee = num.parse(model.currentCoin.coin.withdrawFee);
+          num _withdrawFee = num.parse(model.currentCoin.erc20WithdrawFee);
           setState(() =>
               _numStr = (_num > _withdrawFee) ? (_num - _withdrawFee) : 0.0);
         } else {
@@ -111,18 +111,7 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                       EdgeInsets.fromLTRB(width(40), height(32), width(40), 0),
                   child: Column(
                     children: <Widget>[
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, height(24)),
-                        child: Text(
-                            // '可用',
-                            '${Tr.of(context).tradrAvailable} ${Utils.cutZero(model.currentCoin?.available ?? '0.0')} ${model.currentCoin?.coin?.name ?? '--/--'}',
-                            style: TextStyle(
-                                color: kTextColor3,
-                                fontSize: sp(28),
-                                height: 1.1,
-                                fontWeight: FontWeight.bold)),
-                      ),
+
                       Visibility(
                         visible: widget.coinName == 'USDT',
                         child: ChooseChainTypeWidget(
@@ -156,7 +145,7 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                           obscureText: false,
                           controller: _numCtr,
                           focusNode: _numFocus,
-                          maxLength: 30,
+                          //maxLength: 30,
                           hintText: maxFoo(model),
                           // inputFormatters: [_UsNumberTextInputFormatter()],
                           // inputFormatters: [WhitelistingTextInputFormatter(RegExp(r"[0-9.]"))],
@@ -210,6 +199,21 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                         ),
                       ),
                       Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.fromLTRB(0, 0, 0, height(24)),
+                        child: Text(
+                          // '可用',
+                            '${Tr.of(context).tradrAvailable} ${Utils.cutZero(model.currentCoin?.available ?? '0.0')} ${model.currentCoin?.coin?.name ?? '--/--'}',
+                            style: TextStyle(
+                                color: Color(0xffA8A8A8),
+                                fontSize: sp(28),
+                                height: 1.1,)),
+                      ),
+                      Container(
+                        child:Utils.normalText("手续费根据前一日市场行情动态调整",color: Color(0xff5A535F),fontSize: 24),
+                        alignment: Alignment.centerLeft,
+                      ),
+                      Container(
                         height: height(40),
                         margin:
                             EdgeInsets.fromLTRB(0, height(30), 0, height(92)),
@@ -250,7 +254,7 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                                   Text('${Tr.of(context).assetArrivalquantity}',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        color: kLineColor2,
+                                        color: Color(0xff5A535F),
                                         fontSize: sp(28),
                                         height: 1.1,
                                       )),
@@ -260,7 +264,7 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                                   '$_numStr ${model.currentCoin?.coin?.name ?? '--/--'}',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      color: kTextColor3,
+                                      color: Color(0xff5A535F),
                                       fontSize: sp(28),
                                       height: 1.1,
                                       fontWeight: FontWeight.bold)),
@@ -275,9 +279,9 @@ class _MineScreenState extends State<WithdrawDetailPage> {
                           width: width(670),
                           height: height(88),
                           decoration: BoxDecoration(
-                              color: Color(0xff7865FE),
+                              color: kPrimaryColor,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(width(44)))),
+                                  BorderRadius.all(Radius.circular(width(4)))),
                           alignment: Alignment.center,
                           child: Text('${Tr.of(context).assetCarryon}',
                               textAlign: TextAlign.center,

@@ -30,7 +30,7 @@ class _SearchCoinPageState extends State<SearchCoinPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: false,
-        elevation: 1,
+        elevation: 0.5,
         backgroundColor: Colors.white,
         title: TextFileWidget(
           focus: _searchFocus,

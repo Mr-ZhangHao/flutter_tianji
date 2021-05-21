@@ -78,7 +78,7 @@ class _WalletScreenState extends State<WalletScreen>
                         height: height(320),
                         width: width(690),
                         padding: EdgeInsets.symmetric(
-                            vertical: height(40), horizontal: width(40)),
+                            vertical: height(30), horizontal: width(30)),
                         decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage("images/wallet/Mask@2x.png"),
@@ -106,8 +106,8 @@ class _WalletScreenState extends State<WalletScreen>
                                         child: Image.asset(
                                             'images/wallet/hb@2x.png',
                                             fit: BoxFit.contain,
-                                            width: width(36),
-                                            height: height(36)),
+                                            width: width(38),
+                                            height: height(38)),
                                       ),
                                       Container(
                                         padding:
@@ -115,7 +115,7 @@ class _WalletScreenState extends State<WalletScreen>
                                         child: Text('总资产估值（USDT）：',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.white.withAlpha(78),
                                                 fontSize: sp(32),
                                                 height: 1.1)),
                                       )
@@ -141,6 +141,8 @@ class _WalletScreenState extends State<WalletScreen>
                                 ],
                               ),
                             ),
+                            SizedBox(height: height(20),),
+
                             Container(
                               padding: EdgeInsets.fromLTRB(
                                   0, height(6), 0, height(0)),
@@ -155,7 +157,7 @@ class _WalletScreenState extends State<WalletScreen>
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: sp(64),
+                                      fontSize: sp(52),
                                       height: 1.1)),
                             ),
                             Container(
@@ -176,6 +178,7 @@ class _WalletScreenState extends State<WalletScreen>
                                       fontSize: sp(24),
                                       height: 1.1)),
                             ),
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -190,12 +193,12 @@ class _WalletScreenState extends State<WalletScreen>
                                       Container(
                                         width: width(150),
                                         height: height(64),
-                                        margin:
-                                            EdgeInsets.only(right: width(20)),
+                                        margin: EdgeInsets.only(right: width(20)),
                                         decoration: BoxDecoration(
+                                            color: Color(0xFF207865FE),
                                             border: new Border.all(
                                                 color: Color(0xFFFFFFFF),
-                                                width: width(2)),
+                                                width: width(1)),
                                             borderRadius:
                                                 new BorderRadius.circular(
                                                     width(8))),
@@ -223,9 +226,10 @@ class _WalletScreenState extends State<WalletScreen>
                                         margin:
                                             EdgeInsets.only(right: width(20)),
                                         decoration: BoxDecoration(
+                                            color: Color(0xFF207865FE),
                                             border: new Border.all(
                                                 color: Color(0xFFFFFFFF),
-                                                width: width(2)),
+                                                width: width(1)),
                                             borderRadius:
                                                 new BorderRadius.circular(
                                                     width(8))),

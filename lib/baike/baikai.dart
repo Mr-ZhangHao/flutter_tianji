@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tianji/baike/provider/baike_provider.dart';
 import 'package:flutter_tianji/baike/routes/index.dart';
 import 'package:flutter_tianji/baike/view/baikeRightDrawe.dart';
+import 'package:flutter_tianji/baike/view/news.dart';
 import 'package:flutter_tianji/baike/view/project.dart';
+import 'package:flutter_tianji/business/views/found.dart';
 import 'package:flutter_tianji/common/constants/index.dart';
+import 'package:flutter_tianji/common/event/newsEvent.dart';
+import 'package:flutter_tianji/common/event/projectListEvent.dart';
+import 'package:flutter_tianji/routes/application.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
+import 'package:provider/provider.dart';
 
 // 项目百科
 enum ProjectBaikeType {
@@ -30,6 +37,18 @@ class _BaikeState extends State<Baike> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((mag) {
+      Provider.of<baikeProvider>(context, listen: false).getscreenType();
+      Provider.of<baikeProvider>(context, listen: false).getBanner();
+    });
+    Application.eventBus.on<newsEvent>().listen((event) {
+      if (mounted) {
+        setState(() {
+          assetsType = ProjectBaikeType.News;
+        });
+      }
+    });
+
   }
 
   void _aActiveChanged() {
@@ -43,15 +62,26 @@ class _BaikeState extends State<Baike> {
       assetsType = ProjectBaikeType.News;
     });
   }
+  String selecType = '';
 
+  Map<String, dynamic> map = {
+/*    "id": cateList[i].id,
+    "name": cateList[i].name,*/
+  };
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: homeAppBarWidget(),
       backgroundColor: Color(0xffF9F8FA),
-      body: projectPage(),
+      body:assetsType == ProjectBaikeType.Project ? projectPage():NewListView(),
       endDrawer: baikeRightDrawe(
-        onTab: (e) async {},
+        onTab: (e) async {
+          print("id2:"+e['id'].toString());
+          print("level2"
+              ":"+e['level'].toString());
+          Application.eventBus
+              .fire(projectListEvent(e['id'],e['level']));
+        },
       ),
     );
   }
@@ -59,26 +89,25 @@ class _BaikeState extends State<Baike> {
   ///*导航栏*/
   AppBar homeAppBarWidget() {
     return AppBar(
-      elevation: 0,
+      elevation: 0.2,
       titleSpacing: 0.0,
       automaticallyImplyLeading: false,
       centerTitle: true,
       backgroundColor: Colors.white,
       title: Container(
-        width: width(406),
-        margin: EdgeInsets.only(left: width(20)),
-        padding:
-            EdgeInsets.symmetric(vertical: width(4), horizontal: height(4)),
+        width: width(410),
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(width(4))),
-            color: kTextColor4),
+            color: Color(0xffEDEEEF)),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
                 width: width(196),
-                height: height(64),
+                height: height(56),
+                margin: EdgeInsets.all(width(4)),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(width(4))),
@@ -87,21 +116,23 @@ class _BaikeState extends State<Baike> {
                         : null,
                     color: assetsType == ProjectBaikeType.Project
                         ? kWhite
-                        : kTransprant),
+                        : Color(0xffEDEEEF)),
                 child: GestureDetector(
                   onTap: _aActiveChanged,
                   child: Text("项目",
                       style: TextStyle(
                         color: assetsType == ProjectBaikeType.Project
                             ? kPrimaryColor
-                            : kTextColor3,
-                        fontSize: 15,
+                            : kTextColor6,
+                        fontSize: sp(28),
+                        fontWeight: FontWeight.w500,
                       )),
                 )),
             Container(
                 width: width(196),
-                height: height(58),
+                height: height(56),
                 alignment: Alignment.center,
+                margin: EdgeInsets.all(width(4)),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(width(4))),
                     boxShadow: assetsType == ProjectBaikeType.News
@@ -109,15 +140,16 @@ class _BaikeState extends State<Baike> {
                         : null,
                     color: assetsType == ProjectBaikeType.News
                         ? kWhite
-                        : kTransprant),
+                        : Color(0xffEDEEEF)),
                 child: GestureDetector(
                   onTap: _aActiveChanged1,
                   child: Text("资讯",
                       style: TextStyle(
                         color: assetsType == ProjectBaikeType.News
                             ? kPrimaryColor
-                            : kTextColor3,
-                        fontSize: 15,
+                            : kTextColor6,
+                        fontSize: sp(28),
+                        fontWeight: FontWeight.w500,
                       )),
                 ))
           ],
@@ -129,8 +161,8 @@ class _BaikeState extends State<Baike> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: width(50),
-              height: height(64),
+              width: width(40),
+              height: height(40),
               margin: EdgeInsets.only(right: width(20)),
               alignment: Alignment.center,
               child: GestureDetector(

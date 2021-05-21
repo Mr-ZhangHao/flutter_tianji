@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tianji/common/button/index.dart';
-import 'package:flutter_tianji/common/event/FollowProEvent.dart';
+import 'package:flutter_tianji/common/button/index2.dart';
+import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/event/accountEvent.dart';
 import 'package:flutter_tianji/common/input/focus.dart';
+import 'package:flutter_tianji/common/input/text_input2.dart';
 import 'package:flutter_tianji/common/toast/index.dart';
 import 'package:flutter_tianji/login/widgets/text_input.dart';
 import 'package:flutter_tianji/routes/application.dart';
@@ -13,6 +15,7 @@ import 'package:flutter_tianji/strategy/server/index.dart';
 import 'package:flutter_tianji/utils/screen.dart';
 import 'package:flutter_tianji/utils/util.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 class genDanPage extends StatefulWidget {
   final String type; //1 跟单 2修改跟单
@@ -39,48 +42,34 @@ class _genDanPageState extends State<genDanPage>
   @override
   void initState() {
     super.initState();
-/* 
     WidgetsBinding.instance.addPostFrameCallback((mag) {
       Provider.of<StrategyProvider>(context, listen: false)
-          .getStrategyDetail(widget.apiId);
-    }); */
+          .getStrategyDetail(widget.followApiId);
 
-    if (Provider.of<StrategyProvider>(context, listen: false)
-            .mStrategyDetailModel !=
-        null) {
-      if (Provider.of<StrategyProvider>(context, listen: false)
-          .mStrategyDetailModel
-          .coin
-          .contains(",")) {
-        List<String> coinList =
-            Provider.of<StrategyProvider>(context, listen: false)
-                .mStrategyDetailModel
-                .coin
-                .split(',');
-
-        for (var i = 0; i < coinList.length; i++) {
-          Provider.of<StrategyProvider>(context, listen: false)
-              .getFollowInfo(accountId, widget.platformID, coinList[0]);
-          _tabs.add(coinList[i]);
-        }
-      } else {
-        _tabs.add(Provider.of<StrategyProvider>(context, listen: false)
-            .mStrategyDetailModel
-            .coin);
-      }
+    });
+    List<String> coinList =
+        Provider.of<StrategyProvider>(context, listen: false) .coinList;
+    for (var i = 0; i < coinList.length; i++) {
+      Provider.of<StrategyProvider>(context, listen: false)
+          .getFollowInfo(widget.followApiId,Provider.of<StrategyProvider>(context, listen: false).userApiId, widget.platformID, coinList[0]);
+      _tabs.add(coinList[i]);
     }
+
+    _tabController =
+        TabController(vsync: this, length: _tabs.length, initialIndex: 0);
+
     if (Provider.of<StrategyProvider>(context, listen: false).noFollowList !=
-            null &&
+        null &&
         Provider.of<StrategyProvider>(context, listen: false)
-                .noFollowList
-                .length >
+            .noFollowList
+            .length >
             0) {
       for (int i = 0;
-          i <
-              Provider.of<StrategyProvider>(context, listen: false)
-                  .noFollowList
-                  .length;
-          i++) {
+      i <
+          Provider.of<StrategyProvider>(context, listen: false)
+              .noFollowList
+              .length;
+      i++) {
         Map<String, dynamic> map = {
           "id": Provider.of<StrategyProvider>(context, listen: false)
               .noFollowList[i]
@@ -103,10 +92,6 @@ class _genDanPageState extends State<genDanPage>
       }
 
       setState(() {
-        this.accountId = Provider.of<StrategyProvider>(context, listen: false)
-            .noFollowList[0]
-            .id
-            .toString();
         this.accountName = Provider.of<StrategyProvider>(context, listen: false)
             .noFollowList[0]
             .username;
@@ -119,13 +104,12 @@ class _genDanPageState extends State<genDanPage>
             .toString();
 
         Application.eventBus.fire(accountEvent(
-          this.accountId,
+          Provider.of<StrategyProvider>(context, listen: false).userApiId,
           widget.followApiId,
         ));
       });
     }
-    _tabController =
-        TabController(vsync: this, length: _tabs.length, initialIndex: 0);
+
   }
 
   @override
@@ -140,7 +124,7 @@ class _genDanPageState extends State<genDanPage>
       appBar: Utils.getCommonAppBar(
         context,
         "跟单",
-        elevation: 1.0,
+        elevation: 0.5,
       ),
       backgroundColor: Colors.white,
       body: Consumer<StrategyProvider>(builder:
@@ -186,7 +170,8 @@ class _genDanPageState extends State<genDanPage>
                                   model.userApiId = id.toString();
                                   Application.eventBus.fire(accountEvent(
                                       model.userApiId.toString(),
-                                      widget.followApiId));
+                                      widget.followApiId,
+                               ));
                                 });
                                 RouterUtil.goBack(context);
                               },
@@ -195,12 +180,11 @@ class _genDanPageState extends State<genDanPage>
                         );
                       },
                     ),
-                    Utils.normalText('${memo ?? ""}',
-                        fontWeight: FontWeight.bold),
+                    Utils.normalText('${memo ?? ""}'),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Utils.normalText('跟随者'),
+                        Utils.normalText('跟随者',color: Color(0xff999999)),
                         avatar == null || avatar == 'null' || avatar.isEmpty
                             ? Image.asset('images/home/avatar.png',
                                 width: 40, height: 40)
@@ -248,21 +232,25 @@ class _genDanPageState extends State<genDanPage>
                             ),
                             Utils.normalText(
                                 '${model.mStrategyDetailModel.platform ?? ""}',
-                                color: Color(0xffA5A5A5)),
+                                color: Color(0xff999999)),
                           ],
                         )
                       ],
                     ),
                     Container(
-                      width: double.infinity,
+                      width: MediaQuery.of(context).size.width,
                       height: height(80),
                       decoration: BoxDecoration(
                         color: Color(0xffFFFFFF),
                       ),
                       child: TabBar(
-                        isScrollable: false,
-                        labelColor: Color(0xff7865FE),
+                        isScrollable: true,
+                        labelColor: kPrimaryColor,
                         unselectedLabelColor: Color(0xff323232),
+                        labelStyle: TextStyle(
+                          fontSize: sp(32),
+                          fontWeight: FontWeight.normal
+                        ),
                         indicatorSize: TabBarIndicatorSize.label,
                         indicatorColor:
                             Theme.of(context).tabBarTheme.labelColor,
@@ -345,13 +333,14 @@ class _setProportionPageState extends State<setProportionPage> {
     // TODO: implement initState
     super.initState();
     //监听事件总线上数据变化
-
+    Provider.of<StrategyProvider>(context, listen: false)
+        .getFollowInfo(widget.followApiId,Provider.of<StrategyProvider>(context, listen: false).userApiId, widget.platform_id, widget.coin);
     Application.eventBus.on<accountEvent>().listen((event) {
       if (mounted) {
         accountId = event.accountId;
         setState(() {
           Provider.of<StrategyProvider>(context, listen: false)
-              .getFollowInfo(accountId, widget.platform_id, widget.coin);
+              .getFollowInfo(widget.followApiId,Provider.of<StrategyProvider>(context, listen: false).userApiId, widget.platform_id, widget.coin);
         });
       }
     });
@@ -372,7 +361,7 @@ class _setProportionPageState extends State<setProportionPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Utils.normalText('跟随${widget.coin}合约'),
-              Utils.normalText('正向'),
+              Utils.normalText('正向',color: Color(0xff999999)),
             ],
           ),
           FocusWidget(
@@ -381,8 +370,12 @@ class _setProportionPageState extends State<setProportionPage> {
               focusNode: _proportionFocus,
               controller: _proportionCtr,
               maxHeight: 100,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
               obscureText: false,
+              inputFormatters: [
+                WhitelistingTextInputFormatter(RegExp("[0-9.]")),//只允许输入小数
+              ],
+              keyboardType: TextInputType.number,
+              //  inputFormatters: [_UsNumberTextInputFormatter()],
               hintText: model.proportion.isNotEmpty &&
                       double.parse(model.proportion) > 0
                   ? "${model.proportion.toString()}"
@@ -401,8 +394,8 @@ class _setProportionPageState extends State<setProportionPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MyButton(
-                    text: '跟随',
+                MyButton2(
+                    text: '绑定',
                     onPressed: () {
                       _gendan(widget.followApiId, model.userApiId,
                           _proportionCtr.text, widget.coin);
@@ -415,7 +408,9 @@ class _setProportionPageState extends State<setProportionPage> {
                   height: height(35),
                 ),
                 Utils.normalText(
-                    '策略商城提供大v交易员的跟单，请您确认在跟随前已充分理解‘买卖自负’的市场原则，充分认识到策略交易潜在的交易风险，自行承担交易结果。\n\n任何策略都不能保证其在未来的正盈利性，过往数据不预示未来表现，相关数据仅提供参考，不构成投资建议。任何由于跟随的策略带来资金缩水或损失风险，天玑AI不担负任何责任，请您谨慎选择，合理投资。'),
+
+                    '策略商城提供大v交易员的跟单，请您确认在跟随前已充分理解‘买卖自负’的市场原则，充分认识到策略交易潜在的交易风险，自行承担交易结果。\n\n任何策略都不能保证其在未来的正盈利性，过往数据不预示未来表现，相关数据仅提供参考，不构成投资建议。任何由于跟随的策略带来资金缩水或损失风险，天玑AI不担负任何责任，请您谨慎选择，合理投资。',
+                color: Color(0xff999999)),
               ],
             ),
             visible: model.status == 0,
@@ -423,14 +418,14 @@ class _setProportionPageState extends State<setProportionPage> {
           Visibility(
             child: Column(
               children: [
-                MyButton(
+                MyButton2(
                     text: '修改跟随',
                     onPressed: () {
                       _Modifygendan(widget.followApiId, model.userApiId,
                           _proportionCtr.text, widget.coin);
                     }),
                 SizedBox(height: height(40)),
-                MyButton(
+                MyButton2(
                     text: '取消跟随',
                     bgColor: Color(0xffE3E2EB),
                     onPressed: () {
@@ -451,7 +446,7 @@ class _setProportionPageState extends State<setProportionPage> {
         .then((value) => Toast.showText("修改跟随成功"));
     _proportionCtr.text = "";
     Provider.of<StrategyProvider>(context, listen: false)
-        .getFollowInfo(followApiId, widget.platform_id, widget.coin);
+        .getFollowInfo(followApiId,apiId, widget.platform_id, widget.coin);
   }
 
   _gendan(followApiId, apiId, proportion, coin) async {
@@ -460,7 +455,7 @@ class _setProportionPageState extends State<setProportionPage> {
         .then((value) => Toast.showText("跟随成功"));
     _proportionCtr.text = "";
     Provider.of<StrategyProvider>(context, listen: false)
-        .getFollowInfo(followApiId, widget.platform_id, widget.coin);
+        .getFollowInfo(followApiId,apiId, widget.platform_id, widget.coin);
   }
 
   _Cncelgendan(followApiId, apiId) async {
@@ -468,6 +463,6 @@ class _setProportionPageState extends State<setProportionPage> {
     await StrategyServer.getCncelFollow(apiId, followApiId)
         .then((value) => Toast.showText("取消成功"));
     Provider.of<StrategyProvider>(context, listen: false)
-        .getFollowInfo(followApiId, widget.platform_id, widget.coin);
+        .getFollowInfo(followApiId,apiId, widget.platform_id, widget.coin);
   }
 }

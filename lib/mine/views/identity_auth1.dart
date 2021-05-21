@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tianji/common/button/index.dart';
+import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/input/focus.dart';
 import 'package:flutter_tianji/common/toast/index.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_tianji/mine/provider/mine_provider.dart';
 import 'package:flutter_tianji/mine/routes/index.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
+import 'package:flutter_tianji/utils/util.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_tianji/mine/server/index.dart';
 
@@ -60,24 +62,13 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text(Tr.of(context).authentication),
-        centerTitle: true,
-        elevation: 1,
-        leading: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => RouterUtil.goBack(context),
-            child: Container(
-              alignment: Alignment.center,
-              child: Image.asset('images/mine/back@2x.png',
-                  width: width(22), height: height(36)),
-            )),
-      ),
-      resizeToAvoidBottomPadding: false,
+      appBar:    Utils.getCommonAppBar(context, '${Tr.of(context).authentication}'),
+
+    //  resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: width(40)),
+          padding: EdgeInsets.symmetric(horizontal: width(30)),
           child: Column(
             children: <Widget>[
               FocusWidget(
@@ -85,6 +76,7 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
                 child: InputWidget(
                   maxHeight: 100,
                   textAlign: TextAlign.right,
+
                   focusNode: _countryFocus,
                   onTab: () {
                     Navigator.pushNamed(context, LoginRouter.country)
@@ -108,20 +100,21 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
                   suffixIconConstraintsMinWidth: 150,
                   readOnly: true,
                   suffixIcon: Container(
-                    alignment: Alignment.center,
+                    alignment: Alignment.centerRight,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         //  Text(Tr.of(context).ChinaMainland),
                         Text(
                           '${area_name_us}',
-                          style: TextStyle(fontSize: sp(26)),
+                          style: TextStyle(fontSize: sp(28)),
                         ),
                         SizedBox(width: width(10)),
                         Image.asset(
                           'images/mine/next.png',
                           width: width(18),
-                          color: Color(0xff323232),
+                          height: height(17),
+                          color: Color(0xffD1D1D1),
                         ),
                       ],
                     ),
@@ -129,9 +122,8 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
                   contentPadding: EdgeInsets.only(top: height(5)),
                   hintText: '',
                   prefixIcon: Container(
-                    child: Text(
-                      Tr.of(context).area,
-                      style: TextStyle(color: Colors.black),
+                    alignment: Alignment.centerLeft,
+                    child: Utils.normalText("${Tr.of(context).area}",
                     ),
                   ),
                 ),
@@ -140,7 +132,7 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
                 focusNode: _lastNameFocus,
                 child: InputWidget(
                   maxHeight: 100,
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.right,
                   focusNode: _lastNameFocus,
                   hintText: Tr.of(context).inputNameHint,
                   controller: _lastNameCtr,
@@ -151,10 +143,9 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
                   contentPadding: EdgeInsets.only(bottom: height(12)),
                   hintStyle:
                       TextStyle(color: Color(0xffCCCCCC), fontSize: sp(28)),
-                  prefixIcon: Container(
-                    child: Text(
-                      '${Tr.of(context).LastName}：',
-                      style: TextStyle(color: Colors.black),
+                  prefixIcon:  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Utils.normalText("${Tr.of(context).LastName}",
                     ),
                   ),
                 ),
@@ -163,7 +154,7 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
                 focusNode: _firstNameFocus,
                 child: InputWidget(
                   maxHeight: 100,
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.right,
                   focusNode: _firstNameFocus,
                   hintText: Tr.of(context).enterName,
                   controller: _firstNameCtr,
@@ -175,9 +166,10 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
                   hintStyle:
                       TextStyle(color: Color(0xffCCCCCC), fontSize: sp(28)),
                   prefixIcon: Container(
-                    child: Text(
-                      '${Tr.of(context).name}：',
-                      style: TextStyle(color: Colors.black),
+                    child:  Container(
+                      alignment: Alignment.centerLeft,
+                      child: Utils.normalText("${Tr.of(context).name}",
+                      ),
                     ),
                   ),
                 ),
@@ -221,12 +213,13 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        Text(typeList[type]['name']),
+                        Utils.normalText('${typeList[type]['name']}'),
                         SizedBox(width: width(10)),
                         Image.asset(
                           'images/mine/next.png',
                           width: width(18),
-                          color: Color(0xff323232),
+                          height: height(17),
+                          color: Color(0xffD1D1D1),
                         ),
                       ],
                     ),
@@ -235,9 +228,10 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
                   hintStyle:
                       TextStyle(color: Color(0xff323232), fontSize: sp(28)),
                   prefixIcon: Container(
-                    child: Text(Tr.of(context).AuthenticationType,
-                        style: TextStyle(color: Colors.black)),
+                  alignment: Alignment.centerLeft,
+                  child: Utils.normalText("${Tr.of(context).AuthenticationType}",
                   ),
+                ),
                   hintText: null,
                 ),
               ),
@@ -245,7 +239,7 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
                 focusNode: _numberFocus,
                 child: InputWidget(
                   maxHeight: 100,
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.right,
                   focusNode: _numberFocus,
                   hintText: Tr.of(context).inputIDcard,
                   controller: _numberCtr,
@@ -261,9 +255,10 @@ class _IdentityAuth1PageState extends State<IdentityAuth1Page> {
                   hintStyle:
                       TextStyle(color: Color(0xffCCCCCC), fontSize: sp(28)),
                   prefixIcon: Container(
-                    child: Text('${Tr.of(context).IDNumber}：',
-                        style: TextStyle(color: Colors.black)),
+                  alignment: Alignment.centerLeft,
+                  child: Utils.normalText("${Tr.of(context).IDNumber}",
                   ),
+                ),
                   suffixIcon: _numberCtr.text.isNotEmpty
                       ? GestureDetector(
                           onTap: () {

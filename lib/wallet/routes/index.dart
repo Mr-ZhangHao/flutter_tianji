@@ -17,6 +17,7 @@ import 'package:flutter_tianji/routes/router_init.dart';
 import 'package:flutter_tianji/wallet/views/item.dart';
 import 'package:flutter_tianji/wallet/views/recharge.dart';
 import 'package:flutter_tianji/wallet/views/record_bibi.dart';
+import 'package:flutter_tianji/wallet/views/record_bibi2.dart';
 import 'package:flutter_tianji/wallet/views/verification.dart';
 import 'package:flutter_tianji/wallet/views/withdraw.dart';
 import 'package:flutter_tianji/wallet/views/withdrawDetail.dart';
@@ -30,6 +31,7 @@ class WalletRouter implements IRouterProvider {
   static String transformation = '/transformation';
   static String contract = '/contract';
   static String recordBibi = '/recordBibi';
+  static String recordBibi2 = '/recordBibi2';
   static String recordContract = '/recordContract';
   static String recordDetail = '/recordDetail';
   static String verification = '/verification';
@@ -45,11 +47,20 @@ class WalletRouter implements IRouterProvider {
       var coinName = params['coinName'].first;
       return ItemPage(coinName: coinName);
     }));
+        router.define(recordBibi2, handler:
+        Handler(handlerFunc: (context, Map<String, List<String>> params) {
+      var coinName = params['coinName'].first;
+      var id = params['id'].first;
+      return RecordBibiPage2(coinName: coinName,id: id,);
+    }));
+
     router.define(recharge, handler:
         Handler(handlerFunc: (context, Map<String, List<String>> params) {
       var coinName = params['coinName'].first;
       return RechargePage(coinName: coinName);
     }));
+
+
     router.define(recordBibi,
         handler: Handler(handlerFunc: (_, __) => RecordBibiPage()));
 

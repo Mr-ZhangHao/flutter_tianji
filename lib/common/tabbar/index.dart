@@ -18,6 +18,7 @@ import 'package:flutter_tianji/business/business_screen.dart';
 import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/update/index.dart';
+import 'package:flutter_tianji/course/course_screen.dart';
 import 'package:flutter_tianji/home/home_screen.dart';
 import 'package:flutter_tianji/login/login_screen.dart';
 import 'package:flutter_tianji/login/provider/user_provider.dart';
@@ -58,13 +59,21 @@ class _BottomTabBarState extends State<BottomTabBar> {
           width: width(44), height: width(44)),
       title: Text('策略库'),
     ),
+
     BottomNavigationBarItem(
+      icon: Image.asset('images/tabBar/course02.png',
+          width: width(44), height: width(44)),
+      activeIcon: Image.asset('images/tabBar/course01.png',
+          width: width(44), height: width(44)),
+      title: Text('课程'),
+    ),
+/*    BottomNavigationBarItem(
       icon: Image.asset('images/tabBar/shangye02.png',
           width: width(44), height: width(44)),
       activeIcon: Image.asset('images/tabBar/shangye01.png',
           width: width(44), height: width(44)),
       title: Text('商业API'),
-    ),
+    ),*/
     BottomNavigationBarItem(
       icon: Image.asset('images/tabBar/zican02.png',
           width: width(44), height: width(44)),
@@ -77,7 +86,7 @@ class _BottomTabBarState extends State<BottomTabBar> {
     HomeScreen(), // 首页
     Baike(), // 项目百科
     strategyScreen(), //策略跟单
-    BusinessScreen(), // 商业API
+    course_screen(), // 商业API
     WalletScreen(), // 资产
     //   ContractScreen(), // 合约
   ];
@@ -87,7 +96,7 @@ class _BottomTabBarState extends State<BottomTabBar> {
   @override
   void initState() {
     super.initState();
-  //  UpdateUtil().checkVersion(context);
+   UpdateUtil().checkVersion(context);
   }
 
   @override
@@ -115,11 +124,11 @@ class _BottomTabBarState extends State<BottomTabBar> {
         title: Text(Tr.of(context).mainStrategy),
       ),
       BottomNavigationBarItem(
-        icon: Image.asset('images/tabBar/shangye02.png',
-            width: width(48), height: width(48)),
-        activeIcon: Image.asset('images/tabBar/shangye01.png',
-            width: width(48), height: width(48)),
-        title: Text(Tr.of(context).mainBusiness),
+        icon: Image.asset('images/tabBar/course02.png',
+            width: width(44), height: width(44)),
+        activeIcon: Image.asset('images/tabBar/course01.png',
+            width: width(44), height: width(44)),
+        title: Text(Tr.of(context).mainCourse),
       ),
       BottomNavigationBarItem(
         icon: Image.asset('images/tabBar/zican02.png',

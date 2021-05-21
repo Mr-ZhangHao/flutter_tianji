@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tianji/common/constants/index.dart';
+import 'package:flutter_tianji/common/event/strategyEvent.dart';
+import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/toast/index.dart';
+import 'package:flutter_tianji/routes/application.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/strategy/model/strategyListModel.dart';
 import 'package:flutter_tianji/strategy/provider/index.dart';
@@ -54,6 +57,14 @@ class _strategy_screenState extends State<strategyScreen> {
         Provider.of<HomeProvider>(context, listen: false).getData();
       }*/
     });
+
+    Application.eventBus.on<strategyEvent>().listen((event) {
+      if (mounted) {
+        setState(() {
+          assetsType = strategyType.Account;
+        });
+      }
+    });
   }
 
   void _aActiveChanged() {
@@ -90,7 +101,7 @@ class _strategy_screenState extends State<strategyScreen> {
                             child: Row(
                               children: [
                                 Container(
-                                  height: height(40),
+                                  height: height(30),
                                   width: width(6),
                                   color: Color(0xff323232),
                                 ),
@@ -102,7 +113,7 @@ class _strategy_screenState extends State<strategyScreen> {
                                     'USDT合约',
                                     style: TextStyle(
                                         color: Color(0xff323232),
-                                        fontSize: sp(32),
+                                        fontSize: sp(30),
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -110,7 +121,8 @@ class _strategy_screenState extends State<strategyScreen> {
                                   child: Text(
                                     '更多',
                                     style: TextStyle(
-                                        color: kPrimaryColor, fontSize: sp(24)),
+                                        color: Color(0xff666666),
+                                        fontSize: sp(24)),
                                   ),
                                   onTap: () {
                                     RouterUtil.push(
@@ -120,8 +132,12 @@ class _strategy_screenState extends State<strategyScreen> {
                                 SizedBox(
                                   width: width(10),
                                 ),
-                                Image.asset('images/home/more.png',
-                                    width: width(28), height: height(28)),
+                                Image.asset(
+                                  'images/mine/next.png',
+                                  width: width(18),
+                                  height: height(17),
+                                  color: Color(0xffD1D1D1),
+                                ),
                               ],
                             ),
                           ),
@@ -130,18 +146,40 @@ class _strategy_screenState extends State<strategyScreen> {
                                   EdgeInsets.symmetric(horizontal: width(40)),
                               constraints: BoxConstraints(
                                 minHeight: height(270),
-                                maxHeight: height(830),
+                                maxHeight: height(810),
                               ),
-                              child: ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: model.coinInfoList1.length > 3
-                                      ? 3
-                                      : model.coinInfoList1.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return _strategyItem(
-                                        model.coinInfoList1, index);
-                                  })),
+                              child: model.coinInfoList1.length > 0
+                                  ? ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: model.coinInfoList1.length > 3
+                                          ? 3
+                                          : model.coinInfoList1.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return _strategyItem(
+                                            model.coinInfoList1, index);
+                                      })
+                                  : Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Image.asset(
+                                            'images/business/no_task.png',
+                                            width: width(230),
+                                            height: width(230),
+                                            fit: BoxFit.contain,
+                                          ),
+                                          SizedBox(height: height(20)),
+                                          Text('${Tr.of(context).homeNodata}',
+                                              style: TextStyle(
+                                                  color: Color(0xffDBDBDB)))
+                                        ],
+                                      ),
+                                    )),
                         ],
                       ),
                       Container(
@@ -158,7 +196,7 @@ class _strategy_screenState extends State<strategyScreen> {
                             child: Row(
                               children: [
                                 Container(
-                                  height: height(40),
+                                  height: height(30),
                                   width: width(6),
                                   color: Color(0xff323232),
                                 ),
@@ -170,7 +208,7 @@ class _strategy_screenState extends State<strategyScreen> {
                                     '币本合约',
                                     style: TextStyle(
                                         color: Color(0xff323232),
-                                        fontSize: sp(32),
+                                        fontSize: sp(30),
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -178,7 +216,8 @@ class _strategy_screenState extends State<strategyScreen> {
                                   child: Text(
                                     '更多',
                                     style: TextStyle(
-                                        color: kPrimaryColor, fontSize: sp(24)),
+                                        color: Color(0xff666666),
+                                        fontSize: sp(24)),
                                   ),
                                   onTap: () {
                                     RouterUtil.push(
@@ -188,8 +227,12 @@ class _strategy_screenState extends State<strategyScreen> {
                                 SizedBox(
                                   width: width(10),
                                 ),
-                                Image.asset('images/home/more.png',
-                                    width: width(28), height: height(28)),
+                                Image.asset(
+                                  'images/mine/next.png',
+                                  width: width(18),
+                                  height: height(17),
+                                  color: Color(0xffD1D1D1),
+                                ),
                               ],
                             ),
                           ),
@@ -198,18 +241,40 @@ class _strategy_screenState extends State<strategyScreen> {
                                   EdgeInsets.symmetric(horizontal: width(40)),
                               constraints: BoxConstraints(
                                 minHeight: height(270),
-                                maxHeight: height(830),
+                                maxHeight: height(810),
                               ),
-                              child: ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: model.coinInfoList2.length > 3
-                                      ? 3
-                                      : model.coinInfoList2.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return _strategyItem(
-                                        model.coinInfoList2, index);
-                                  })),
+                              child: model.coinInfoList2.length > 0
+                                  ? ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: model.coinInfoList2.length > 3
+                                          ? 3
+                                          : model.coinInfoList2.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return _strategyItem(
+                                            model.coinInfoList2, index);
+                                      })
+                                  : Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Image.asset(
+                                            'images/business/no_task.png',
+                                            width: width(230),
+                                            height: width(230),
+                                            fit: BoxFit.contain,
+                                          ),
+                                          SizedBox(height: height(20)),
+                                          Text('${Tr.of(context).homeNodata}',
+                                              style: TextStyle(
+                                                  color: Color(0xffDBDBDB)))
+                                        ],
+                                      ),
+                                    )),
                         ],
                       ),
                       Container(
@@ -226,7 +291,7 @@ class _strategy_screenState extends State<strategyScreen> {
                             child: Row(
                               children: [
                                 Container(
-                                  height: height(40),
+                                  height: height(30),
                                   width: width(6),
                                   color: Color(0xff323232),
                                 ),
@@ -238,7 +303,7 @@ class _strategy_screenState extends State<strategyScreen> {
                                     '币币现货',
                                     style: TextStyle(
                                         color: Color(0xff323232),
-                                        fontSize: sp(32),
+                                        fontSize: sp(30),
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -246,7 +311,8 @@ class _strategy_screenState extends State<strategyScreen> {
                                   child: Text(
                                     '更多',
                                     style: TextStyle(
-                                        color: kPrimaryColor, fontSize: sp(24)),
+                                        color: Color(0xff666666),
+                                        fontSize: sp(24)),
                                   ),
                                   onTap: () {
                                     RouterUtil.push(
@@ -256,8 +322,12 @@ class _strategy_screenState extends State<strategyScreen> {
                                 SizedBox(
                                   width: width(10),
                                 ),
-                                Image.asset('images/home/more.png',
-                                    width: width(28), height: height(28)),
+                                Image.asset(
+                                  'images/mine/next.png',
+                                  width: width(18),
+                                  height: height(17),
+                                  color: Color(0xffD1D1D1),
+                                ),
                               ],
                             ),
                           ),
@@ -266,18 +336,40 @@ class _strategy_screenState extends State<strategyScreen> {
                                   EdgeInsets.symmetric(horizontal: width(40)),
                               constraints: BoxConstraints(
                                 minHeight: height(270),
-                                maxHeight: height(830),
+                                maxHeight: height(810),
                               ),
-                              child: ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: model.coinInfoList3.length > 3
-                                      ? 3
-                                      : model.coinInfoList3.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return _strategyItem(
-                                        model.coinInfoList3, index);
-                                  })),
+                              child: model.coinInfoList3.length > 0
+                                  ? ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: model.coinInfoList3.length > 3
+                                          ? 3
+                                          : model.coinInfoList3.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return _strategyItem(
+                                            model.coinInfoList3, index);
+                                      })
+                                  : Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Image.asset(
+                                            'images/business/no_task.png',
+                                            width: width(230),
+                                            height: width(230),
+                                            fit: BoxFit.contain,
+                                          ),
+                                          SizedBox(height: height(20)),
+                                          Text('${Tr.of(context).homeNodata}',
+                                              style: TextStyle(
+                                                  color: Color(0xffDBDBDB)))
+                                        ],
+                                      ),
+                                    )),
                         ],
                       ),
                     ],
@@ -302,18 +394,16 @@ class _strategy_screenState extends State<strategyScreen> {
                                 height: height(150),
                               ),
                               SizedBox(height: height(12)),
-                              Utils.normalText(
-                                '您未绑定账户',
-                              ),
+                              Utils.normalText('您未绑定账户', color: kTextColor6),
                               SizedBox(height: height(42)),
                               Container(
                                 width: width(360),
                                 height: height(88),
                                 alignment: Alignment.center,
                                 decoration: new BoxDecoration(
-                                  color: Color(0xFF7865FE), // 底色
+                                  color: kPrimaryColor, // 底色
                                   borderRadius: new BorderRadius.circular(
-                                      width(48)), // 圆角度
+                                      width(60)), // 圆角度
                                 ),
                                 child: GestureDetector(
                                   child: Center(
@@ -336,6 +426,7 @@ class _strategy_screenState extends State<strategyScreen> {
 
   double x;
   double y;
+
   //账户条目
   _accountPage(StrategyProvider model) {
     return ListView.builder(
@@ -344,146 +435,168 @@ class _strategy_screenState extends State<strategyScreen> {
         itemCount: model.strategyAccount.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
-              child: Card(
-                  child: Container(
-                      margin: EdgeInsets.all(width(20)),
-                      height: height(240),
-                      child: Column(children: [
-                        Row(children: [
-                          model.strategyAccount[index].avatar != null
-                              ? ClipOval(
-                                  child: Image.network(
-                                      '${model.strategyAccount[index].avatar}',
-                                      fit: BoxFit.cover,
-                                      width: 40,
-                                      height: 40))
-                              : Image.asset('images/home/avatar.png',
-                                  width: 40, height: 40),
-                          SizedBox(
-                            width: width(30),
-                          ),
-                          Utils.normalText(
-                              model.strategyAccount[index].username ?? '',
-                              fontWeight: FontWeight.bold),
-                          SizedBox(
-                            width: width(20),
-                          ),
-                          Utils.normalText(
-                              model.strategyAccount[index].typeName ?? '',
-                              color: Color(0xff7865FE),
-                              fontWeight: FontWeight.bold),
-                          SizedBox(
-                            width: width(40),
-                          ),
-                          Utils.normalText(
-                              model.strategyAccount[index].memo ?? '备注'),
-                          Expanded(child: Text('')),
-                          GestureDetector(
-                            child: Icon(
-                              Icons.more_horiz,
-                              color: Color(0xff7865FE),
-                            ),
-                            onPanDown: (details) {
-                              x = details.globalPosition.dx;
-                              y = details.globalPosition.dy;
-                            },
-                            onTap: () {
-                              TextEditingController _textCtr =
-                                  TextEditingController();
-                              showMenu(
-                                  context: context,
-                                  position: RelativeRect.fromLTRB(x, y,
-                                      MediaQuery.of(context).size.width - x, 0),
-                                  items: [
-                                    PopupMenuItem(
-                                      value: "1",
-                                      child: Utils.normalText("修改备注"),
-                                    ),
-                                    PopupMenuItem(
-                                      value: "2",
-                                      child: Utils.normalText("删除API"),
-                                    ),
-                                    PopupMenuItem(
-                                      value: "3",
-                                      child: Utils.normalText("授权续期"),
-                                    ),
-                                  ]).then((value) => {
-                                    if (value == '1')
-                                      {
-                                        Utils.ShowDialogUtils(context, '修改备注',
-                                            isvisible: true,
-                                            textcontroller: _textCtr,
-                                            confirm: () {
-                                          _ModifyNote(
-                                              model.strategyAccount[index].id,
-                                              _textCtr.text);
-                                        })
-                                      }
-                                    else if (value == '2')
-                                      {
-                                        Utils.ShowDialogUtils(
-                                            context, '确认要删除OKEX-glxh的API吗？',
-                                            confirm: () {
-                                          _DeleteApi(
-                                            model.strategyAccount[index].id,
-                                          );
-                                        })
-                                      }
-                                    else if (value == '3')
-                                      {}
-                                  });
-                            },
-                          )
-                        ]),
-                        SizedBox(
-                          height: height(40),
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: kWhite,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(4),
+                        bottomRight: Radius.circular(4),
+                        topLeft: Radius.circular(4),
+                        topRight: Radius.circular(4),
+                      )),
+                  margin: EdgeInsets.only(
+                      left: width(20), right: width(20), top: width(30)),
+                  padding: EdgeInsets.all(width(20)),
+                  height: height(240),
+                  child: Column(children: [
+                    Row(children: [
+                      model.strategyAccount[index].avatar != null
+                          ? ClipOval(
+                              child: Image.network(
+                                  '${model.strategyAccount[index].avatar}',
+                                  fit: BoxFit.cover,
+                                  width: 40,
+                                  height: 40))
+                          : Image.asset('images/home/avatar.png',
+                              width: 40, height: 40),
+                      SizedBox(
+                        width: width(30),
+                      ),
+                      Utils.normalText(
+                        model.strategyAccount[index].username ?? '',
+                      ),
+                      SizedBox(
+                        width: width(20),
+                      ),
+                      Utils.normalText(
+                        model.strategyAccount[index].typeName ?? '',
+                        color: kPrimaryColor,
+                      ),
+                      SizedBox(
+                        width: width(40),
+                      ),
+                      Utils.normalText(
+                          '${model.strategyAccount[index].platform}-' ?? '--'),
+                      Container(
+                        width: width(60),
+                        child: Text(
+                            '${model.strategyAccount[index].memo ?? '备注'}',
+                            maxLines: 1,
+                            style: TextStyle(fontSize: sp(28)),
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center),
+                      ),
+                      Expanded(child: Text('')),
+                      GestureDetector(
+                        child: Icon(
+                          Icons.more_horiz,
+                          color: kPrimaryColor,
                         ),
-                        Row(
+                        onPanDown: (details) {
+                          x = details.globalPosition.dx;
+                          y = details.globalPosition.dy;
+                        },
+                        onTap: () {
+                          TextEditingController _textCtr =
+                              TextEditingController();
+                          showMenu(
+                              context: context,
+                              position: RelativeRect.fromLTRB(x, y,
+                                  MediaQuery.of(context).size.width - x, 0),
+                              items: [
+                                PopupMenuItem(
+                                  value: "1",
+                                  child: Utils.normalText("修改备注"),
+                                ),
+                                PopupMenuItem(
+                                  value: "2",
+                                  child: Utils.normalText("删除API"),
+                                ),
+                                PopupMenuItem(
+                                  value: "3",
+                                  child: Utils.normalText("授权续期"),
+                                ),
+                              ]).then((value) => {
+                                if (value == '1')
+                                  {
+                                    Utils.ShowDialogUtils(context, '修改备注',
+                                        isvisible: true,
+                                        textcontroller: _textCtr, confirm: () {
+                                      _ModifyNote(
+                                          model.strategyAccount[index].id,
+                                          _textCtr.text);
+                                    })
+                                  }
+                                else if (value == '2')
+                                  {
+                                    Utils.ShowDialogUtils(
+                                        context, '确认要删除OKEX-glxh的API吗？',
+                                        confirm: () {
+                                      _DeleteApi(
+                                        model.strategyAccount[index].id,
+                                      );
+                                    })
+                                  }
+                                else if (value == '3')
+                                  {}
+                              });
+                        },
+                      )
+                    ]),
+                    SizedBox(
+                      height: height(40),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                              child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(
-                                  child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Utils.normalText('跟随人数',
-                                      fontSize: 24, color: Color(0xff999999)),
-                                  SizedBox(
-                                    height: height(20),
-                                  ),
-                                  Utils.normalText(
-                                    model.strategyAccount[index].count
-                                            .toString() ??
-                                        '0.00',
-                                    fontSize: 28,
-                                  )
-                                ],
-                              )),
-                              Expanded(
-                                  child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Utils.normalText(
-                                      model.strategyAccount[index].type == 1
-                                          ? '跟随佣金'
-                                          : '跟随收益',
-                                      fontSize: 24,
-                                      color: Color(0xff999999)),
-                                  SizedBox(
-                                    height: height(20),
-                                  ),
-                                  Utils.normalText(
-                                      model.strategyAccount[index].profit
-                                              .toString() ??
-                                          '0.00',
-                                      fontSize: 28,
-                                      color: Color(0xffFF0000)),
-                                ],
-                              )),
-                            ])
-                      ]))),
+                              Utils.normalText(
+                                  model.strategyAccount[index].type == 1
+                                      ? '跟随人数'
+                                      : '跟随交易员',
+                                  fontSize: 24,
+                                  color: Color(0xff999999)),
+                              SizedBox(
+                                height: height(20),
+                              ),
+                              Utils.normalText(
+                                model.strategyAccount[index].count.toString() ??
+                                    '0',
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                              )
+                            ],
+                          )),
+                          Expanded(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Utils.normalText(
+                                  model.strategyAccount[index].type == 1
+                                      ? '跟随佣金'
+                                      : '跟随收益',
+                                  fontSize: 24,
+                                  color: Color(0xff999999)),
+                              SizedBox(
+                                height: height(20),
+                              ),
+                              Utils.normalText(
+                                  model.strategyAccount[index].profit
+                                          .toString() ??
+                                      '0.00',
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xffFF0000)),
+                            ],
+                          )),
+                        ])
+                  ])),
               onTap: () {
                 RouterUtil.pushResult(
                     context,
@@ -518,7 +631,7 @@ class _strategy_screenState extends State<strategyScreen> {
           decoration: BoxDecoration(
               border: Border(
                   bottom: BorderSide(width: 0.5, color: Color(0xffEAEAEA)))),
-          height: height(250),
+          height: height(270),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -542,8 +655,9 @@ class _strategy_screenState extends State<strategyScreen> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Utils.normalText('${data[index].username ?? ""}',
-                              fontWeight: FontWeight.bold),
+                          Utils.normalText(
+                            '${data[index].username ?? ""}',
+                          ),
                           SizedBox(
                             width: width(20),
                           ),
@@ -561,24 +675,21 @@ class _strategy_screenState extends State<strategyScreen> {
                                     ),
                                     bottom: BorderSide(
                                       color: Color(0xffD45151),
-
                                       width: 0.5,
                                     ),
                                     left: BorderSide(
                                       color: Color(0xffD45151),
-
                                       width: 0.5,
                                     ),
                                     right: BorderSide(
                                       color: Color(0xffD45151),
-
                                       width: 0.5,
                                     )),
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(0),
-                                    topRight: Radius.circular(8),
-                                    bottomLeft: Radius.circular(8),
-                                    bottomRight: Radius.circular(8)),
+                                    topRight: Radius.circular(width(8)),
+                                    bottomLeft: Radius.circular(width(8)),
+                                    bottomRight: Radius.circular(width(8))),
                               ),
                               child: Text('平台优选',
                                   style: TextStyle(
@@ -601,7 +712,7 @@ class _strategy_screenState extends State<strategyScreen> {
                         height: height(70),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: Color(0xff7865FE),
+                          color: kPrimaryColor,
                           borderRadius: BorderRadius.all(Radius.circular(44)),
                         ),
                         child: Text('跟随',
@@ -613,10 +724,12 @@ class _strategy_screenState extends State<strategyScreen> {
                         Provider.of<StrategyProvider>(context, listen: false)
                             .getnoFollowList(
                                 data[index].id, data[index].platformId);
+                        /*  Provider.of<StrategyProvider>(context, listen: false)
+                            .getStrategyDetail(data[index].id);*/
                         Provider.of<StrategyProvider>(context, listen: false)
-                            .getStrategyDetail(data[index].id);
+                            .coinList = data[index].coin;
                         //延时500毫秒执行
-                        Future.delayed(const Duration(milliseconds: 1000), () {
+                        Future.delayed(const Duration(milliseconds: 1500), () {
                           //延时执行的代码
                           RouterUtil.pushResult(
                               context,
@@ -654,8 +767,8 @@ class _strategy_screenState extends State<strategyScreen> {
                     children: [
                       Utils.normalText('${data[index].profitRate ?? 0}%',
                           fontWeight: FontWeight.bold,
-
-                          fontSize: 28, color: Color(0xffFEA665)),
+                          fontSize: 30,
+                          color: Color(0xffFEA665)),
                       SizedBox(
                         height: height(20),
                       ),
@@ -669,8 +782,8 @@ class _strategy_screenState extends State<strategyScreen> {
                     children: [
                       Utils.normalText('${data[index].profit ?? 0}%',
                           fontWeight: FontWeight.bold,
-
-                          fontSize: 28, color: Color(0xffFEA665)),
+                          fontSize: 30,
+                          color: Color(0xffFEA665)),
                       SizedBox(
                         height: height(20),
                       ),
@@ -684,8 +797,8 @@ class _strategy_screenState extends State<strategyScreen> {
                     children: [
                       Utils.normalText('${data[index].count ?? 0}',
                           fontWeight: FontWeight.bold,
-
-                          fontSize: 28, color: Color(0xffFEA665)),
+                          fontSize: 30,
+                          color: Color(0xffFEA665)),
                       SizedBox(
                         height: height(20),
                       ),
@@ -714,20 +827,20 @@ class _strategy_screenState extends State<strategyScreen> {
       centerTitle: true,
       backgroundColor: Colors.white,
       title: Container(
-        width: width(406),
-        margin: EdgeInsets.only(left: width(20)),
-        padding:
-            EdgeInsets.symmetric(vertical: width(4), horizontal: height(4)),
+        width: width(408),
         alignment: Alignment.center,
+        height: height(64),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(width(4))),
-            color: kTextColor4),
+            color: Color(0xffEDEEEF)),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
                 width: width(196),
-                height: height(64),
+                height: height(56),
+                margin: EdgeInsets.all(width(4)),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(width(4))),
@@ -736,20 +849,22 @@ class _strategy_screenState extends State<strategyScreen> {
                         : null,
                     color: assetsType == strategyType.Strategy
                         ? kWhite
-                        : kTransprant),
+                        : Color(0xffEDEEEF)),
                 child: GestureDetector(
                   onTap: _aActiveChanged,
                   child: Text("策略跟单",
                       style: TextStyle(
                         color: assetsType == strategyType.Strategy
                             ? kPrimaryColor
-                            : kTextColor3,
-                        fontSize: 15,
+                            : kTextColor6,
+                        fontSize: sp(28),
+                        fontWeight: FontWeight.w500,
                       )),
                 )),
             Container(
-                width: width(196),
-                height: height(58),
+                width: width(192),
+                height: height(56),
+                margin: EdgeInsets.all(width(4)),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(width(4))),
@@ -758,15 +873,16 @@ class _strategy_screenState extends State<strategyScreen> {
                         : null,
                     color: assetsType == strategyType.Account
                         ? kWhite
-                        : kTransprant),
+                        : Color(0xffEDEEEF)),
                 child: GestureDetector(
                   onTap: _aActiveChanged1,
                   child: Text("我的账户",
                       style: TextStyle(
                         color: assetsType == strategyType.Account
                             ? kPrimaryColor
-                            : kTextColor3,
-                        fontSize: 15,
+                            : kTextColor6,
+                        fontSize: sp(28),
+                        fontWeight: FontWeight.w500,
                       )),
                 ))
           ],
@@ -779,12 +895,12 @@ class _strategy_screenState extends State<strategyScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: width(50),
-                height: height(64),
+                width: width(48),
+                height: height(48),
                 margin: EdgeInsets.only(right: width(20)),
                 alignment: Alignment.center,
                 child: GestureDetector(
-                  child: Image.asset("images/strategy/strategy_add.png"),
+                  child: Image.asset("images/strategy/strategy_add.png",color: kPrimaryColor,),
                   onTap: () {
                     RouterUtil.pushResult(context,
                         "${StrategyRouter.addBindAccounts}?type=${2}&editorId=${""}",

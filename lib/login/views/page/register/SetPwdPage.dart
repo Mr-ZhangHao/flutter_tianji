@@ -9,6 +9,7 @@ import 'package:flutter_tianji/login/server/index.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/routes/routes.dart';
 import 'package:flutter_tianji/utils/screen.dart';
+import 'package:flutter_tianji/utils/util.dart';
 
 class SetPwdPageWidget extends StatefulWidget {
   final String name;
@@ -38,29 +39,24 @@ class _SetPwdPageWidgetState extends State<SetPwdPageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhite,
-      appBar: AppBar(
-        title: Text(''),
-        elevation: 1,
-        centerTitle: true,
-      ),
+      appBar:    Utils.getCommonAppBar(context, '${Tr.of(context).SetPassword}'),
       body: SingleChildScrollView(
           child: Container(
-        margin: EdgeInsets.symmetric(horizontal: width(DefaultPadding)),
+        margin: EdgeInsets.symmetric(horizontal: width(60)),
         child: Column(
           children: [
-            SizedBox(height: height(48)),
-            Container(
+            SizedBox(height: height(36)),
+     /*       Container(
               alignment: Alignment.centerLeft,
               width: double.infinity,
               child: Text(
-                '设置登录密码',
+                '${Tr.of(context).SetPassword}',
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: sp(48),
                     fontWeight: FontWeight.bold),
               ),
-            ),
-            SizedBox(height: height(20)),
+            ),*/
             Container(
               alignment: Alignment.centerLeft,
               width: double.infinity,
@@ -68,14 +64,14 @@ class _SetPwdPageWidgetState extends State<SetPwdPageWidget> {
                 color: Color(0xffFFFFFF),
               ),
               child: Text(
-                '登录密码6-20位，且为数字字母组合',
+                '${Tr.of(context).loginPwdHint2}',
                 style: TextStyle(
-                    color: Color(0xffB7B7B7),
+                    color: Color(0xff808080),
                     fontSize: sp(28),
                     fontWeight: FontWeight.normal),
               ),
             ),
-            SizedBox(height: height(54)),
+            SizedBox(height: height(20)),
             Container(
               height: height(88),
               alignment: Alignment.centerLeft,
@@ -94,7 +90,7 @@ class _SetPwdPageWidgetState extends State<SetPwdPageWidget> {
                   obscureText: !isopen,
                   controller: _psw1Ctr,
                   focusNode: _psw1Focus,
-                  hintText: '设置密码',
+                  hintText: '${Tr.of(context).LoginPassword}',
                   prefixIcon: ImageIcon(AssetImage('images/login/key.png'),
                       color: Color(0xffBFBFBF)),
                   suffixIcon: GestureDetector(
@@ -112,7 +108,7 @@ class _SetPwdPageWidgetState extends State<SetPwdPageWidget> {
                 ),
               ),
             ),
-            SizedBox(height: height(30)),
+            SizedBox(height: height(40)),
             Container(
               height: height(88),
               alignment: Alignment.centerLeft,
@@ -131,7 +127,7 @@ class _SetPwdPageWidgetState extends State<SetPwdPageWidget> {
                   obscureText: false,
                   controller: _InvitationCodeCtr,
                   focusNode: _InvitationCodeFocus,
-                  hintText: '邀请码（选填）',
+                  hintText: '${Tr.of(context).InvitationCodeHint}',
                   suffixIconConstraintsMaxWidth: 160,
                   suffixIconConstraintsMinWidth: 160,
                   suffixIconConstraintsMaxHeight: 60,
@@ -145,16 +141,18 @@ class _SetPwdPageWidgetState extends State<SetPwdPageWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Checkbox(
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    value: checked,
-                    onChanged: (value) => setState(() => checked = value)),
-                Text(
-                  '我已阅读并同意使用',
-                  style: TextStyle(color: Color(0xffA2A2A2), fontSize: sp(28)),
+                Container(
+                  child: Checkbox(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      value: checked,
+                      onChanged: (value) => setState(() => checked = value)),
                 ),
                 Text(
-                  '《天玑阁协议》',
+                  '${Tr.of(context).TJAgreement2}',
+                  style: TextStyle(color: Color(0xff323232), fontSize: sp(28)),
+                ),
+                Text(
+                  '${Tr.of(context).TJAgreement}',
                   style: TextStyle(color: kPrimaryColor, fontSize: sp(28)),
                 ),
               ],
@@ -167,7 +165,7 @@ class _SetPwdPageWidgetState extends State<SetPwdPageWidget> {
                 margin: EdgeInsets.only(top: height(36)),
                 height: height(88),
                 decoration: BoxDecoration(
-                  color: Color(0xff7865FE),
+                  color: kPrimaryColor,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(circular),
                     bottomRight: Radius.circular(circular),
@@ -177,7 +175,7 @@ class _SetPwdPageWidgetState extends State<SetPwdPageWidget> {
                 ),
                 alignment: Alignment.center,
                 child: Text(
-                  '立即注册',
+                  '${Tr.of(context).SignUpNow}',
                   style: TextStyle(color: Colors.white, fontSize: sp(28)),
                 ),
               ),

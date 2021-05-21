@@ -15,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/routes/routes.dart';
 import 'package:flutter_tianji/utils/screen.dart';
@@ -56,7 +57,16 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
         child: Stack(fit: StackFit.expand, children: <Widget>[
           showGuide
               ? GuidePage()
-              : Image.asset('images/splash/launch_image.png', fit: BoxFit.fill),
+              : Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image:
+                  AssetImage("images/splash/launch_image.png"),
+                  fit: BoxFit.fill),
+            ),
+                child: Image.asset('images/splash/launch_image2.png', fit: BoxFit.fill),
+          ),
           Visibility(
             visible: !showGuide,
             child: Align(
@@ -163,24 +173,23 @@ class _GuidePageState extends State<GuidePage> {
           Offstage(
             offstage: curIndex != GuidePage.images.length - 1,
             child: Align(
-              alignment: Alignment.bottomRight,
+              alignment: Alignment.bottomCenter,
               child: SafeArea(
                 child: InkWell(
                   onTap: () => nextPage(context),
                   child: Container(
-                    width: width(160),
-                    height: height(60),
+                    width: width(280),
+                    height: height(86),
                     alignment: Alignment.center,
-                    padding: EdgeInsets.only(bottom: height(8)),
                     margin: EdgeInsets.symmetric(
-                        horizontal: width(50), vertical: height(80)),
+                        horizontal: width(50), vertical: height(150)),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
-                      color: Colors.black.withAlpha(50),
+                      color: kWhite,
                     ),
-                    child: Text('点击进入',
+                    child: Text('立即体验',
                         style:
-                            TextStyle(color: Colors.white, fontSize: sp(28))),
+                            TextStyle(color: kPrimaryColor, fontSize: sp(34))),
                     // child: Text(_countdownController.duration.toString()),
                   ),
                 ),

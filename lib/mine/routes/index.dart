@@ -49,6 +49,8 @@ class MineRouter implements IRouterProvider {
       // NoticeModel noticeModel = NoticeModel.fromJson(item);
       return tariffStandardPage();
     }));
+
+
     // 好友列表
     router.define(buddyList, handler:
         Handler(handlerFunc: (context, Map<String, List<String>> params) {

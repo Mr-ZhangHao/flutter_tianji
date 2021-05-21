@@ -33,7 +33,7 @@ class _VertifyStatusPageState extends State<VertifyStatusPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(Tr.of(context).authentication),
-        elevation: 1,
+        elevation: 0.5,
         leading: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => RouterUtil.goBack(context),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/common/toast/index.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/strategy/provider/index.dart';
@@ -87,15 +88,15 @@ class _strategyOrderDetailPageState extends State<strategyOrderDetailPage>
                         children: [
                           model.mStrategyDetailModel.avatar == null
                               ? Image.asset('images/home/avatar.png',
-                                  width: width(88), height: height(88))
+                                  width: 44, height: 44)
                               : ClipOval(
                                   child: Image.network(
                                       '${model.mStrategyDetailModel.avatar}',
                                       fit: BoxFit.cover,
-                                      width: width(88),
-                                      height: height(88))),
+                                      width: 44,
+                                      height: 44)),
                           SizedBox(
-                            width: width(24),
+                            width: width(30),
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -103,12 +104,14 @@ class _strategyOrderDetailPageState extends State<strategyOrderDetailPage>
                             children: [
                               Utils.normalText(
                                   '${model.mStrategyDetailModel.username ?? ""}'),
+                              SizedBox(height: height(10),),
                               Utils.normalText(
                                   '注册时间：${model.mStrategyDetailModel.create_time ?? ""}',
                                   color: Color(0xff999999)),
+                              SizedBox(height: height(10),),
                               Container(
                                   child: Text(
-                                '交易所/币种：${model.mStrategyDetailModel.platform.toUpperCase() + "/" + model.mStrategyDetailModel.coin ?? ""}',
+                                '交易所/币种：${model.mStrategyDetailModel.platform.toUpperCase() + "/" + model.mStrategyDetailModel.coin.first ?? "--"}',
                                 softWrap: true,
                                 textAlign: TextAlign.left,
                                 overflow: TextOverflow.ellipsis,
@@ -127,7 +130,7 @@ class _strategyOrderDetailPageState extends State<strategyOrderDetailPage>
                                 height: height(70),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  color: Color(0xff7865FE),
+                                  color: kPrimaryColor,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(44)),
                                 ),
@@ -142,10 +145,8 @@ class _strategyOrderDetailPageState extends State<strategyOrderDetailPage>
                                     .getnoFollowList(
                                         model.mStrategyDetailModel.id,
                                         model.mStrategyDetailModel.platform_id);
-                                Provider.of<StrategyProvider>(context,
-                                        listen: false)
-                                    .getStrategyDetail(
-                                        model.mStrategyDetailModel.id);
+                                Provider.of<StrategyProvider>(context, listen: false).coinList=  model.mStrategyDetailModel.coin;
+
                                 //延时500毫秒执行
                                 Future.delayed(
                                     const Duration(milliseconds: 1000), () {
@@ -154,6 +155,8 @@ class _strategyOrderDetailPageState extends State<strategyOrderDetailPage>
                                       context,
                                       "${StrategyRouter.genDan}?type=${1}&apiId=${model.mStrategyDetailModel.id}&platformID=${model.mStrategyDetailModel.platform_id}",
                                       (result) {});
+
+
                                 });
                               },
                             ),
@@ -223,13 +226,12 @@ class _strategyOrderDetailPageState extends State<strategyOrderDetailPage>
                       color: Color(0xffF8F6F9),
                     ),
                     Container(
-                      width: double.infinity,
+                      alignment: Alignment.centerLeft,
+                      width: MediaQuery.of(context).size.width,
                       height: height(80),
                       child: TabBar(
-                        isScrollable: false,
-                        labelPadding:
-                            EdgeInsets.only(left: width(40), right: width(40)),
-                        labelColor: Color(0xff7865FE),
+                        isScrollable: true,
+                        labelColor: kPrimaryColor,
                         unselectedLabelColor: Color(0xff323232),
                         indicatorSize: TabBarIndicatorSize.label,
                         indicatorColor:
@@ -238,6 +240,12 @@ class _strategyOrderDetailPageState extends State<strategyOrderDetailPage>
                         tabs: _buildTabs(),
                       ),
                     ),
+                        Divider(
+                          color: Color(0xff59D6D6D6),
+                          indent: width(30),
+                          endIndent: width(30),
+                          height: 0.5,
+                        ),
                     Container(
                       constraints: BoxConstraints(
                           minHeight: height(800),
@@ -254,10 +262,12 @@ class _strategyOrderDetailPageState extends State<strategyOrderDetailPage>
     Toast.showLoading('loading...');
     await StrategyServer.getInterest(id);
     Toast.showText("关注成功");
+    Provider.of<StrategyProvider>(context, listen: false)
+        .getStrategyDetail(widget.apiId);
   }
 
   Widget _tabBarView(StrategyProvider model) {
-    return TabBarView(
+    return model.isIdle ? TabBarView(
       controller: _tabController,
       children: [
         accountPage(
@@ -268,7 +278,7 @@ class _strategyOrderDetailPageState extends State<strategyOrderDetailPage>
           apiId: widget.apiId,
         ),
       ],
-    );
+    ):Container();
   }
 
   List<Widget> _buildTabs() {
@@ -279,6 +289,7 @@ class _strategyOrderDetailPageState extends State<strategyOrderDetailPage>
             alignment: Alignment.center,
             child: Text(
               _tabs[i],
+              style: TextStyle(fontSize: sp(32)),
               textAlign: TextAlign.center,
             )))
         .toList();

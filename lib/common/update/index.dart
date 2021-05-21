@@ -47,7 +47,7 @@ class UpdateUtil {
 
   Future<UpdateVersion> getVersionInfo(type) async {
     var res = await http
-        .get('/api/home/appNewVersion', queryParameters: {"mobile_system": type});
+        .get('/api/home/appVersion', queryParameters: {"mobile_system": type});
 
     return UpdateVersion.fromJson(res.data['data']);
   }

@@ -148,10 +148,20 @@ class Utils {
     return Text(
       text,
       style: TextStyle(
+          height: 1.1,
           fontSize: sp(fontSize == null ? 28 : fontSize),
           color: color == null ? Color(0xff323232) : color,
           fontWeight: fontWeight != null ? fontWeight : FontWeight.normal),
       textAlign: textAlign == null ? TextAlign.left : textAlign,
+    );
+  }
+
+  static divider(){
+    return   Image.asset(
+      'images/mine/next.png',
+      width: width(18),
+      height: height(17),
+      color: Color(0xffD1D1D1),
     );
   }
 
@@ -163,15 +173,15 @@ class Utils {
     }
     return AppBar(
       bottom: null,
-      elevation: elevation,
+      elevation: 0.3,
       leading: GestureDetector(
-        onTap: () => Navigator.pop(context),
-        child: Container(
-          alignment: Alignment.center,
-          child: Image.asset('images/login/back.png',
-              width: width(22), height: height(36)),
-        ),
-      ),
+          behavior: HitTestBehavior.opaque,
+          onTap: () => RouterUtil.goBack(context),
+          child: Container(
+            alignment: Alignment.center,
+            child: Image.asset('images/mine/back@2x.png',
+                width: width(20), height: height(28)),
+          )),
       title: Text(
         title,
         style: TextStyle(
@@ -198,7 +208,7 @@ class Utils {
         builder: (context) {
           return AlertDialog(
             title: Text(contText,
-                style: TextStyle(fontSize: sp(32), color: Color(0xff323232))),
+                style: TextStyle(fontSize: sp(32), color: Color(0xff323232),),textAlign: TextAlign.center,),
             content: Visibility(
               child: TextField(
                 inputFormatters: <TextInputFormatter>[
@@ -218,7 +228,7 @@ class Utils {
                       color: Color(0xffDADADA),
 
                       ///设置边框的粗细
-                      width: 2.0,
+                      width: 1.0,
                     ),
                   ),
 
@@ -233,7 +243,7 @@ class Utils {
                       color: Color(0xffDADADA),
 
                       ///设置边框的粗细
-                      width: 2.0,
+                      width: 1.0,
                     ),
                   ),
                   disabledBorder: OutlineInputBorder(
@@ -246,7 +256,7 @@ class Utils {
                       color: Color(0xffDADADA),
 
                       ///设置边框的粗细
-                      width: 2.0,
+                      width: 1.0,
                     ),
                   ),
 
@@ -277,7 +287,9 @@ class Utils {
                   height: height(80),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Color(0xffDADADA),
+                    color: Color(0xffF5F5F5),
+                    border: new Border.all(color: Color(0xFFDADADA), width: width(2)),
+
                     borderRadius: BorderRadius.all(Radius.circular(width(8))),
                   ),
                   child: Text(Tr.of(context).cancel,
@@ -292,7 +304,7 @@ class Utils {
                     height: height(80),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Color(0xff7865FE),
+                      color: kPrimaryColor,
                       borderRadius: BorderRadius.all(Radius.circular(width(8))),
                     ),
                     child: Text(Tr.of(context).determine,
@@ -306,7 +318,6 @@ class Utils {
   }
 }
 
-class WhitelistingTextInputFormatter {}
 
 class commonTypeWidget extends StatelessWidget {
   final Function(int type, String name) onTab;

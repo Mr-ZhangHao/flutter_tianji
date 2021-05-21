@@ -42,8 +42,8 @@ class _screenRightDrawerState extends State<StrategyRightDrawer> {
     // TODO: implement initState
     super.initState();
     setState(() {
-      coin = widget.coinID;
-      mPlatform = widget.mPlatformId;
+    //  coin = widget.coinID;
+   //   mPlatform = widget.mPlatformId;
     });
   }
 
@@ -138,20 +138,17 @@ class _screenRightDrawerState extends State<StrategyRightDrawer> {
                 margin: EdgeInsets.only(top: height(20)),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    color: Color(0xffEFF8FE),
-                    borderRadius: BorderRadius.circular(5),
-                    image: mPlatform == e.platform
-                        ? DecorationImage(
-                            image: AssetImage('images/wallet/select.png'),
-                            fit: BoxFit.fill)
-                        : null),
-                height: width(70),
+                    color: mPlatform == e.platform ? kPrimaryColor:kWhite,
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(color: Color(0xffE0E0E0),width:mPlatform == e.platform ? 0:0.5),
+                  ),
+                height: width(60),
                 width: width(140),
                 child: Text(e.platform,
                     style: TextStyle(
                         color: mPlatform == e.platform
-                            ? kPrimaryColor
-                            : Color(0xff323232),
+                            ? kWhite
+                            : Color(0xff999999),
                         fontSize: sp(24))),
               ),
             ))
@@ -173,19 +170,16 @@ class _screenRightDrawerState extends State<StrategyRightDrawer> {
                 margin: EdgeInsets.only(top: height(20)),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    color: Color(0xffEFF8FE),
-                    borderRadius: BorderRadius.circular(5),
-                    image: coin == e.coin
-                        ? DecorationImage(
-                            image: AssetImage('images/wallet/select.png'),
-                            fit: BoxFit.fill)
-                        : null),
-                height: width(70),
+                  color: coin == e.coin ? kPrimaryColor:kWhite,
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(color: Color(0xffE0E0E0),width:coin == e.coin ? 0:0.5),
+                ),
+                height: width(60),
                 width: width(140),
                 child: Text(e.coin,
                     style: TextStyle(
                         color:
-                            coin == e.coin ? kPrimaryColor : Color(0xff323232),
+                            coin == e.coin ? kWhite: Color(0xff999999),
                         fontSize: sp(24))),
               ),
             ))
@@ -222,7 +216,7 @@ class _screenRightDrawerState extends State<StrategyRightDrawer> {
                   mPlatform = "";
                   Application.eventBus
                       .fire(allStartegyEvent(coin, mPlatformID));
-                  Navigator.of(context).pop();
+                //  Navigator.of(context).pop();
                   // currencyModel2 = currencyModel;
                 });
               },

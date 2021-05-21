@@ -29,10 +29,11 @@ class SecurityPage extends StatelessWidget {
     UserInfoModel user = Provider.of<MineProvider>(context).userInfo;
 
     return Scaffold(
+      backgroundColor: kWhite,
       appBar: AppBar(
         title: Text(Tr.of(context).securityCenter),
         centerTitle: true,
-        elevation: 1,
+        elevation: 0.5,
         leading: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => RouterUtil.goBack(context),
@@ -51,14 +52,13 @@ class SecurityPage extends StatelessWidget {
               linkColor: kPrimaryColor,
               onTab: () => RouterUtil.push(context, MineRouter.loginPsw),
             ),
-            SizedBox(height: height(20)),
             ListItemWidget(
               leading: Tr.of(context).CellPhone,
               linkText: null == user.mobile
                   ? Tr.of(context).unbounded
                   : Utils.hiddenMiddle(user?.mobile, 3, 4),
               linkColor:
-                  null == user.mobile ? kPrimaryColor : Color(0xff909090),
+                  null == user.mobile ? kPrimaryColor : kTextColor3,
               onTab: user.mobile != null
                   ? null
                   : () => RouterUtil.push(context, MineRouter.bindPhone),
@@ -68,7 +68,7 @@ class SecurityPage extends StatelessWidget {
               linkText: null == user.email
                   ? Tr.of(context).unbounded
                   : Utils.hiddenMiddle(user?.email, 3, 4),
-              linkColor: null == user.email ? kPrimaryColor : Color(0xff909090),
+              linkColor: null == user.email ? kPrimaryColor : kTextColor3,
               onTab: user.email != null
                   ? null
                   : () => RouterUtil.push(context, MineRouter.bindEmail),
@@ -78,7 +78,7 @@ class SecurityPage extends StatelessWidget {
               linkText: user.gaSecret == 1
                   ? Tr.of(context).Bound
                   : Tr.of(context).unbounded,
-              linkColor: user.gaSecret == 0 ? kPrimaryColor : Color(0xff909090),
+              linkColor: user.gaSecret == 0 ? kPrimaryColor : kTextColor3,
               onTab: user.gaSecret == 1
                   ? null
                   : () => RouterUtil.push(context, MineRouter.bindGoogle),
@@ -97,7 +97,7 @@ class SecurityPage extends StatelessWidget {
                 }
               },
             ),
-
+/*
             SizedBox(height: height(20)),
             // ListItemWidget(
             //   leading: '防钓鱼码',
@@ -110,7 +110,7 @@ class SecurityPage extends StatelessWidget {
               linkText: '   ',
               linkColor: kPrimaryColor,
               onTab: () => RouterUtil.push(context, MineRouter.loginRecord),
-            ),
+            ),*/
           ],
         ),
       ),
@@ -135,29 +135,33 @@ class ListItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTab,
-      child: Container(
-        height: height(100),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border(
-                bottom: BorderSide(width: 0.5, color: Color(0xffEBEBEB)))),
-        padding: EdgeInsets.symmetric(horizontal: width(30)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(leading, style: TextStyle(color: Color(0xff909090))),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Text(linkText, style: TextStyle(color: linkColor)),
-                  SizedBox(width: width(20)),
-                  Image.asset('images/mine/next.png',
-                      fit: BoxFit.fill, width: width(22), height: width(33)),
-                ],
-              ),
-            )
-          ],
-        ),
+      child: Column(
+        children: [
+          Container(
+            height: height(100),
+            decoration: BoxDecoration(
+                color: Colors.white,
+           ),
+            padding: EdgeInsets.symmetric(horizontal: width(30)),
+            child:  Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(leading, style: TextStyle(color: Color(0xff323232),fontSize: sp(28))),
+                Container(
+                  child: Row(
+                    children: <Widget>[
+                      Text(linkText, style: TextStyle(color: linkColor,fontSize: sp(28))),
+
+                      SizedBox(width: width(20)),
+                     Utils.divider()
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          Divider(indent: width(40),endIndent: width(40), color: Color(0xffEBEBEB),height: height(2),)
+        ],
       ),
     );
   }

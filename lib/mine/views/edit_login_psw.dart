@@ -14,6 +14,7 @@ import 'package:flutter_tianji/mine/provider/mine_provider.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
 import 'package:flutter_tianji/utils/sp_utils.dart';
+import 'package:flutter_tianji/utils/util.dart';
 import 'package:provider/provider.dart';
 
 class EditLoginPswPage extends StatefulWidget {
@@ -47,6 +48,9 @@ class _EditLoginPswPageState extends State<EditLoginPswPage> {
   String errorText = '';
 
   bool isError = false;
+  bool isopen = false;
+  bool isopen2 = false;
+  bool isopen3= false;
 
   bool isLoading = false;
   TfaTypeModel tfaType;
@@ -62,26 +66,15 @@ class _EditLoginPswPageState extends State<EditLoginPswPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhite,
-      appBar: AppBar(
-        title: Text(Tr.of(context).modifyLoginPassword),
-        centerTitle: true,
-        elevation: 1,
-        leading: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => RouterUtil.goBack(context),
-            child: Container(
-              alignment: Alignment.center,
-              child: Image.asset('images/mine/back@2x.png',
-                  width: width(22), height: height(36)),
-            )),
-      ),
+      appBar:    Utils.getCommonAppBar(context, '${Tr.of(context).modifyLoginPassword}'),
       body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: width(40)),
+          padding: EdgeInsets.symmetric(horizontal: width(30)),
           child: Column(
             children: <Widget>[
-              Container(
+
+            /*  Container(
                 padding: EdgeInsets.symmetric(
                     vertical: height(8), horizontal: width(10)),
                 margin: EdgeInsets.symmetric(vertical: height(28)),
@@ -98,26 +91,37 @@ class _EditLoginPswPageState extends State<EditLoginPswPage> {
                   ],
                 ),
               ),
-              SizedBox(height: height(30)),
+              SizedBox(height: height(30)),*/
               FocusWidget(
                 focusNode: _oldPswFocus,
                 child: InputWidget(
                   focusNode: _oldPswFocus,
                   controller: _oldPswCtr,
                   maxHeight: 100,
-                  obscureText: true,
                   hintText: Tr.of(context).hintInputPassword,
                   prefixIconConstraintsMaxWidth: 200,
                   prefixIconConstraintsMinWidth: 160,
                   prefixIconConstraintsMinHeight: 50,
                   prefixIconConstraintsMaxHeight: 50,
-                  contentPadding: EdgeInsets.only(bottom: height(12)),
+                  suffixIconConstraintsMaxWidth: 28,
+                  suffixIconConstraintsMinWidth: 28,
+                  suffixIconConstraintsMaxHeight: 100,
+                  suffixIconConstraintsMinHeight: 28,
+                  obscureText: !isopen,
+                  suffixIcon: GestureDetector(
+                    onTap: () => {setState(() => isopen = !isopen)},
+                    child: ImageIcon(
+                        AssetImage(
+                            'images/login/${isopen ? 'open' : 'close'}.png'),
+                        color: isopen ? kPrimaryColor : Color(0xff787878)),
+                  ),
                   hintStyle:
                       TextStyle(color: Color(0xffCCCCCC), fontSize: sp(28)),
                   prefixIcon: Container(
-                    child: Text('${Tr.of(context).originalLoginPassword}：',
-                        style: TextStyle(color: Colors.black)),
+                  alignment: Alignment.centerLeft,
+                  child: Utils.normalText("${Tr.of(context).originalLoginPassword}：",
                   ),
+                ),
                 ),
               ),
               FocusWidget(
@@ -126,18 +130,29 @@ class _EditLoginPswPageState extends State<EditLoginPswPage> {
                   focusNode: _newPsw1Focus,
                   controller: _newPsw1Ctr,
                   maxHeight: 100,
-                  obscureText: true,
                   hintText: Tr.of(context).LoginPasswordhint,
                   prefixIconConstraintsMaxWidth: 200,
                   prefixIconConstraintsMinWidth: 160,
                   prefixIconConstraintsMinHeight: 50,
                   prefixIconConstraintsMaxHeight: 50,
-                  contentPadding: EdgeInsets.only(bottom: height(12)),
+                  suffixIconConstraintsMaxWidth: 28,
+                  suffixIconConstraintsMinWidth: 28,
+                  suffixIconConstraintsMaxHeight: 100,
+                  suffixIconConstraintsMinHeight: 28,
+                  obscureText: !isopen2,
+                  suffixIcon: GestureDetector(
+                    onTap: () => {setState(() => isopen2 = !isopen2)},
+                    child: ImageIcon(
+                        AssetImage(
+                            'images/login/${isopen2 ? 'open' : 'close'}.png'),
+                        color: isopen2 ? kPrimaryColor : Color(0xff787878)),
+                  ),
                   hintStyle:
                       TextStyle(color: Color(0xffCCCCCC), fontSize: sp(28)),
                   prefixIcon: Container(
-                    child: Text('${Tr.of(context).Newloginpassword}：',
-                        style: TextStyle(color: Colors.black)),
+                    alignment: Alignment.centerLeft,
+                    child: Utils.normalText("${Tr.of(context).Newloginpassword}：",
+                    ),
                   ),
                 ),
               ),
@@ -147,18 +162,30 @@ class _EditLoginPswPageState extends State<EditLoginPswPage> {
                   controller: _newPsw2Ctr,
                   focusNode: _newPsw2Focus,
                   maxHeight: 100,
-                  obscureText: true,
                   hintText: Tr.of(context).RepeatPassword,
                   prefixIconConstraintsMaxWidth: 200,
                   prefixIconConstraintsMinWidth: 160,
                   prefixIconConstraintsMinHeight: 50,
                   prefixIconConstraintsMaxHeight: 50,
-                  contentPadding: EdgeInsets.only(bottom: height(12)),
+                  suffixIconConstraintsMaxWidth: 28,
+                  suffixIconConstraintsMinWidth: 28,
+                  suffixIconConstraintsMaxHeight: 100,
+                  suffixIconConstraintsMinHeight: 28,
+                  obscureText: !isopen3,
+                  suffixIcon: GestureDetector(
+                    onTap: () => {setState(() => isopen3 = !isopen3)},
+                    child: ImageIcon(
+                        AssetImage(
+                            'images/login/${isopen3 ? 'open' : 'close'}.png'),
+                        color: isopen3 ? kPrimaryColor : Color(0xff787878)),
+                  ),
+
                   hintStyle:
                       TextStyle(color: Color(0xffCCCCCC), fontSize: sp(28)),
                   prefixIcon: Container(
-                    child: Text('${Tr.of(context).ConfirmNewPassword}：',
-                        style: TextStyle(color: Colors.black)),
+                    alignment: Alignment.centerLeft,
+                    child: Utils.normalText("${Tr.of(context).ConfirmNewPassword}：",
+                    ),
                   ),
                 ),
               ),
@@ -181,7 +208,7 @@ class _EditLoginPswPageState extends State<EditLoginPswPage> {
                 builder:
                     (BuildContext context, MineProvider model, Widget child) {
                   return MyButton(
-                      text: Tr.of(context).submit, onPressed: _confirm);
+                      text: Tr.of(context).determine, onPressed: _confirm);
                 },
               )
             ],
@@ -189,7 +216,7 @@ class _EditLoginPswPageState extends State<EditLoginPswPage> {
         ),
       ),
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+    //  resizeToAvoidBottomPadding: false,
     );
   }
 

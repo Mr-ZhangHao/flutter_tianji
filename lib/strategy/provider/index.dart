@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_tianji/providers/view_state_model.dart';
 import 'package:flutter_tianji/strategy/model/CoinsModel.dart';
 import 'package:flutter_tianji/strategy/model/FollowInfoViewModel.dart';
@@ -34,11 +37,18 @@ class StrategyProvider extends ViewStateModel {
   int status = 0;
   String proportion = '';
   String userApiId;
+  List<String> coinList=[];//详情跟单币种
 
-  void getFollowInfo(followApiId, platform, coin) async {
+
+  List<BarChartGroupData> items = [];
+  final Color leftBarColor = const Color(0xff52BEB4); //买入
+  final Color rightBarColor = const Color(0xffEF726F); //卖出
+  List<FlSpot> spots = [];
+
+  void getFollowInfo(followApiId,apiID, platform, coin) async {
     setBusy();
     try {
-      var data = await StrategyServer.getFollowPro(followApiId, platform, coin);
+      var data = await StrategyServer.getFollowPro(followApiId,apiID, platform, coin);
       mFollowInfoViewModel = data;
       status = data.status;
       proportion = data.proportion.toString();
@@ -119,21 +129,52 @@ class StrategyProvider extends ViewStateModel {
     setBusy();
 
     try {
+      spots.clear();
+      items.clear();
       var data = await StrategyServer.getStrategyDetail(apiId);
       mStrategyDetailModel = data;
+
+      for (int i = 0; i < 7; i++) {
+        //   items.add(makeGroupData(i,i.ceilToDouble(),i.ceilToDouble()));
+        //   spots.add(FlSpot(i.ceilToDouble(), i.ceilToDouble()),);
+       items.add(makeGroupData(i,double.parse(data.sumTradbuy[i].count.toString()),double.parse(data.sumTradSell[0].count.toString())));
+       spots.add(FlSpot(double.parse(data.profitList[i].days.toString()), double.parse(data.profitList[i].pnl.toString())),);
+      }
+
+
+/*      data.profitList.asMap()
+        .keys
+        .map((i) => spots1.add(FlSpot(data.profitList[i].date, data.profitList[i].pnl)));*/
       notifyListeners();
       setIdle();
     } catch (e, s) {
       setError(e, s);
     }
   }
+  /* 条形图 */
 
+  BarChartGroupData makeGroupData(int x, double y1, double y2) {
+    return BarChartGroupData(barsSpace: 4, x: x, barRods: [
+      BarChartRodData(
+        y: y1,
+        colors: [leftBarColor],
+        width: 7,
+      ),
+      BarChartRodData(
+        y: y2,
+        colors: [rightBarColor],
+        width: 7,
+      ),
+    ]);
+  }
   void getAccountDetail(id) async {
     setBusy();
 
     try {
       var data = await StrategyServer.getAccountDetail(id);
       mAccountDetailModel = data;
+
+
       notifyListeners();
       setIdle();
     } catch (e, s) {

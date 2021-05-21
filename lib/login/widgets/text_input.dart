@@ -168,6 +168,8 @@ class _InputWidgetState extends State<InputWidget> {
         style: widget.style,
         keyboardType: widget.keyboardType,
         readOnly: widget.readOnly, //输入文本的样式
+        inputFormatters: widget.getVCode != null ? [
+          WhitelistingTextInputFormatter.digitsOnly   ]:widget.inputFormatters,
         decoration: InputDecoration(
           prefixStyle: TextStyle(color: Colors.black),
           contentPadding: widget.contentPadding,

@@ -423,15 +423,16 @@ class _BusinessScreenState extends State<BusinessScreen>
                         : null,
                     color: assetsType == AssetsType.collection
                         ? kWhite
-                        : kTransprant),
+                        : Color(0xffEDEEEF)),
                 child: GestureDetector(
                   onTap: _aActiveChanged,
                   child: Text("归集",
                       style: TextStyle(
                         color: assetsType == AssetsType.collection
                             ? kPrimaryColor
-                            : kTextColor3,
-                        fontSize: 15,
+                            : kTextColor6,
+                        fontSize: sp(28),
+                        fontWeight: FontWeight.w500,
                       )),
                 )),
             Container(
@@ -442,15 +443,16 @@ class _BusinessScreenState extends State<BusinessScreen>
                     boxShadow:
                         assetsType == AssetsType.found ? kDefaultShadow : null,
                     color:
-                        assetsType == AssetsType.found ? kWhite : kTransprant),
+                        assetsType == AssetsType.found ? kWhite : Color(0xffEDEEEF)),
                 child: GestureDetector(
                   onTap: _aActiveChanged1,
                   child: Text("发现",
                       style: TextStyle(
                         color: assetsType == AssetsType.found
                             ? kPrimaryColor
-                            : kTextColor3,
-                        fontSize: 15,
+                            : kTextColor6,
+                        fontSize: sp(28),
+                        fontWeight: FontWeight.w500,
                       )),
                 ))
           ],

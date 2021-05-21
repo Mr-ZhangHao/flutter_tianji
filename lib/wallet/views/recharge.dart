@@ -151,7 +151,7 @@ class _MineScreenState extends State<RechargePage> {
                           decoration: BoxDecoration(
                               color: Color.fromARGB(1000, 18, 109, 255),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(width(35)))),
+                                  BorderRadius.all(Radius.circular(width(5)))),
                           child: Text('${Tr.of(context).assetCopyaddress}',
                               style: TextStyle(
                                   color: Colors.white,

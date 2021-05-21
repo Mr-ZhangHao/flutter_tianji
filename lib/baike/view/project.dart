@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tianji/baike/view/projectList.dart';
+import 'package:flutter_tianji/common/event/allStartegyEvent.dart';
+import 'package:flutter_tianji/common/event/projectListEvent.dart';
+import 'package:flutter_tianji/routes/application.dart';
 import 'package:flutter_tianji/utils/screen.dart';
 import 'package:flutter_tianji/utils/util.dart';
 
@@ -12,6 +15,7 @@ class _projectPageState extends State<projectPage> {
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
@@ -27,21 +31,21 @@ class _projectPageState extends State<projectPage> {
                 children: [
                   Expanded(
                       child:
-                          Utils.normalText('名称', textAlign: TextAlign.center)),
+                          Utils.normalText('名称', textAlign: TextAlign.center,color: Color(0xff666666)),flex: 2,),
                   Expanded(
                       child:
-                          Utils.normalText('分类', textAlign: TextAlign.center)),
+                          Utils.normalText('分类', textAlign: TextAlign.center,color: Color(0xff666666))),
                   Expanded(
                       child:
-                          Utils.normalText('评级', textAlign: TextAlign.center)),
+                          Utils.normalText('评级', textAlign: TextAlign.center,color: Color(0xff666666))),
                   Expanded(
                       child:
-                          Utils.normalText('热度', textAlign: TextAlign.center)),
+                          Utils.normalText('热度', textAlign: TextAlign.center,color: Color(0xff666666))),
                   GestureDetector(
                     child: Container(
                         padding: EdgeInsets.symmetric(horizontal: width(20)),
                         child: Image.asset('images/business/icon_screen.png',
-                            width: width(48), height: height(48))),
+                            width: width(40), height: height(40))),
                     onTap: () {
                       Scaffold.of(context).openEndDrawer();
                     },

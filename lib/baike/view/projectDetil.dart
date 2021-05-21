@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tianji/baike/provider/baike_provider.dart';
+import 'package:flutter_tianji/baike/server/index.dart';
 import 'package:flutter_tianji/baike/view/detail/liquidity.dart';
 import 'package:flutter_tianji/baike/view/detail/marketHeat.dart';
 import 'package:flutter_tianji/baike/view/detail/projectEvaluation.dart';
@@ -6,10 +8,14 @@ import 'package:flutter_tianji/baike/view/detail/riskAssessment.dart';
 import 'package:flutter_tianji/baike/view/detail/valueEvaluation.dart';
 import 'package:flutter_tianji/business/views/item/tradeStatisticList.dart';
 import 'package:flutter_tianji/common/constants/index.dart';
+import 'package:flutter_tianji/common/toast/index.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
+import 'package:provider/provider.dart';
 
 class projectDetilPage extends StatefulWidget {
+  final String id;
+  projectDetilPage({Key key,this.id}) : super(key: key);
   @override
   _projectDetilPageState createState() => _projectDetilPageState();
 }
@@ -24,6 +30,7 @@ class _projectDetilPageState extends State<projectDetilPage>
     super.initState();
     _tabController =
         TabController(vsync: this, length: _tabs.length, initialIndex: 0);
+    Provider.of<baikeProvider>(context, listen: false).getprojectDetail(widget.id);
   }
 
   @override
@@ -38,7 +45,7 @@ class _projectDetilPageState extends State<projectDetilPage>
       appBar: AppBar(
         title: Text('评测详情'),
         centerTitle: true,
-        elevation: 1,
+        elevation: 0.5,
         leading: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => RouterUtil.goBack(context),
@@ -47,6 +54,26 @@ class _projectDetilPageState extends State<projectDetilPage>
               child: Image.asset('images/mine/back@2x.png',
                   width: width(22), height: height(36)),
             )),
+        actions: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: width(40),
+                height: height(40),
+                margin: EdgeInsets.only(right: width(20)),
+                alignment: Alignment.center,
+                child: GestureDetector(
+                  child: Image.asset("images/baike/shoucang@2x.png"),
+                  onTap: () {
+                    _follow(widget.id);
+                  },
+                ),
+              ),
+            ],
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -57,9 +84,9 @@ class _projectDetilPageState extends State<projectDetilPage>
               color: Color(0xffFFFFFF),
             ),
             child: TabBar(
-              isScrollable: false,
+              isScrollable: true,
               labelPadding: EdgeInsets.only(left: width(20), right: width(20)),
-              labelColor: Color(0xff7865FE),
+              labelColor: kPrimaryColor,
               unselectedLabelColor: Color(0xff323232),
               indicatorSize: TabBarIndicatorSize.label,
               indicatorColor: Theme.of(context).tabBarTheme.labelColor,
@@ -104,9 +131,14 @@ class _projectDetilPageState extends State<projectDetilPage>
             alignment: Alignment.center,
             child: Text(
               _tabs[i],
-              style: TextStyle(fontSize: sp(22)),
+              style: TextStyle(fontSize: sp(28)),
               textAlign: TextAlign.center,
             )))
         .toList();
+  }
+  _follow(id) async {
+    Toast.showLoading('loading...');
+    await baikeServer.collect(id);
+    Toast.showText("收藏成功");
   }
 }

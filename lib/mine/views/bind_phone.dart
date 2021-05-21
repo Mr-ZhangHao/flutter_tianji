@@ -24,6 +24,7 @@ import 'package:flutter_tianji/login/widgets/text_input.dart';
 import 'package:flutter_tianji/mine/provider/mine_provider.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
+import 'package:flutter_tianji/utils/util.dart';
 import 'package:provider/provider.dart';
 
 class BindPhonePage extends StatefulWidget {
@@ -65,19 +66,8 @@ class _BindPhonePageState extends State<BindPhonePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(Tr.of(context).bindPhone),
-        centerTitle: true,
-        elevation: 1,
-        leading: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => RouterUtil.goBack(context),
-            child: Container(
-              alignment: Alignment.center,
-              child: Image.asset('images/mine/back@2x.png',
-                  width: width(22), height: height(36)),
-            )),
-      ),
+      appBar:    Utils.getCommonAppBar(context, '${Tr.of(context).bindPhone}'),
+
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: width(40)),
@@ -157,9 +147,14 @@ class _BindPhonePageState extends State<BindPhonePage> {
                   visible: isError,
                   child: Text(errorText,
                       style: TextStyle(color: Color(0xffFF3838)))),
-              SizedBox(height: height(70)),
+              SizedBox(height: height(30)),
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Utils.normalText("注意：手机号绑定后将不可修改。"),
+              ),
+              SizedBox(height: height(80)),
               MyButton(
-                text: Tr.of(context).submitBinding,
+                text: Tr.of(context).determine,
                 onPressed: _confirm,
               )
             ],
@@ -167,7 +162,7 @@ class _BindPhonePageState extends State<BindPhonePage> {
         ),
       ),
       resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: false,
+     // resizeToAvoidBottomPadding: false,
     );
   }
 

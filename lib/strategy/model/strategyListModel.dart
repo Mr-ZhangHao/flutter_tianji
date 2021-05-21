@@ -15,8 +15,8 @@ class strategyListModel {
   int count;
   int care;
   String create_time;
-  String coin;
   List<ProfitList> profitList;
+  List<String> coin;
   List<SumTradbuy> sumTradbuy;
   List<SumTradSell> sumTradSell;
   SumTrad sumTrad;
@@ -59,15 +59,16 @@ class strategyListModel {
     victoryRate = json['victory_rate'];
     profit = json['profit'];
     count = json['count'];
-    coin = json['coin'];
     create_time = json['create_time'];
     care = json['care'];
+    coin = json['coin'].cast<String>();
     if (json['profitList'] != null) {
       profitList = new List<ProfitList>();
       json['profitList'].forEach((v) {
         profitList.add(new ProfitList.fromJson(v));
       });
     }
+
     if (json['sumTradbuy'] != null) {
       sumTradbuy = new List<SumTradbuy>();
       json['sumTradbuy'].forEach((v) {
@@ -121,7 +122,7 @@ class strategyListModel {
 
 class ProfitList {
   String date;
-  String pnl;
+  Object pnl;
 
   ProfitList({this.date, this.pnl});
 

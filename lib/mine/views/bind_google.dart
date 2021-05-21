@@ -26,6 +26,7 @@ import 'package:flutter_tianji/login/widgets/text_input.dart';
 import 'package:flutter_tianji/mine/provider/mine_provider.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
+import 'package:flutter_tianji/utils/util.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -83,19 +84,8 @@ class _BindGooglePageState extends State<BindGooglePage> {
     GlobalKey _globalKey = GlobalKey();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(Tr.of(context).bindGoogle),
-        centerTitle: true,
-        elevation: 1,
-        leading: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => RouterUtil.goBack(context),
-            child: Container(
-              alignment: Alignment.center,
-              child: Image.asset('images/mine/back@2x.png',
-                  width: width(22), height: height(36)),
-            )),
-      ),
+      appBar:    Utils.getCommonAppBar(context, '${Tr.of(context).bindGoogle}'),
+      backgroundColor: kWhite,
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: width(40)),
@@ -153,9 +143,8 @@ class _BindGooglePageState extends State<BindGooglePage> {
                       // },
                       focusNode: _phoneFocus,
                       hintText:
-                          '${Tr.of(context).Key}+：${model.googleSecret ?? ''}',
+                          '${Tr.of(context).Key}：${model.googleSecret ?? ''}',
                       controller: _phoneCtr,
-                      contentPadding: EdgeInsets.only(top: height(13)),
                       hintStyle:
                           TextStyle(color: Color(0xff323232), fontSize: sp(28)),
                       suffixIconConstraintsMaxHeight: 60,
@@ -255,7 +244,7 @@ class _BindGooglePageState extends State<BindGooglePage> {
         ),
       ),
       resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: false,
+     // resizeToAvoidBottomPadding: false,
     );
   }
 

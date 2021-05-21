@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tianji/baike/routes/index.dart';
 import 'package:flutter_tianji/business/views/screenRightDrawer.dart';
+import 'package:flutter_tianji/common/constants/index.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/strategy/routes/index.dart';
 import 'package:flutter_tianji/strategy/views/AllStrategyListView.dart';
@@ -43,14 +44,14 @@ class _AllStrategyState extends State<AllStrategy>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Utils.getCommonAppBar(context, "全部策略", elevation: 1.0, actions: [
+      appBar: Utils.getCommonAppBar(context, "全部策略", elevation: 0.5, actions: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: width(50),
-              height: height(64),
+              width: width(40),
+              height: height(40),
               margin: EdgeInsets.only(right: width(20)),
               alignment: Alignment.center,
               child: GestureDetector(
@@ -111,7 +112,9 @@ class _AllStrategyState extends State<AllStrategy>
       endDrawer: StrategyRightDrawer(
         coinID: coinID,
         mPlatformId: mPlatform,
-        onTab: (e) async {},
+        onTab: (e) async {
+
+        },
         onCoinTab: (coin) {
           setState(() {
             this.coinID = coin;
@@ -132,14 +135,11 @@ class _AllStrategyState extends State<AllStrategy>
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: Container(
-          width: double.infinity,
+          width: MediaQuery.of(context).size.width-100,
           height: height(80),
-          margin: EdgeInsets.only(left: width(20)),
-          alignment: Alignment.center,
           child: TabBar(
-            isScrollable: false,
-            labelPadding: EdgeInsets.only(left: width(40), right: width(40)),
-            labelColor: Color(0xff7865FE),
+            isScrollable: true,
+            labelColor: kPrimaryColor,
             unselectedLabelColor: Color(0xff323232),
             indicatorSize: TabBarIndicatorSize.label,
             indicatorColor: Theme.of(context).tabBarTheme.labelColor,
@@ -173,7 +173,7 @@ class _AllStrategyState extends State<AllStrategy>
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: width(20)),
                   child: Image.asset('images/business/icon_screen.png',
-                      width: width(48), height: height(48))),
+                      width: width(40), height: height(40))),
             );
           }),
         ]);

@@ -19,6 +19,8 @@ class accountDetailPage extends StatefulWidget {
 }
 
 class _accountDetailPageState extends State<accountDetailPage> {
+  String title = '账户详情';
+
   @override
   void initState() {
     // TODO: implement initState
@@ -26,7 +28,10 @@ class _accountDetailPageState extends State<accountDetailPage> {
     WidgetsBinding.instance.addPostFrameCallback((mag) {
       Provider.of<StrategyProvider>(context, listen: false)
           .getAccountDetail(widget.id);
+
     });
+
+
   }
 
   @override
@@ -35,7 +40,7 @@ class _accountDetailPageState extends State<accountDetailPage> {
         backgroundColor: Colors.white,
         appBar: Utils.getCommonAppBar(
           context,
-          "账户详情",
+          "${title??""}",
           elevation: 0.2,
           /*  actions: <Widget>[
             Column(
@@ -72,7 +77,8 @@ class _accountDetailPageState extends State<accountDetailPage> {
         ),
         body: Consumer<StrategyProvider>(builder:
             (BuildContext context, StrategyProvider model, Widget child) {
-          return model.mAccountDetailModel == null
+
+              return model.mAccountDetailModel == null
               ? Center(
                   child: CupertinoActivityIndicator(),
                 )
@@ -110,7 +116,9 @@ class _accountDetailPageState extends State<accountDetailPage> {
                                   width: width(40),
                                 ),
                                 Utils.normalText(
-                                    model.mAccountDetailModel.memo ?? ''),
+                                    '${ model.mAccountDetailModel.platform}-' ?? '--'),
+                                Utils.normalText(
+                                    model.mAccountDetailModel.memo ?? '备注'),
                               ],
                             ),
                             SizedBox(
@@ -145,8 +153,8 @@ class _accountDetailPageState extends State<accountDetailPage> {
                                 fontSize: 40,
                                 fontWeight: FontWeight.bold),
                             model.mAccountDetailModel.type == 1
-                                ? Utils.normalText('跟随总人数')
-                                : Utils.normalText('跟随交易员'),
+                                ? Utils.normalText('跟随总人数',fontSize: 24)
+                                : Utils.normalText('跟随交易员',fontSize: 24),
                           ],
                         )),
                         Expanded(
@@ -161,8 +169,8 @@ class _accountDetailPageState extends State<accountDetailPage> {
                                 fontSize: 40,
                                 fontWeight: FontWeight.bold),
                             model.mAccountDetailModel.type == 1
-                                ? Utils.normalText('跟随佣金')
-                                : Utils.normalText('跟随收益'),
+                                ? Utils.normalText('跟随佣金',fontSize: 24)
+                                : Utils.normalText('跟随收益',fontSize: 24),
                           ],
                         )),
                       ],
@@ -212,7 +220,7 @@ class _accountDetailPageState extends State<accountDetailPage> {
                     height: height(20),
                     color: Color(0xffF8F6F9),
                   ),
-                  MineListItemWidget(
+                    MineListItemWidget2(
                     text: '交易记录',
                     image: 'images/strategy/icon_record.png',
                     onTab: () {
@@ -222,7 +230,7 @@ class _accountDetailPageState extends State<accountDetailPage> {
                           (result) {});
                     },
                   ),
-                  MineListItemWidget(
+                    MineListItemWidget2(
                     text: model.mAccountDetailModel.type == 1 ? "跟随者" : "跟随交易员",
                     image: 'images/strategy/icon_gendan.png',
                     onTab: () {
@@ -232,7 +240,7 @@ class _accountDetailPageState extends State<accountDetailPage> {
                           (result) {});
                     },
                   ),
-                  MineListItemWidget(
+                    MineListItemWidget2(
                     text: '更换API',
                     image: 'images/strategy/icon_conversion.png',
                     onTab: () {
@@ -243,7 +251,7 @@ class _accountDetailPageState extends State<accountDetailPage> {
                       });
                     },
                   ),
-                  MineListItemWidget(
+                    MineListItemWidget2(
                     text: '解除绑定',
                     image: 'images/strategy/icon_remove.png',
                     onTab: () {
@@ -267,5 +275,99 @@ class _accountDetailPageState extends State<accountDetailPage> {
     Navigator.pop(context);
     Provider.of<StrategyProvider>(context, listen: false).getStrategyAccount();
     RouterUtil.goBack(context);
+  }
+}
+class MineListItemWidget2 extends StatelessWidget {
+  const MineListItemWidget2({
+    Key key,
+    this.image,
+    this.text,
+    this.onTab,
+    this.isShowBadge = false,
+    this.isVersion = false,
+    this.rightText,
+  }) : super(key: key);
+  final String image;
+  final String text;
+  final String rightText;
+  final bool isShowBadge;
+  final bool isVersion;
+  final Function onTab;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTab,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: height(100),
+        margin: EdgeInsets.symmetric(horizontal: width(40)),
+        decoration: BoxDecoration(
+            border: Border(
+                bottom: BorderSide(width: 0.5, color: Color(0xffEBEBEB)))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Visibility(
+                  child: Image.asset(
+                      image == "" ? "images/home/avatar.png" : image,
+                      fit: BoxFit.fill,
+                      width: width(48),
+                      height: height(48)),
+                  visible: image != "",
+                ),
+                SizedBox(width: width(28)),
+                Text(
+                  text,
+                  style: TextStyle(fontSize: sp(28), color: Color(0xff323232)),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Visibility(
+                  visible: isShowBadge,
+                  child: Container(
+                    width: width(12),
+                    height: width(12),
+                    margin: EdgeInsets.only(right: width(10)),
+                    decoration: BoxDecoration(
+                      color: Color(0xffF74F4F),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+                /*  Visibility(
+                    visible: isVersion,
+                    child: Text(
+                      Platform.isAndroid
+                          ? GlobalConfig.andVersionName
+                          : GlobalConfig.iosVersionName,
+                      style:
+                          TextStyle(fontSize: sp(28), color: Color(0xff323232)),
+                    )) */
+              ],
+            ),
+            Visibility(
+              child: Expanded(
+                  child: Text(
+                    rightText == null ? "" : rightText,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(fontSize: sp(28), color: Color(0xff323232)),
+                  )),
+              visible: rightText != null,
+            ),
+            Image.asset(
+              'images/mine/next.png',
+              width: width(16),
+              height: height(16),
+              color: Color(0xffD1D1D1),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

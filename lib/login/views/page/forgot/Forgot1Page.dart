@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tianji/common/config/global_config.dart';
 import 'package:flutter_tianji/common/constants/index.dart';
+import 'package:flutter_tianji/common/i18n/i18n.dart';
 import 'package:flutter_tianji/common/input/focus.dart';
 import 'package:flutter_tianji/common/input/text_input2.dart';
 import 'package:flutter_tianji/login/routes/index.dart';
 import 'package:flutter_tianji/login/widgets/text_input.dart';
 import 'package:flutter_tianji/routes/fluro_navigator.dart';
 import 'package:flutter_tianji/utils/screen.dart';
+import 'package:flutter_tianji/utils/util.dart';
 
 class Forgot1PageWidget extends StatefulWidget {
   const Forgot1PageWidget({
@@ -25,36 +27,24 @@ class _Forgot1PageWidgetState extends State<Forgot1PageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhite,
-      appBar: AppBar(
-        title: Text(''),
-        elevation: 1,
-        centerTitle: true,
-      ),
+      appBar:    Utils.getCommonAppBar(context, '${Tr.of(context).FindPassword}'),
       body: SingleChildScrollView(
           child: Container(
-        margin: EdgeInsets.symmetric(horizontal: width(DefaultPadding)),
+        margin: EdgeInsets.symmetric(horizontal: width(60)),
         child: Column(
           children: [
-            SizedBox(height: height(48)),
-            Container(
-              alignment: Alignment.centerLeft,
-              width: double.infinity,
-              child: Text(
-                '找回密码',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: sp(48),
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            SizedBox(height: height(74)),
+
+            SizedBox(height: height(60)),
             Container(
               height: height(88),
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(horizontal: width(40)),
               decoration: BoxDecoration(
                   color: Color(0xffF4F4F4),
+                  border: new Border.all(color: Color(0xFFE7E7E7), width: width(2)),
+
                   borderRadius: BorderRadius.only(
+
                     bottomLeft: Radius.circular(circular),
                     bottomRight: Radius.circular(circular),
                     topLeft: Radius.circular(circular),
@@ -65,7 +55,7 @@ class _Forgot1PageWidgetState extends State<Forgot1PageWidget> {
                 child: InputWidget2(
                   controller: _nameCtr,
                   focusNode: _nameFocus,
-                  hintText: '邮箱或手机号',
+                  hintText: '${Tr.of(context).hintInputEmailOrPhone}',
                   suffixIconConstraintsMaxWidth: 160,
                   suffixIconConstraintsMinWidth: 160,
                   suffixIconConstraintsMaxHeight: 60,
@@ -74,7 +64,7 @@ class _Forgot1PageWidgetState extends State<Forgot1PageWidget> {
                 ),
               ),
             ),
-            SizedBox(height: height(60)),
+            SizedBox(height: height(80)),
             GestureDetector(
               onTap: () {
                 RouterUtil.pushResult(
@@ -84,10 +74,10 @@ class _Forgot1PageWidgetState extends State<Forgot1PageWidget> {
               },
               child: Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(top: height(36)),
                 height: height(88),
                 decoration: BoxDecoration(
-                  color: Color(0xff7865FE),
+
+                  color: kPrimaryColor,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(circular),
                     bottomRight: Radius.circular(circular),
@@ -97,7 +87,7 @@ class _Forgot1PageWidgetState extends State<Forgot1PageWidget> {
                 ),
                 alignment: Alignment.center,
                 child: Text(
-                  '下一步',
+                  '${Tr.of(context).Nextstep}',
                   style: TextStyle(color: Colors.white, fontSize: sp(28)),
                 ),
               ),

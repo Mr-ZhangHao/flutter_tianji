@@ -36,6 +36,7 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget>
   bool wantKeepAlive = true;
 
   bool isCode = true;
+  bool isopen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +52,8 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget>
             margin: EdgeInsets.symmetric(horizontal: width(DefaultPadding)),
             padding: EdgeInsets.symmetric(horizontal: width(40)),
             decoration: BoxDecoration(
+                border: new Border.all(color: Color(0xFFE7E7E7), width: width(2)),
+
                 color: Color(0xffF4F4F4),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(circular),
@@ -83,6 +86,8 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget>
                       EdgeInsets.symmetric(horizontal: width(DefaultPadding)),
                   padding: EdgeInsets.symmetric(horizontal: width(40)),
                   decoration: BoxDecoration(
+                      border: new Border.all(color: Color(0xFFE7E7E7), width: width(2)),
+
                       color: Color(0xffF4F4F4),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(circular),
@@ -119,6 +124,8 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget>
                       EdgeInsets.symmetric(horizontal: width(DefaultPadding)),
                   padding: EdgeInsets.symmetric(horizontal: width(40)),
                   decoration: BoxDecoration(
+                      border: new Border.all(color: Color(0xFFE7E7E7), width: width(2)),
+
                       color: Color(0xffF4F4F4),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(circular),
@@ -129,14 +136,21 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget>
                   child: FocusWidget(
                     focusNode: _pswFocus,
                     child: InputWidget2(
-                      obscureText: true,
+                      suffixIconConstraintsMaxWidth: 28,
+                      suffixIconConstraintsMinWidth: 28,
+                      suffixIconConstraintsMaxHeight: 100,
+                      suffixIconConstraintsMinHeight: 28,
                       controller: _pswCtr,
                       focusNode: _pswFocus,
                       hintText: '${Tr.of(context).LoginPassword}',
-                      suffixIconConstraintsMaxWidth: 160,
-                      suffixIconConstraintsMinWidth: 160,
-                      suffixIconConstraintsMaxHeight: 60,
-                      suffixIconConstraintsMinHeight: 60,
+                      obscureText: !isopen,
+                      suffixIcon: GestureDetector(
+                        onTap: () => {setState(() => isopen = !isopen)},
+                        child: ImageIcon(
+                            AssetImage(
+                                'images/login/${isopen ? 'open' : 'close'}.png'),
+                            color: isopen ? kPrimaryColor : Color(0xffBFBFBF)),
+                      ),
                       maxHeight: 100,
                     ),
                   ),
@@ -172,10 +186,10 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget>
                 padding: EdgeInsets.symmetric(horizontal: width(46)),
                 child: Container(
                   width: double.infinity,
-                  margin: EdgeInsets.only(top: height(36)),
+                  margin: EdgeInsets.only(top: height(80)),
                   height: height(88),
                   decoration: BoxDecoration(
-                    color: Color(0xff7865FE),
+                    color: kPrimaryColor,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(circular),
                       bottomRight: Radius.circular(circular),
@@ -191,7 +205,7 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget>
                 ),
               )),
           SizedBox(
-            height: height(74),
+            height: height(54),
           ),
           GestureDetector(
             onTap: () => RouterUtil.push(context, LoginRouter.register,

@@ -23,7 +23,7 @@ class _IdentityTypePageState extends State<IdentityTypePage> {
       appBar: AppBar(
         title: Text(Tr.of(context).authentication),
         centerTitle: true,
-        elevation: 1,
+        elevation: 0.5,
         leading: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => RouterUtil.goBack(context),

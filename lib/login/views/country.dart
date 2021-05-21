@@ -72,7 +72,7 @@ class _countryPageState extends State<countryPage> {
       backgroundColor: kWhite,
       appBar: AppBar(
         title: Text(Tr.of(context).chooseCountry),
-        elevation: 1,
+        elevation: 0.5,
         centerTitle: true,
       ),
       body: Column(

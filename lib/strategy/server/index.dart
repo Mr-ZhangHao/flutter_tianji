@@ -203,10 +203,11 @@ class StrategyServer {
 
   //跟随信息
   static Future<FollowInfoViewModel> getFollowPro(
-      followApiId, platform, coin) async {
+      followApiId, apiID, platform, coin) async {
     var res = await http.post('/api/strategy/follow_pro', queryParameters: {
       "platform": platform,
       "follow_api_id": followApiId,
+      "api_id": apiID,
       "coin": coin,
     });
     return FollowInfoViewModel.fromJson(res.data['data']);
